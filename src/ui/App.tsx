@@ -7,7 +7,7 @@ function App() {
 	return (
 		<div className="App">
 			<header className="App-header">
-				<img className="App-logo" alt="Tjingeling badring" />
+				<img className="App-logo" alt="Säkraste sidan på webben!" />
 				<Hello/>
 			</header>
 		</div>

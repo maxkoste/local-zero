@@ -1,5 +1,7 @@
 import React from 'react';
 import { useState } from 'react';
+import { User } from '../../backend/user'
+import { users } from '../../backend/controller'
 
 
 //Denna funktionen exporteras och kan importeras genom att skriva:
@@ -7,25 +9,40 @@ import { useState } from 'react';
 export function Hello() {
 	return (
 		<div>
-			<h1>Counters that update because im trying stuff</h1>
-			<MyButton/>
-			<MyButton/>
-			<MyButton/>
+			<h1>Klicka på en av våra användare här nere! </h1>
+			<MyButton />
 		</div>
 	);
 }
 
-function MyButton(){
-	const[count, setCount] = useState(0);
+function MyButton() {
+	const [selected, setSelected] = useState<User | null>(null);
 
-	//Det går att ha funktioner i funktioner!! Crazy shit man
-	function handleClick() {
-		setCount(count + 1);
+	let userInfo = null;
+	if (selected != null){
+		userInfo = (
+			<div>
+				<p> ID : {selected.id}</p>
+				<p> Username : {selected.username}</p>
+				<p> Email : {selected.email}</p>
+				<p> Password : {selected.password}</p>
+			</div>
+		)
 	}
-
 	return (
-		<button onClick={handleClick}> 
-			Clicked {count} times
-		</button>
+		<div>
+			<select onChange={e=>{
+				const user = users.find(u => u.id === Number(e.target.value));
+				setSelected(user ?? null);
+			}}>
+				{ users.map(u => (
+					<option key={u.id} value={u.id}>{u.username}</option>
+				))}
+
+			</select>
+			<div>
+				{userInfo}
+			</div>
+		</div>
 	);
 }
