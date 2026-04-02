@@ -1,6 +1,7 @@
 import React from 'react'
 import { User } from './user'
 
+//dummy data relax!!!!
 export const users: User[] = [
 	{ id: 1, username: "Anders", password: "jagälskarhästar99", email: "anders@live.se" },
 	{ id: 2, username: "Bob", password: "kattenmorris00", email: "bob@hotmail.se" },
