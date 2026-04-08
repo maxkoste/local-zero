@@ -9,7 +9,8 @@ export interface Content {
     type: ContentType;
 
     author: User;
-    content: string;
+    body: string;
+    // images should be able to be stored too.
     location?: string;
     duration?: string;
     date: Date;

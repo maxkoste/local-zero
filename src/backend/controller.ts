@@ -2,6 +2,8 @@ import React from 'react'
 import { User } from './user'
 import { Visibility } from './visibility'
 
+// probably wont be used
+
 //dummy data relax!!!!
 export const users: User[] = [
 	{ id: 1, username: "Anders", password: "jagälskarhästar99", email: "anders@live.se", visibility: Visibility.PUBLIC },
