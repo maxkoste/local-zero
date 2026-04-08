@@ -1,7 +1,7 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
-import { Hello } from './pages/Frontpage'
+import { Hello } from './pages/front-page'
 
 function App() {
 	return (
