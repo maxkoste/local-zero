@@ -1,6 +1,7 @@
 import React from 'react'
 import { Visibility } from './visibility'
 import { ActionKey } from './action'
+import { Notification } from './notification'
 
 export interface User {
 	id: number,
@@ -9,5 +10,5 @@ export interface User {
 	email: string,
 	visibility: Visibility,
 	action?: ActionKey[], // maybe there should be a blank list
+	notification?: Notification[], // blank?
 }
-
