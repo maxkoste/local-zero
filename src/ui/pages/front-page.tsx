@@ -2,6 +2,7 @@ import React from 'react';
 import { useState } from 'react';
 import { User } from '../../backend/user'
 import { users } from '../../backend/controller'
+import NavBar from '../components/nav-bar';
 import { Stack } from "@mui/material";
 import ThreadCard from "../components/thread-card";
 import { Box } from "@mui/material";
@@ -20,7 +21,6 @@ const threads = [
         author: "User123",
     },
 ];
-
 
 export default function FrontPage() {
     return (
