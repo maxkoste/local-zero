@@ -1,6 +1,5 @@
 import './login-page.css';
 import React from "react";
-import { FrontPage } from './front-page';
 import { useNavigate } from "react-router-dom";
 
 function LoginPage() {
@@ -29,8 +28,9 @@ function LoginPage() {
 									name="email"
 									required
 									autoComplete="email"
+									placeholder="Email"
 								/>
-								<label htmlFor="email">Email Address</label>
+								{/* <label htmlFor="email">Email Address</label> */}
 								<span className="focus-border"></span>
 							</div>
 							<span className="error-message" id="emailError"></span>
@@ -44,8 +44,9 @@ function LoginPage() {
 									name="password"
 									required
 									autoComplete="current-password"
+									placeholder="Password"
 								/>
-								<label htmlFor="password">Password</label>
+								{/* <label htmlFor="password">Password</label> */}
 								<button
 									type="button"
 									className="password-toggle"

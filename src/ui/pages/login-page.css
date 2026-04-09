@@ -48,9 +48,9 @@
     backdrop-filter: blur(10px);
 }
 
-.input-wrapper input::placeholder {
-    color: transparent;
-}
+/* .input-wrapper input::placeholder { */
+/*     color: transparent; */
+/* } */
 
 .input-wrapper label {
     position: absolute;
