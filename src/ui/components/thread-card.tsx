@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 type Thread = {
-    id: number;
+    id: string;
     title: string;
     body: string;
     author: string;
