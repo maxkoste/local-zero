@@ -8,13 +8,13 @@ import { Box } from "@mui/material";
 
 const threads = [
     {
-        id: 1,
+        id: "1",
         title: "First thread",
         body: "This is the first thread.",
         author: "Lolita",
     },
     {
-        id: 2,
+        id: "2",
         title: "Second thread",
         body: "Another thread with some example text.",
         author: "User123",

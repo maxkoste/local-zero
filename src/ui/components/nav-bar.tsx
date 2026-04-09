@@ -1,6 +1,6 @@
 import React from 'react'
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
-import { FrontPage } from '../pages/front-page';
+import FrontPage from '../pages/front-page';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
