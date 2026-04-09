@@ -1,6 +1,10 @@
 
 import React, { useState } from "react";
+<<<<<<< HEAD:frontend/src/pages/sign-up.tsx
 import { Visibility } from "../types";
+=======
+import { Visibility } from "../../backend/visibility";
+>>>>>>> 458adfd (backend runs on its own server and exposes two endpoints for adding and getting users that are stored in a json file):src/ui/pages/sign-up.tsx
 
 
 export function SignUp() {
