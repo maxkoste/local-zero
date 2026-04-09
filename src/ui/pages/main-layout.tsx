@@ -6,7 +6,7 @@ export default function MainLayout() {
   return (
     <>
       <NavBar />
-      <Outlet /> {/* Renders the child route */}
+      <Outlet />
     </>
   );
 }
