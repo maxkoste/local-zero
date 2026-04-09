@@ -18,7 +18,7 @@ import ParkIcon from '@mui/icons-material/Park';
 
 //lägg till pages här ifall det kommer flera
 const pages = [
-	{ label: 'Front Page', path: '/front' },
+	{ label: 'Initiativ', path: '/front' },
 ];
 
 const settings = [
@@ -144,7 +144,7 @@ function ResponsiveAppBar() {
 					<Box sx={{ flexGrow: 0 }}>
 						<Tooltip title="Open settings">
 							<IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-								<Avatar alt="User" src={undefined} /> {/* TODO: swap with real user avatar URL */}
+								<Avatar alt="User" src={undefined} />
 							</IconButton>
 						</Tooltip>
 						<Menu
