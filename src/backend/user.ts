@@ -1,6 +1,5 @@
-import React from 'react'
 import { Visibility } from './visibility'
-import { ActionKey } from './action'
+import type { ActionKey } from './action'
 import { Notification } from './notification'
 
 export interface User {
