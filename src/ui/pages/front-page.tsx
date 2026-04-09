@@ -21,6 +21,7 @@ const threads = [
     },
 ];
 
+
 export default function FrontPage() {
     return (
         <Box sx={{ maxWidth: 700, margin: "0 auto", padding: 2 }}>
