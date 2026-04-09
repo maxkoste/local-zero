@@ -2,7 +2,7 @@ import { Card, CardContent, Typography, CardHeader } from "@mui/material";
 import { useState } from "react";
 
 type Thread = {
-    id: string;
+    id: number;
     title: string;
     body: string;
     author: string;
