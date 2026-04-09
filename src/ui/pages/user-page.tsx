@@ -69,7 +69,7 @@ export function UserPage() {
 		<Box sx={{ maxWidth: 900, mx: 'auto', px: 2, py: 4 }}>
 			<Grid container spacing={3}>
 
-				{/**/}
+				{/*Left Column - profile pic and initiativ and shietzzz*/}
 				<Grid size={{ xs: 12, md: 4 }}>
 					<Card>
 						<Box sx={{ textAlign: 'center', mb: 3 }}>
