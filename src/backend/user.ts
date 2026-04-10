@@ -9,6 +9,6 @@ export interface User {
 	password: string,
 	email: string,
 	visibility: Visibility,
-	action?: ActionKey[], // maybe there should be a blank list
-	notification?: Notification[], // blank?
+	action: ActionKey[],
+	notification: Notification[],
 }

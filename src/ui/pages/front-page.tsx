@@ -1,29 +1,13 @@
-import React from 'react';
-import { Stack } from "@mui/material";
-import ThreadCard from "../components/thread-card";
-import { Box } from "@mui/material";
-
-const threads = [
-    {
-        id: "1",
-        title: "First thread",
-        body: "This is the first thread.",
-        author: "Lolita",
-    },
-    {
-        id: "2",
-        title: "Second thread",
-        body: "Another thread with some example text.",
-        author: "User123",
-    },
-];
+import { Stack, Box } from "@mui/material";
+import { initiatives } from "../../backend/storage-system";
+import { ContentCard } from "../components/content-card";
 
 export function FrontPage() {
     return (
         <Box sx={{ maxWidth: 700, margin: "0 auto", padding: 2 }}>
             <Stack spacing={2}>
-                {threads.map((thread) => (
-                    <ThreadCard key={thread.id} thread={thread} />
+                {initiatives.map((initiative) => (
+                    <ContentCard key={initiative.id} content={initiative} />
                 ))}
             </Stack>
         </Box>
