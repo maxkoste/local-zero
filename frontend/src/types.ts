@@ -1,13 +1,136 @@
-import React from 'react'
-import { Content } from "./content/content";
-import { User } from "./user";
-import { Visibility } from "./visibility";
-// has list of users
-// has list of initiative
+export enum Visibility {
+    PUBLIC = "public",
+    KIRSEBERG = "kirseberg",
+    FOLKETS_PARK = "folkets_park",
+    SOFIELUND = "sofielund",
+    SORGENFRI = "sorgenfri",
+}
 
-// read and writes from file (should be sqllite or .dat)
-// stores all data during runtime
-// singleton
+export interface Notification {
+}
+
+export type ActionKey = keyof typeof Action;
+
+export const Action = {
+    BIKE: { label: "bike to work", points: 10 },
+    TREE: { label: "plant a tree", points: 20 },
+    PANTA: { label: "pantamera", points: 5 },
+    CEO: { label: "shoot a CEO", points: 1000 },
+    OIL: { label: "oil spill", points: -500 },
+    FLIGHT: { label: "take a flight to work", points: -50 },
+} as const;
+
+export interface User {
+	id: number,
+	username: string,
+	password: string,
+	email: string,
+	visibility: Visibility,
+	action: ActionKey[],
+	notification: Notification[],
+}
+
+export type ContentType = 'initiative' | 'update' | 'comment';
+
+export interface Image {
+    id: string;
+    url: string;
+    alt?: string;
+}
+
+export interface IContent {
+    id: string;
+    title: string;
+    type: ContentType;
+    author: User;
+    body: string;
+    date: Date;
+    visibility: Visibility;
+
+    image?: Image;                 
+    location?: string;
+    duration?: string;
+
+    likes: Set<string>;
+    dislikes: Set<string>;
+
+    children: IContent[];               
+
+    addChild(child: IContent): void;
+    removeChild(childId: string): boolean;
+    getChildren(): IContent[];
+    getAllDescendants(): IContent[];
+}
+
+export class Content implements IContent {
+    id: string;
+    title: string;
+    type: ContentType;
+    author: User;
+    body: string;
+    date: Date;
+    visibility: Visibility;
+
+    image?: Image;
+    location?: string;
+    duration?: string;
+
+    likes: Set<string> = new Set();
+    dislikes: Set<string> = new Set();
+
+    children: IContent[] = [];
+
+    constructor(
+        id: string,
+        title: string,
+        type: ContentType,
+        author: User,
+        body: string,
+        date: Date = new Date(),
+        visibility: Visibility,
+        image?: Image,
+        location?: string,
+        duration?: string
+    ) {
+        this.id = id;
+        this.title = title;
+        this.type = type;
+        this.author = author;
+        this.body = body;
+        this.visibility = visibility;
+        this.date = date;
+        this.image = image;
+        this.location = location;
+        this.duration = duration;
+    }
+
+    addChild(child: IContent): void {
+        this.children.push(child);
+    }
+
+    removeChild(childId: string): boolean {
+        const initialLength = this.children.length;
+        this.children = this.children.filter(child => child.id !== childId);
+        return this.children.length !== initialLength;
+    }
+
+    getChildren(): IContent[] {
+        return [...this.children];
+    }
+
+    getAllDescendants(): IContent[] {
+        const descendants: IContent[] = [];
+        const stack = [...this.children];
+
+        while (stack.length > 0) {
+        const current = stack.pop()!;
+        descendants.push(current);
+        stack.push(...current.children);
+        }
+
+        return descendants;
+    }
+}
 
 const user1: User = {
     id: 1,

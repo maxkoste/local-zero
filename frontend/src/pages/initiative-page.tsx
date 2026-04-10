@@ -1,8 +1,8 @@
 import { useParams } from "react-router-dom";
 import { Box, Stack } from "@mui/material";
-import { initiatives } from "../../backend/storage-system";
+import { initiatives } from "../types";
 import { ContentCard } from "../components/content-card";
-import { Content } from "../../backend/content/content";
+import { Content } from "../types";
 
 export function InitiativePage() {
     const { id } = useParams();
@@ -16,10 +16,8 @@ export function InitiativePage() {
     return (
         <Box sx={{ maxWidth: 700, margin: "0 auto", padding: 2 }}>
             <Stack spacing={2}>
-                {/* Root initiative */}
                 <ContentCard content={initiative} />
 
-                {/* Children (updates/comments) */}
                 {initiative.children.map(child => (
                     <ContentCard key={child.id} content={child as Content} />
                 ))}

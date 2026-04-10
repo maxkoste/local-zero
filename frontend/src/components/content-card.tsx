@@ -1,7 +1,7 @@
 import { Card, CardContent, Typography, CardHeader } from "@mui/material";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Content } from "../../backend/content/content";
+import { Content } from "../types";
 
 type Props = {
     content: Content;

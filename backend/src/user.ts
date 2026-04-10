@@ -1,4 +1,4 @@
-import { Visibility } from './visibility'
+import { Visibility } from '../src/visibility'
 import type { ActionKey } from './action'
 import { Notification } from './notification'
 
