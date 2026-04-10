@@ -1,6 +1,6 @@
 
 import React, { useState } from "react";
-import { Visibility } from "../types";
+import { Visibility } from "shared";
 
 
 export function SignUp() {

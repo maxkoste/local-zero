@@ -1,7 +1,7 @@
 import { ContentFactory } from './content-factory';
-import { IContent, Image } from './content';
-import { User } from '../user';
-import {Visibility} from '../visibility';
+import { IContent, Image } from 'shared';
+import { User } from 'shared';
+import { Visibility } from 'shared';
 
 export function createInitiative(
     id: string,

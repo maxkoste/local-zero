@@ -1,15 +1,13 @@
 {
-  "name": "your-project",
+  "name": "local-zero",
   "private": true,
   "scripts": {
+    "build:shared": "cd shared && npx tsc",
     "dev:backend": "cd backend && npm run dev",
     "dev:frontend": "cd frontend && npm start",
-    "dev": "concurrently \"npm run dev:backend\" \"npm run dev:frontend\""
+    "dev": "npm run build:shared && concurrently \"npm run dev:backend\" \"npm run dev:frontend\""
   },
   "devDependencies": {
     "concurrently": "^8.2.2"
-  },
-  "dependencies": {
-    "@mui/icons-material": "^9.0.0"
   }
 }

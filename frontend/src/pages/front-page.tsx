@@ -1,5 +1,5 @@
 import { Stack, Box } from "@mui/material";
-import { initiatives } from "../types";
+import { initiatives } from "shared";
 import { ContentCard } from "../components/content-card";
 
 export function FrontPage() {
