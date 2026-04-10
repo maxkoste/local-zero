@@ -1,24 +1,24 @@
-### Starting the server: 
+# Starting the server: 
 
-# Navigate to Backend
+### Navigate to Backend
 
 cd src/backend
 
 --------------------------------------------------
 
-# Install Dependencies
+### Install Dependencies
 
 npm install
 
 --------------------------------------------------
 
-# Run the Development Server
+### Run the Development Server
 
 npm run dev
 
 --------------------------------------------------
 
-Data Storage
+### Data Storage
 
 Users are stored in:
 users.json
