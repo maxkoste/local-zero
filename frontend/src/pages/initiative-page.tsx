@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom";
 import { Box, Stack, Typography } from "@mui/material";
-import { initiatives } from "../types";
+import { initiatives } from "shared";
 import { InitiativeCard } from "../components/content-card";
 import { UpdateCard } from "../components/update-card";
 

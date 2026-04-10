@@ -1,6 +1,6 @@
 import { Card, CardContent, CardHeader, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import { IContent } from "../types";
+import { IContent } from "shared";
 
 type Props = {
     content: IContent;

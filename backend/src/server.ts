@@ -1,7 +1,6 @@
 import express from 'express';
 import fs from 'fs';
 import path from 'path';
-import { User } from './user'
 import cors from 'cors';
 
 const app = express();
