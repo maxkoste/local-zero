@@ -205,29 +205,62 @@ const parkUpdate1 = new Content(
     Visibility.PUBLIC
 );
 
-const parkComment1 = new Content(
-    "1-2",
+const parkComment2 = new Content(
+    "1-1-1",
     "",
     "comment",
     user2,
-    "This is really important, I fully support this.",
+    "Great news, which day is the meeting?",
     new Date(),
     Visibility.PUBLIC
 );
 
-const parkReply1 = new Content(
-    "1-2-1",
+const parkReply2 = new Content(
+    "1-1-1-1",
+    "",
+    "comment",
+    user4,
+    "Tuesday the 15th at 18:00 at the community center.",
+    new Date(),
+    Visibility.PUBLIC
+);
+
+const parkReply3 = new Content(
+    "1-1-1-2",
     "",
     "comment",
     user1,
-    "Glad to hear! We need more support like this.",
+    "I'll be there!",
     new Date(),
     Visibility.PUBLIC
 );
 
-parkComment1.addChild(parkReply1);
+const parkReply4 = new Content(
+    "1-1-2",
+    "",
+    "comment",
+    user5,
+    "Is this really going to make a difference?",
+    new Date(),
+    Visibility.PUBLIC
+);
+
+const parkReplyNested = new Content(
+    "1-1-2-1",
+    "",
+    "comment",
+    user3,
+    "Every bit of community action counts. Join us and see!",
+    new Date(),
+    Visibility.PUBLIC
+);
+
+parkReply2.addChild(parkReply3);       // svar på svaret
+parkComment2.addChild(parkReply2);
+parkReply4.addChild(parkReplyNested);
+parkComment2.addChild(parkReply4);
+parkUpdate1.addChild(parkComment2);
 park.addChild(parkUpdate1);
-park.addChild(parkComment1);
 
 // --- Initiative 2 ---
 const plastic = new Content(
@@ -261,7 +294,7 @@ const plasticComment1 = new Content(
 );
 
 plastic.addChild(plasticUpdate1);
-plastic.addChild(plasticComment1);
+plasticUpdate1.addChild(plasticComment1);
 
 // --- Initiative 3 ---
 const biking = new Content(
