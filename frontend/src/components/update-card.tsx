@@ -13,7 +13,7 @@ import {
 } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutlineRounded";
-import { IContent } from "../types";
+import { IContent } from "shared";
 
 type Props = {
     content: IContent;

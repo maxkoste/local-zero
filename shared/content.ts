@@ -1,5 +1,5 @@
-import { User } from '../user';
-import {Visibility} from '../visibility';
+import { User } from './user';
+import {Visibility} from './visibility';
 
 export type ContentType = 'initiative' | 'update' | 'comment';
 

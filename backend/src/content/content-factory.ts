@@ -1,6 +1,6 @@
-import { User } from '../user';
-import { Visibility } from '../visibility';
-import { IContent, Content, ContentType, Image } from './content';
+import { User } from 'shared';
+import { Visibility } from 'shared';
+import { IContent, Content, ContentType, Image } from 'shared';
 
 export class ContentFactory {
 

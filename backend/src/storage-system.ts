@@ -1,6 +1,3 @@
-import { Content } from "./content/content";
-import { User } from "./user";
-import { Visibility } from "./visibility";
 // has list of users
 // has list of initiative
 
