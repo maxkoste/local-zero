@@ -6,6 +6,7 @@ import LoginPage from './pages/login-page';
 import {FrontPage} from './pages/front-page';
 import { UserPage } from './pages/user-page'
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { SignUp } from './pages/sign-up';
 import MainLayout from './pages/main-layout';
 
 const darkTheme = createTheme({
@@ -24,6 +25,7 @@ function App() {
 					<Route element={<MainLayout />}>
 						<Route path="/front" element={<FrontPage />} />
 						<Route path="/profile" element={<UserPage />} />
+						<Route path="/sign-up" element={<SignUp />} />
 					</Route>
 				</Routes>
 			</BrowserRouter>

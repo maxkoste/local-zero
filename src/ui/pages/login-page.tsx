@@ -10,6 +10,10 @@ function LoginPage() {
 		navigate("/front");
 	};
 
+	const handleSignUp = () => {
+		navigate("/sign-up");
+	};
+
 	return (
 		<div className="app-wrapper">
 			<div className="login-container">
@@ -80,11 +84,11 @@ function LoginPage() {
 						</button>
 					</form>
 
-					<div className="signup-link">
+					<button onClick={handleSignUp} className="signup-link">
 						<p>
-							Don't have an account? <a href="#">Sign up</a>
+							Sign up
 						</p>
-					</div>
+					</button>
 
 					<div className="success-message" id="successMessage">
 						<div className="success-icon">✓</div>
