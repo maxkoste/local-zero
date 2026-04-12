@@ -36,7 +36,7 @@ export function InitiativePage() {
     return (
         <Box sx={{ maxWidth: 700, margin: "0 auto", padding: 2 }}>
             <Stack spacing={2}>
-                <InitiativeCard content={initiative} showLink={false} />
+                <InitiativeCard content={initiative} showLink={false} detailed={true} />
                 {updates.length > 0 && (
                     <>
                         <Typography variant="overline" color="text.secondary" sx={{ pl: 1 }}>

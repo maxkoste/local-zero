@@ -49,18 +49,42 @@ export function BaseContentCard({ content, children, onDelete }: BaseProps) {
     );
 }
 
-export function InitiativeCard({ content, onDelete, showLink = true }: { content: IContent; onDelete?: () => void; showLink?: boolean }) {
+export function InitiativeCard({
+                                   content,
+                                   onDelete,
+                                   showLink = true,
+                                   detailed = false,
+                               }: {
+    content: IContent;
+    onDelete?: () => void;
+    showLink?: boolean;
+    detailed?: boolean;
+}) {
     const navigate = useNavigate();
-
     const updateCount = content.children.filter((c) => c.type === "update").length;
 
     return (
         <BaseContentCard content={content} onDelete={onDelete}>
-            <Typography
-                variant="caption"
-                color="text.secondary"
-                sx={{ display: "block", mt: 1 }}
-            >
+            {detailed && (
+                <>
+                    {content.visibility && (
+                        <Typography variant="caption" color="text.secondary" sx={{ display: "block", mt: 1 }}>
+                            Visibility: {content.visibility}
+                        </Typography>
+                    )}
+                    {content.location && (
+                        <Typography variant="caption" color="text.secondary" sx={{ display: "block", mt: 0.5 }}>
+                            Location: {content.location}
+                        </Typography>
+                    )}
+                    {content.duration && (
+                        <Typography variant="caption" color="text.secondary" sx={{ display: "block", mt: 0.5 }}>
+                            Duration: {content.duration}
+                        </Typography>
+                    )}
+                </>
+            )}
+            <Typography variant="caption" color="text.secondary" sx={{ display: "block", mt: 1 }}>
                 {updateCount} update{updateCount !== 1 ? "s" : ""}
             </Typography>
             {showLink && (
