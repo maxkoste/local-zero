@@ -1,0 +1,22 @@
+[
+  {
+    "id": "1775993689571",
+    "type": "initiative",
+    "title": "Stop pissing in the stairwell",
+    "author": {
+      "id": 1,
+      "username": "Lolita",
+      "email": "lolita@email.com",
+      "visibility": "public"
+    },
+    "body": "Hello. I think we should make a collective effort to keep the stairwell clean so we don’t have to step in urine. Anyone interested in joining?",
+    "visibility": "kirseberg",
+    "date": "2026-04-12T11:34:49.571Z",
+    "image": null,
+    "location": "The stairwell at Ryttaregatan 5b",
+    "duration": "2 weeks",
+    "likes": [],
+    "dislikes": [],
+    "children": []
+  }
+]

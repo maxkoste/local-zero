@@ -29,7 +29,7 @@ export function UpdateCard({ content }: Props) {
         <Card sx={{ maxWidth: 600, margin: "0 auto" }}>
             <CardHeader
                 title={content.title}
-                subheader={`Posted by ${content.author.username} · ${content.date.toLocaleDateString()}`}
+                subheader={`Posted by ${content.author.username} · ${new Date(content.date).toLocaleDateString()}`}
             />
 
             <CardContent>
@@ -101,7 +101,7 @@ function CommentItem({ comment, depth }: CommentProps) {
                 <Typography variant="caption" color="text.secondary" sx={{ fontWeight: 500 }}>
                     {comment.author.username}
                     {" · "}
-                    {comment.date.toLocaleDateString()}
+                    {new Date(comment.date).toLocaleDateString()}
                 </Typography>
                 <Typography variant="body2" sx={{ mt: 0.25 }}>
                     {comment.body}

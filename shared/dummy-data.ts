@@ -61,7 +61,7 @@ const park = new Content(
     "initiative",
     user1,
     "We should protect the park from being developed into housing.",
-    new Date(),
+    new Date("2025-03-01"),
     Visibility.PUBLIC
 );
 
@@ -71,7 +71,7 @@ const parkUpdate1 = new Content(
     "update",
     user4,
     "A meeting with the municipality has been scheduled.",
-    new Date(),
+    new Date("2025-03-03"),
     Visibility.PUBLIC
 );
 
@@ -81,7 +81,7 @@ const parkComment2 = new Content(
     "comment",
     user2,
     "Great news, which day is the meeting?",
-    new Date(),
+    new Date("2025-03-03"),
     Visibility.PUBLIC
 );
 
@@ -91,7 +91,7 @@ const parkReply2 = new Content(
     "comment",
     user4,
     "Tuesday the 15th at 18:00 at the community center.",
-    new Date(),
+    new Date("2025-03-04"),
     Visibility.PUBLIC
 );
 
@@ -101,7 +101,7 @@ const parkReply3 = new Content(
     "comment",
     user1,
     "I'll be there!",
-    new Date(),
+    new Date("2025-03-04"),
     Visibility.PUBLIC
 );
 
@@ -111,7 +111,7 @@ const parkReply4 = new Content(
     "comment",
     user5,
     "Is this really going to make a difference?",
-    new Date(),
+    new Date("2025-03-05"),
     Visibility.PUBLIC
 );
 
@@ -121,11 +121,11 @@ const parkReplyNested = new Content(
     "comment",
     user3,
     "Every bit of community action counts. Join us and see!",
-    new Date(),
+    new Date("2025-03-05"),
     Visibility.PUBLIC
 );
 
-parkReply2.addChild(parkReply3);       // svar på svaret
+parkReply2.addChild(parkReply3);
 parkComment2.addChild(parkReply2);
 parkReply4.addChild(parkReplyNested);
 parkComment2.addChild(parkReply4);
@@ -139,7 +139,7 @@ const plastic = new Content(
     "initiative",
     user2,
     "Let's introduce a plastic-free initiative in our community.",
-    new Date(),
+    new Date("2025-03-05"),
     Visibility.PUBLIC
 );
 
@@ -149,7 +149,7 @@ const plasticUpdate1 = new Content(
     "update",
     user3,
     "A local grocery store agreed to reduce plastic packaging.",
-    new Date(),
+    new Date("2025-03-07"),
     Visibility.PUBLIC
 );
 
@@ -159,7 +159,7 @@ const plasticComment1 = new Content(
     "comment",
     user5,
     "This sounds expensive. Who pays for it?",
-    new Date(),
+    new Date("2025-03-08"),
     Visibility.PUBLIC
 );
 
@@ -173,7 +173,7 @@ const biking = new Content(
     "initiative",
     user3,
     "We need safer and more extensive bike lanes in the city.",
-    new Date(),
+    new Date("2025-03-08"),
     Visibility.PUBLIC
 );
 
@@ -184,7 +184,7 @@ const recycling = new Content(
     "initiative",
     user1,
     "More recycling stations should be available in public areas.",
-    new Date(),
+    new Date("2025-03-10"),
     Visibility.PUBLIC
 );
 
@@ -195,7 +195,7 @@ const trees = new Content(
     "initiative",
     user3,
     "Tree planting improves air quality and city aesthetics.",
-    new Date(),
+    new Date("2025-03-12"),
     Visibility.PUBLIC
 );
 
@@ -206,7 +206,7 @@ const transport = new Content(
     "initiative",
     user4,
     "We need more frequent and reliable buses and trains.",
-    new Date(),
+    new Date("2025-03-15"),
     Visibility.PUBLIC
 );
 
@@ -217,7 +217,7 @@ const solar = new Content(
     "initiative",
     user1,
     "Install solar panels on schools and government buildings.",
-    new Date(),
+    new Date("2025-03-18"),
     Visibility.PUBLIC
 );
 
@@ -228,7 +228,7 @@ const carFree = new Content(
     "initiative",
     user2,
     "Limit cars in the city center to reduce pollution.",
-    new Date(),
+    new Date("2025-03-20"),
     Visibility.PUBLIC
 );
 
@@ -239,7 +239,7 @@ const compost = new Content(
     "initiative",
     user3,
     "Introduce shared composting stations for neighborhoods.",
-    new Date(),
+    new Date("2025-03-22"),
     Visibility.PUBLIC
 );
 
@@ -250,7 +250,7 @@ const water = new Content(
     "initiative",
     user5,
     "Stronger protections against industrial pollution are needed.",
-    new Date(),
+    new Date("2025-03-25"),
     Visibility.PUBLIC
 );
 

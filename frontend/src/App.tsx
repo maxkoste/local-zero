@@ -9,6 +9,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { SignUp } from './pages/sign-up';
 import MainLayout from './pages/main-layout';
 import { InitiativePage } from './pages/initiative-page';
+import { CreateInitiativePage } from './pages/create-initiative-page';
 
 const darkTheme = createTheme({
 	palette: {
@@ -28,6 +29,7 @@ function App() {
                         <Route path="/profile" element={<UserPage />} />
                         <Route path="/sign-up" element={<SignUp />} />
                         <Route path="/initiative/:id" element={<InitiativePage />} />
+                        <Route path="/create-initiative" element={<CreateInitiativePage />} />
                     </Route>
 				</Routes>
 			</BrowserRouter>
