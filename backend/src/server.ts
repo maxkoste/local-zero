@@ -66,6 +66,7 @@ app.patch('/api/initiatives/:id', (req, res) => {
     const { id } = req.params;
     const { title, body, visibility, image, location, duration, likes, dislikes } = req.body;
 
+    //If not including a change - will skip
     const updated = storage.updateInitiative(id, {
         ...(title !== undefined && { title }),
         ...(body !== undefined && { body }),
