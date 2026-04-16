@@ -1,0 +1,62 @@
+[
+  {
+    "id": "1775993689571",
+    "type": "initiative",
+    "title": "Stop pissing in the stairwell",
+    "author": {
+      "id": 1,
+      "username": "Lolita",
+      "email": "lolita@email.com",
+      "visibility": "public"
+    },
+    "body": "Hello. I think we should make a collective effort to keep the stairwell clean so we don’t have to step in urine. Anyone interested in joining?",
+    "visibility": "kirseberg",
+    "date": "2026-04-12T11:34:49.571Z",
+    "image": null,
+    "location": "The stairwell at Ryttaregatan 5b",
+    "duration": "2 weeks",
+    "likes": [],
+    "dislikes": [],
+    "children": []
+  },
+  {
+    "id": "1776327565058",
+    "type": "initiative",
+    "title": "Rensa kirseberg från alla med efternamnet Skön",
+    "author": {
+      "id": 1,
+      "username": "Lolita",
+      "email": "lolita@email.com",
+      "visibility": "public"
+    },
+    "body": "En djävel bara iallafall. Det är han som fucking kissar i trappan asså",
+    "visibility": "kirseberg",
+    "date": "2026-04-16T08:19:25.058Z",
+    "image": null,
+    "location": "Ryttaregatan 5b",
+    "duration": "Så länge det är nödvändigt",
+    "likes": [],
+    "dislikes": [],
+    "children": []
+  },
+  {
+    "id": "1776327949076",
+    "type": "initiative",
+    "title": "test",
+    "author": {
+      "id": 1,
+      "username": "Lolita",
+      "email": "lolita@email.com",
+      "visibility": "public"
+    },
+    "body": "inte",
+    "visibility": "public",
+    "date": "2026-04-16T08:25:49.076Z",
+    "image": null,
+    "location": null,
+    "duration": null,
+    "likes": [],
+    "dislikes": [],
+    "children": []
+  }
+]

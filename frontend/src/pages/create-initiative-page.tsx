@@ -23,10 +23,10 @@ export function CreateInitiativePage() {
 
     // TODO: replace with logged-in user from auth context when that exists
     const hardcodedAuthor = {
-        id: 1,
+        id: 7,
         username: "Lolita",
-        email: "lolita@email.com",
-        visibility: Visibility.PUBLIC,
+        email: "preferoldermen96@gmail.com",
+        visibility: Visibility.KIRSEBERG,
     };
 
     async function handleSubmit() {
