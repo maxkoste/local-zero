@@ -96,7 +96,7 @@ app.delete('/api/initiatives/:id', (req, res) => {
 });
 
 
-//Room for Posts and Comments
+//Room for Updates and Comments
 
 
 

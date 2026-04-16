@@ -129,6 +129,15 @@ class StorageSystem {
         this.flushUsers();
     }
 
+
+    //Room for handling updates and comments
+
+
+
+    //Room for handling chats
+
+
+
     //Flushes - handles concurrency
 
     private flushInitiatives(): void {
