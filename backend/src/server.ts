@@ -1,6 +1,6 @@
 import express from 'express';
 import cors from 'cors';
-import { storage, InitiativeRecord, UserRecord } from './storage/storage-system';
+import { storage, ContentRecord, UserRecord } from './storage/storage-system';
 
 const app = express();
 const PORT = 3001;
@@ -42,7 +42,7 @@ app.post('/api/initiatives', (req, res) => {
         return res.status(400).json({ error: 'title, author, body, and visibility are required' });
     }
 
-    const newInitiative: InitiativeRecord = {
+    const newInitiative: ContentRecord = {
         id: String(Date.now()),
         type: 'initiative',
         title,

@@ -14,10 +14,12 @@ export interface ImageRecord {
     alt?: string;
 }
 
-export interface InitiativeRecord {
+export type ContentType = 'initiative' | 'update' | 'comment';
+
+export interface ContentRecord {
     id: string;
-    type: 'initiative';
-    title: string;
+    type: ContentType;
+    title?: string;
     author: AuthorRecord;
     body: string;
     visibility: string;
@@ -27,11 +29,11 @@ export interface InitiativeRecord {
     duration: string | null;
     likes: string[];
     dislikes: string[];
-    children: InitiativeRecord[];
+    children: ContentRecord[];
 }
 
-export type InitiativeUpdate = Partial<Pick<
-    InitiativeRecord,
+export type ContentUpdate = Partial<Pick<
+    ContentRecord,
     'title' | 'body' | 'visibility' | 'image' | 'location' | 'duration' | 'likes' | 'dislikes'
 >>;
 
@@ -49,7 +51,7 @@ const USERS_FILE = path.join(process.cwd(), 'src/storage/users.json');
 class StorageSystem {
     private static instance: StorageSystem;
 
-    private initiatives: InitiativeRecord[] = [];
+    private initiatives: ContentRecord[] = [];
     private users: UserRecord[] = [];
 
     // Chained promises ensure writes to each file are safe by queueing them
@@ -82,21 +84,21 @@ class StorageSystem {
 
     //Initiatives
 
-    getInitiatives(): InitiativeRecord[] {
+    getInitiatives(): ContentRecord[] {
         return this.initiatives;
     }
 
-    getInitiativeById(id: string): InitiativeRecord | undefined {
+    getInitiativeById(id: string): ContentRecord | undefined {
         return this.initiatives.find(i => i.id === id);
     }
 
-    addInitiative(initiative: InitiativeRecord): void {
+    addInitiative(initiative: ContentRecord): void {
         this.initiatives.push(initiative);
         this.flushInitiatives();
     }
 
 
-    updateInitiative(id: string, update: InitiativeUpdate): InitiativeRecord | null {
+    updateInitiative(id: string, update: ContentUpdate): ContentRecord | null {
         const index = this.initiatives.findIndex(i => i.id === id);
         if (index === -1) return null;
 
@@ -130,8 +132,23 @@ class StorageSystem {
     }
 
 
-    //Room for handling updates and comments
+    //Updates and comments
+    addChild(parentId: string, child: ContentRecord): ContentRecord | null {
+        const parent = this.findNode(this.initiatives, parentId);
+        if (!parent) return null;
 
+        const validParent: Record<ContentType, ContentType[]> = {
+            initiative: ['update'],
+            update: ['comment'],
+            comment: ['comment'],
+        };
+
+        if (!validParent[parent.type].includes(child.type)) return null;
+
+        parent.children.push(child);
+        this.flushInitiatives();
+        return parent;
+    }
 
 
     //Room for handling chats
@@ -139,7 +156,6 @@ class StorageSystem {
 
 
     //Flushes - handles concurrency
-
     private flushInitiatives(): void {
         this.initiativesWriteQueue = this.initiativesWriteQueue.then(() =>
             fs.writeFile(INITIATIVES_FILE, JSON.stringify(this.initiatives, null, 2), 'utf-8')
@@ -150,6 +166,16 @@ class StorageSystem {
         this.usersWriteQueue = this.usersWriteQueue.then(() =>
             fs.writeFile(USERS_FILE, JSON.stringify(this.users, null, 2), 'utf-8')
         );
+    }
+
+    //Helper method to traverse children
+    private findNode(nodes: ContentRecord[], id: string): ContentRecord | null {
+        for (const node of nodes) {
+            if (node.id === id) return node;
+            const found = this.findNode(node.children, id);
+            if (found) return found;
+        }
+        return null;
     }
 }
 
