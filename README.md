@@ -8,13 +8,17 @@ cd src/backend
 
 ### Install Dependencies
 
-npm install
+npm install (Both in backend and frontend)
+
+
+npm install typescript
+
 
 --------------------------------------------------
 
 ### Run the Development Server
 
-npm run dev
+Run the script in local-zero/package.json: dev
 
 --------------------------------------------------
 
