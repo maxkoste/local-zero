@@ -102,7 +102,12 @@ export function InitiativePage() {
                             Updates ({updates.length})
                         </Typography>
                         {updates.map((update) => (
-                            <UpdateCard key={update.id} content={update} />
+                            <UpdateCard
+                                key={update.id}
+                                content={update}
+                                initiativeId={id!}
+                                onRefresh={fetchInitiative}
+                            />
                         ))}
                     </>
                 )}

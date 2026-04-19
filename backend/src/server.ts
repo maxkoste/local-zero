@@ -100,7 +100,7 @@ app.delete('/api/initiatives/:id', (req, res) => {
 //Updates and Comments. Is there unecessary checks now due to the factory and content types set in builder-pattern? 
 app.post('/api/initiatives/:parentId/children', (req, res) => {
     const { parentId } = req.params;
-    const { type, author, body, visibility, title, image, location, duration } = req.body;
+    const { type, author, body, visibility, title, image, location, duration, parentId: bodyParentId } = req.body;
 
     if (!type || !author || !body || !visibility) {
         return res.status(400).json({ error: 'type, author, body, and visibility are required' });
@@ -126,7 +126,8 @@ app.post('/api/initiatives/:parentId/children', (req, res) => {
         children: [],
     };
 
-    const result = storage.addChild(parentId, newChild);
+    const targetId = bodyParentId ?? parentId;
+    const result = storage.addChild(targetId, newChild);
 
     if (!result) {
         return res.status(404).json({ error: 'Parent not found or invalid type for parent' });

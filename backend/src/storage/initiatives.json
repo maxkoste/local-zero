@@ -76,7 +76,86 @@
         "duration": null,
         "likes": [],
         "dislikes": [],
-        "children": []
+        "children": [
+          {
+            "id": "1776599976067",
+            "type": "comment",
+            "author": {
+              "id": 1,
+              "username": "Lolita",
+              "email": "lolita@email.com",
+              "visibility": "public"
+            },
+            "body": "test",
+            "visibility": "public",
+            "date": "2026-04-19T11:59:36.067Z",
+            "image": null,
+            "location": null,
+            "duration": null,
+            "likes": [],
+            "dislikes": [],
+            "children": [
+              {
+                "id": "1776599986047",
+                "type": "comment",
+                "author": {
+                  "id": 1,
+                  "username": "Lolita",
+                  "email": "lolita@email.com",
+                  "visibility": "public"
+                },
+                "body": "test1",
+                "visibility": "public",
+                "date": "2026-04-19T11:59:46.047Z",
+                "image": null,
+                "location": null,
+                "duration": null,
+                "likes": [],
+                "dislikes": [],
+                "children": [
+                  {
+                    "id": "1776599992871",
+                    "type": "comment",
+                    "author": {
+                      "id": 1,
+                      "username": "Lolita",
+                      "email": "lolita@email.com",
+                      "visibility": "public"
+                    },
+                    "body": "test2",
+                    "visibility": "public",
+                    "date": "2026-04-19T11:59:52.871Z",
+                    "image": null,
+                    "location": null,
+                    "duration": null,
+                    "likes": [],
+                    "dislikes": [],
+                    "children": []
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "1776599997952",
+            "type": "comment",
+            "author": {
+              "id": 1,
+              "username": "Lolita",
+              "email": "lolita@email.com",
+              "visibility": "public"
+            },
+            "body": "test3",
+            "visibility": "public",
+            "date": "2026-04-19T11:59:57.952Z",
+            "image": null,
+            "location": null,
+            "duration": null,
+            "likes": [],
+            "dislikes": [],
+            "children": []
+          }
+        ]
       }
     ]
   }
