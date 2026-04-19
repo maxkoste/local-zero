@@ -37,7 +37,68 @@
     "duration": "Så länge det är nödvändigt",
     "likes": [],
     "dislikes": [],
-    "children": []
+    "children": [
+      {
+        "id": "1776600328272",
+        "type": "update",
+        "author": {
+          "id": 1,
+          "username": "Lolita",
+          "email": "lolita@email.com",
+          "visibility": "public"
+        },
+        "body": "Längst upp i trapphuset. Hjälp mig att få ut honom ikväll?",
+        "visibility": "kirseberg",
+        "date": "2026-04-19T12:05:28.272Z",
+        "title": "Har hittat var han bor",
+        "image": null,
+        "location": null,
+        "duration": null,
+        "likes": [],
+        "dislikes": [],
+        "children": [
+          {
+            "id": "1776600346134",
+            "type": "comment",
+            "author": {
+              "id": 1,
+              "username": "Lolita",
+              "email": "lolita@email.com",
+              "visibility": "public"
+            },
+            "body": "Vi kör. Kl 18?",
+            "visibility": "kirseberg",
+            "date": "2026-04-19T12:05:46.134Z",
+            "image": null,
+            "location": null,
+            "duration": null,
+            "likes": [],
+            "dislikes": [],
+            "children": [
+              {
+                "id": "1776600362915",
+                "type": "comment",
+                "author": {
+                  "id": 1,
+                  "username": "Lolita",
+                  "email": "lolita@email.com",
+                  "visibility": "public"
+                },
+                "body": "18.30 funkar bättre för mig. Ses utanför.",
+                "visibility": "kirseberg",
+                "date": "2026-04-19T12:06:02.915Z",
+                "image": null,
+                "location": null,
+                "duration": null,
+                "likes": [],
+                "dislikes": [],
+                "children": []
+              }
+            ]
+          }
+        ]
+      }
+    ]
   },
   {
     "id": "1776327949076",

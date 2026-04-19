@@ -39,6 +39,12 @@ export function UpdateCard({ content, initiativeId, onRefresh }: Props) {
 
     const comments = content.children.filter((c) => c.type === "comment");
 
+    function countAllComments(items: IContent[]): number {
+        return items.reduce((acc, item) => acc + 1 + countAllComments(item.children.filter(c => c.type === "comment")), 0);
+    }
+
+    const totalCommentCount = countAllComments(comments);
+
     async function handlePostComment() {
         if (!commentBody.trim()) return;
 
@@ -95,7 +101,7 @@ export function UpdateCard({ content, initiativeId, onRefresh }: Props) {
                 >
                     <ChatBubbleOutlineIcon fontSize="small" />
                     <Typography variant="caption" sx={{ ml: 0.5 }}>
-                        {comments.length}
+                        {totalCommentCount}
                     </Typography>
                 </IconButton>
                 <IconButton
