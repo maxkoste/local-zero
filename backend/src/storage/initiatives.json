@@ -57,6 +57,27 @@
     "duration": null,
     "likes": [],
     "dislikes": [],
-    "children": []
+    "children": [
+      {
+        "id": "1776599215273",
+        "type": "update",
+        "author": {
+          "id": 1,
+          "username": "Lolita",
+          "email": "lolita@email.com",
+          "visibility": "public"
+        },
+        "body": "test",
+        "visibility": "public",
+        "date": "2026-04-19T11:46:55.273Z",
+        "title": "test",
+        "image": null,
+        "location": null,
+        "duration": null,
+        "likes": [],
+        "dislikes": [],
+        "children": []
+      }
+    ]
   }
 ]
