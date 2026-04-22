@@ -24,8 +24,6 @@ app.get('/api/users/:id', (req, res) => {
     res.json(user);
 });
 
-//TODO: fixa endpoints för updatering av user-data som inte skapas under signup (bio, antal initiativ, poäng) etc.
-
 app.post('/api/users', (req, res) => {
     const { username, password, email, visibility } = req.body;
 
@@ -41,6 +39,22 @@ app.post('/api/users', (req, res) => {
 
     res.status(201).json(newUser);
 });
+
+app.patch('/api/users/:id', (req, res) => {
+    const userId = Number(req.params.id);
+
+    const user = storage.getUserById(userId);
+
+    if (!user) {
+        return res.status(404).json({ error: 'User not found' });
+    }
+
+    // TODO: Implementera logik flör att updatera profil attribut (visibility, bio, etc.)
+    // Just nu returneras endast användarens info utan att ändrinhgar görs.
+
+    res.status(200).json(user);
+});
+
 
 //Initiatives
 
