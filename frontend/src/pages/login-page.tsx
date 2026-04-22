@@ -7,6 +7,14 @@ function LoginPage() {
 
 	const handleLogin = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault(); // prevent page reload
+
+		const fakeUser ={
+			id: 1,
+			email: "test@example.com"
+		};
+
+		localStorage.setItem("currentUser", JSON.stringify(fakeUser));
+
 		navigate("/front");
 	};
 

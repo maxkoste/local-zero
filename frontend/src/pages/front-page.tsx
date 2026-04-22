@@ -27,8 +27,15 @@ export function FrontPage() {
         fetchInitiatives();
     }
 
+    /*
     const allInitiatives = [...mockInitiatives, ...apiInitiatives]
         .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+        */
+    //Fix sålänge så att det inte kraschar om någon av dem inte är en array, vilket den inte är i vissa fall. Borde kanske fixa så att de alltid är det istället.
+    const allInitiatives = [
+    ...(Array.isArray(mockInitiatives) ? mockInitiatives : []),
+    ...(Array.isArray(apiInitiatives) ? apiInitiatives : [])
+    ].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 
     return (
         <Box sx={{ maxWidth: 700, margin: "0 auto", padding: 2 }}>

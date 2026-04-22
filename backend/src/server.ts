@@ -13,6 +13,19 @@ app.get('/api/users', (req, res) => {
     res.json(storage.getUsers());
 });
 
+app.get('/api/users/:id', (req, res) => {
+    const userId = Number(req.params.id);
+    const user = storage.getUserById(userId);
+
+    if (!user) {
+        return res.status(404).json({ error: 'User not found' });
+    }
+
+    res.json(user);
+});
+
+//TODO: fixa endpoints för updatering av user-data som inte skapas under signup (bio, antal initiativ, poäng) etc.
+
 app.post('/api/users', (req, res) => {
     const { username, password, email, visibility } = req.body;
 
