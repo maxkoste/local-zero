@@ -1,6 +1,6 @@
 import express from 'express';
 import cors from 'cors';
-import { storage, ContentRecord, UserRecord } from './storage/storage-system';
+import { storage, ContentRecord, UserRecord, ChatRecord, MessageRecord } from './storage/storage-system';
 
 const app = express();
 const PORT = 3001;
@@ -32,7 +32,22 @@ app.post('/api/users', (req, res) => {
 //Initiatives
 
 app.get('/api/initiatives', (req, res) => {
-    res.json(storage.getInitiatives());
+    // preparation for adding userid in this call
+    const userId = req.query.userId ? Number(req.query.userId) : null;
+    const user = userId !== null ? storage.getUserById(userId) : null;
+    const userVisibility = user?.visibility ?? null;
+
+    const initiatives = storage.getInitiatives();
+
+    if (userVisibility === 'public') {
+        return res.json(initiatives);
+    }
+
+    const filtered = initiatives.filter(i =>
+        i.visibility === 'public' || (userVisibility && i.visibility === userVisibility)
+    );
+
+    res.json(filtered);
 });
 
 app.post('/api/initiatives', (req, res) => {
@@ -138,7 +153,69 @@ app.post('/api/initiatives/:parentId/children', (req, res) => {
 
 
 
-//Room for chat-storage
+//Chats
+app.get('/api/chats', (req, res) => {
+    // preparation for sending the logged in users id
+    const userId = req.query.userId ? Number(req.query.userId) : null;
+    if (userId === null) return res.status(400).json({ error: 'userId is required' });
+
+    const chats = storage.getChats().filter(c =>
+        c.sender.id === userId || c.receiver.id === userId
+    );
+
+    res.json(chats);
+});
+
+app.get('/api/chats/:id', (req, res) => {
+    const chat = storage.getChatById(req.params.id);
+    if (!chat) return res.status(404).json({ error: 'Chat not found' });
+    res.json(chat);
+});
+
+app.post('/api/chats', (req, res) => {
+    const { sender, receiver, body } = req.body;
+
+    if (!sender || !receiver || !body) {
+        return res.status(400).json({ error: 'sender, receiver, and body are required' });
+    }
+
+    const newChat: ChatRecord = {
+        id: String(Date.now()),
+        sender,
+        receiver,
+        body,
+        date: new Date().toISOString(),
+        children: [],
+    };
+
+    storage.addChat(newChat);
+    res.status(201).json(newChat);
+});
+
+app.post('/api/chats/:id/messages', (req, res) => {
+    const { sender, body } = req.body;
+
+    if (!sender || !body) {
+        return res.status(400).json({ error: 'sender and body are required' });
+    }
+
+    const newMessage: MessageRecord = {
+        id: String(Date.now()),
+        sender,
+        body,
+        date: new Date().toISOString(),
+    };
+
+    const result = storage.addMessage(req.params.id, newMessage);
+    if (!result) return res.status(404).json({ error: 'Chat not found' });
+    res.status(201).json(newMessage);
+});
+
+app.delete('/api/chats/:id/messages/:messageId', (req, res) => {
+    const deleted = storage.deleteMessage(req.params.id, req.params.messageId);
+    if (!deleted) return res.status(404).json({ error: 'Chat or message not found' });
+    res.status(200).json({ message: 'Message deleted' });
+});
 
 
 
