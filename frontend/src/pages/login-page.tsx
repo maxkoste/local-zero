@@ -5,18 +5,49 @@ import { useNavigate } from "react-router-dom";
 function LoginPage() {
 	const navigate = useNavigate();
 
-	const handleLogin = (e: React.FormEvent<HTMLFormElement>) => {
-		e.preventDefault(); // prevent page reload
+	const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
+	e.preventDefault();
 
-		const fakeUser ={
-			id: 1,
-			email: "test@example.com"
-		};
+	const formData = new FormData(e.currentTarget);
+	const email = formData.get("email") as string;
+	const password = formData.get("password") as string;
 
-		localStorage.setItem("currentUser", JSON.stringify(fakeUser));
+	console.log("Login attempt:", { email, password });
 
+	if (!email || !password) {
+		console.log("Using mock login");
+		localStorage.setItem("currentUser", JSON.stringify({ mode: "mock" }));
 		navigate("/front");
-	};
+		return;
+	}
+
+	try {
+		const response = await fetch("http://localhost:3001/api/login", {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify({ email, password }),
+		});
+
+		console.log("Login response status:", response.status);
+
+		if (!response.ok) {
+			const error = await response.json();
+			console.error("Invalid login:", error);
+			localStorage.removeItem("currentUser");
+			return;
+		}
+
+		const user = await response.json();
+		console.log("Logged in user:", user);
+
+		localStorage.setItem("currentUser", JSON.stringify(user));
+		navigate("/front");
+	} catch (error) {
+		console.error("Login request failed:", error);
+	}
+};
 
 	const handleSignUp = () => {
 		navigate("/sign-up");

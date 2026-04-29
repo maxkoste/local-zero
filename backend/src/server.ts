@@ -7,6 +7,24 @@ const PORT = 3001;
 app.use(express.json());
 app.use(cors());
 
+//Login 
+app.post('/api/login', (req, res) => {
+	const { email, password } = req.body;
+
+	const user = storage.getUsers().find(
+		u => u.email === email && u.password === password
+	);
+
+	if (!user) {
+		return res.status(401).json({ error: 'Invalid credentials' });
+	}
+
+	res.json({
+		id: user.id,
+		email: user.email
+	});
+});
+
 //Users
 
 app.get('/api/users', (req, res) => {
@@ -49,8 +67,8 @@ app.patch('/api/users/:id', (req, res) => {
         return res.status(404).json({ error: 'User not found' });
     }
 
-    // TODO: Implementera logik flör att updatera profil attribut (visibility, bio, etc.)
-    // Just nu returneras endast användarens info utan att ändrinhgar görs.
+    // TODO: Implementera logik för att updatera profil attribut (visibility, bio, etc.)
+    // Just nu returneras endast användarens info utan att ändringar görs.
 
     res.status(200).json(user);
 });
@@ -128,7 +146,6 @@ app.delete('/api/initiatives/:id', (req, res) => {
 app.post('/api/initiatives/:parentId/children', (req, res) => {
     const { parentId } = req.params;
     const { type, author, body, visibility, title, image, location, duration } = req.body;
-
     if (!type || !author || !body || !visibility) {
         return res.status(400).json({ error: 'type, author, body, and visibility are required' });
     }
