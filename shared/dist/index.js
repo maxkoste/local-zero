@@ -17,6 +17,5 @@ Object.defineProperty(exports, "__esModule", { value: true });
 __exportStar(require("./visibility"), exports);
 __exportStar(require("./user"), exports);
 __exportStar(require("./content"), exports);
-__exportStar(require("./dummy-data"), exports);
 __exportStar(require("./chat"), exports);
 __exportStar(require("./message"), exports);

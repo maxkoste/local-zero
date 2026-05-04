@@ -1,9 +1,9 @@
 [
   {
     "id": 1,
-    "username": "Anders",
-    "password": "jagälskarhästar99",
-    "email": "anders@live.se",
+    "username": "Admin",
+    "password": "admin",
+    "email": "admin@admin.se",
     "visibility": "PUBLIC"
   },
   {
@@ -39,13 +39,6 @@
     "username": "Lina",
     "password": "smakakaka02",
     "email": "lina02@hotmail.se",
-    "visibility": "KIRSEBERG"
-  },
-  {
-    "id": 7,
-    "username": "Lolita",
-    "password": "flabbatillsjagdör_@#123",
-    "email": "preferoldermen96@gmail.com",
     "visibility": "KIRSEBERG"
   },
   {
@@ -166,5 +159,19 @@
     "password": "test",
     "email": "Test2@test2.test",
     "visibility": "sofielund"
+  },
+  {
+    "id": 25,
+    "username": "yolo",
+    "password": "123",
+    "email": "baggins@max.com",
+    "visibility": "kirseberg"
+  },
+  {
+    "id": 26,
+    "username": "yolo",
+    "password": "123",
+    "email": "baggins@max.com",
+    "visibility": "kirseberg"
   }
 ]

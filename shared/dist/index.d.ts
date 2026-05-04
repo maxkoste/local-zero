@@ -1,6 +1,5 @@
 export * from './visibility';
 export * from './user';
 export * from './content';
-export * from './dummy-data';
 export * from './chat';
 export * from './message';
