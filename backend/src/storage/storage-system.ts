@@ -39,6 +39,7 @@ export type ContentUpdate = Partial<Pick<
 
 export interface ProfileRecord {
     userId: number;
+    username: string;
     bio: string;
     nbrInitiatives: number | null;
     carbonScore: number | null;

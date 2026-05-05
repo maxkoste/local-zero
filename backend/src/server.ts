@@ -80,7 +80,7 @@ app.post('/api/users', (req, res) => {
 	const newUser: UserRecord = { id: nextId, username, password, email, visibility, ecoActions: [] };
 	storage.addUser(newUser);
 
-	const newProfile: ProfileRecord = { userId: nextId, bio: '', nbrInitiatives: null, carbonScore: null, contactInfo: null };
+	const newProfile: ProfileRecord = { userId: nextId, username, bio: '', nbrInitiatives: null, carbonScore: null, contactInfo: null };
 	storage.addProfile(newProfile);
 
 	res.status(201).json(newUser);

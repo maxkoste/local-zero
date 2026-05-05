@@ -1,6 +1,7 @@
 [
   {
     "userId": 1,
+    "username": "Admin",
     "bio": "Jag är kungen bruv",
     "nbrInitiatives": 666,
     "carbonScore": 6969420,
@@ -8,6 +9,7 @@
   },
   {
     "userId": 2,
+    "username": "Bob",
     "bio": "",
     "nbrInitiatives": null,
     "carbonScore": null,
@@ -15,6 +17,7 @@
   },
   {
     "userId": 3,
+    "username": "Majken",
     "bio": "",
     "nbrInitiatives": null,
     "carbonScore": null,
@@ -22,6 +25,7 @@
   },
   {
     "userId": 4,
+    "username": "Lars",
     "bio": "",
     "nbrInitiatives": null,
     "carbonScore": null,
@@ -29,6 +33,7 @@
   },
   {
     "userId": 5,
+    "username": "Fredrik",
     "bio": "",
     "nbrInitiatives": null,
     "carbonScore": null,
@@ -36,6 +41,7 @@
   },
   {
     "userId": 6,
+    "username": "Lina",
     "bio": "",
     "nbrInitiatives": null,
     "carbonScore": null,
@@ -43,6 +49,7 @@
   },
   {
     "userId": 8,
+    "username": "Emma",
     "bio": "",
     "nbrInitiatives": null,
     "carbonScore": null,
@@ -50,6 +57,7 @@
   },
   {
     "userId": 9,
+    "username": "Gunnar",
     "bio": "",
     "nbrInitiatives": null,
     "carbonScore": null,
@@ -57,6 +65,7 @@
   },
   {
     "userId": 10,
+    "username": "Britta",
     "bio": "",
     "nbrInitiatives": null,
     "carbonScore": null,
@@ -64,6 +73,7 @@
   },
   {
     "userId": 11,
+    "username": "Göran",
     "bio": "",
     "nbrInitiatives": null,
     "carbonScore": null,
@@ -71,6 +81,7 @@
   },
   {
     "userId": 12,
+    "username": "Sigrid",
     "bio": "",
     "nbrInitiatives": null,
     "carbonScore": null,
@@ -78,6 +89,7 @@
   },
   {
     "userId": 13,
+    "username": "Rickard",
     "bio": "",
     "nbrInitiatives": null,
     "carbonScore": null,
@@ -85,6 +97,7 @@
   },
   {
     "userId": 14,
+    "username": "Monika",
     "bio": "",
     "nbrInitiatives": null,
     "carbonScore": null,
@@ -92,6 +105,7 @@
   },
   {
     "userId": 15,
+    "username": "Svante",
     "bio": "",
     "nbrInitiatives": null,
     "carbonScore": null,
@@ -99,6 +113,7 @@
   },
   {
     "userId": 16,
+    "username": "Agneta",
     "bio": "",
     "nbrInitiatives": null,
     "carbonScore": null,
@@ -106,6 +121,7 @@
   },
   {
     "userId": 17,
+    "username": "Conny",
     "bio": "",
     "nbrInitiatives": null,
     "carbonScore": null,
@@ -113,6 +129,7 @@
   },
   {
     "userId": 18,
+    "username": "Pirjo",
     "bio": "",
     "nbrInitiatives": null,
     "carbonScore": null,
@@ -120,6 +137,7 @@
   },
   {
     "userId": 19,
+    "username": "Kentsson",
     "bio": "",
     "nbrInitiatives": null,
     "carbonScore": null,
@@ -127,6 +145,7 @@
   },
   {
     "userId": 20,
+    "username": "Doris",
     "bio": "",
     "nbrInitiatives": null,
     "carbonScore": null,
@@ -134,6 +153,7 @@
   },
   {
     "userId": 21,
+    "username": "Ragnhild",
     "bio": "",
     "nbrInitiatives": null,
     "carbonScore": null,
@@ -141,6 +161,7 @@
   },
   {
     "userId": 22,
+    "username": "Bosse",
     "bio": "",
     "nbrInitiatives": null,
     "carbonScore": null,
@@ -148,6 +169,7 @@
   },
   {
     "userId": 23,
+    "username": "NyyTestNamn",
     "bio": "",
     "nbrInitiatives": null,
     "carbonScore": null,
@@ -155,6 +177,7 @@
   },
   {
     "userId": 24,
+    "username": "Test2",
     "bio": "",
     "nbrInitiatives": null,
     "carbonScore": null,
@@ -162,6 +185,7 @@
   },
   {
     "userId": 25,
+    "username": "yolo",
     "bio": "",
     "nbrInitiatives": null,
     "carbonScore": null,
@@ -169,6 +193,7 @@
   },
   {
     "userId": 26,
+    "username": "yolo",
     "bio": "",
     "nbrInitiatives": null,
     "carbonScore": null,
