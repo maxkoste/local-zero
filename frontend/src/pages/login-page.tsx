@@ -22,6 +22,14 @@ function LoginPage() {
 		});
 
 		if (response.ok) {
+			const data = await response.json();
+
+			if (!data.token) {
+				throw new Error("No token returned from server");
+			}
+
+			localStorage.setItem('token', data.token)
+
 			navigate("/front");
 		} else {
 			const err = await response.json();
