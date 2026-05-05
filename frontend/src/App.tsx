@@ -31,7 +31,7 @@ function App() {
                         <Route path="/sign-up" element={<SignUp />} />
                         <Route path="/initiative/:id" element={<InitiativePage />} />
                         <Route path="/create-initiative" element={<CreateInitiativePage />} />
-                        <Route path="/chat/:id" element={<ChatPage />} /> {/* 👈 add this */}
+                        <Route path="/chat/:id" element={<ChatPage />} />
                     </Route>
                 </Routes>
             </BrowserRouter>
