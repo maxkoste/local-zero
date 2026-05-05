@@ -52,7 +52,6 @@ function requireAuth(req: express.Request, res: express.Response): JwtPayload | 
 
 
 //Users
-
 app.get('/api/users', (req, res) => {
 	res.json(storage.getUsers());
 });
