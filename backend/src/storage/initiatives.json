@@ -120,5 +120,100 @@
     "likes": [],
     "dislikes": [],
     "children": []
+  },
+  {
+    "id": "1777974815478",
+    "type": "initiative",
+    "title": "awdawd",
+    "author": {
+      "id": 1,
+      "username": "Admin",
+      "email": "admin@admin.se"
+    },
+    "body": "awdawdawd",
+    "visibility": "public",
+    "date": "2026-05-05T09:53:35.478Z",
+    "image": null,
+    "location": null,
+    "duration": null,
+    "likes": [],
+    "dislikes": [],
+    "children": []
+  },
+  {
+    "id": "1777974960492",
+    "type": "initiative",
+    "title": "HEjsan",
+    "author": {
+      "id": 8,
+      "username": "Emma",
+      "email": "emma@gmail.com"
+    },
+    "body": "Jag är emma",
+    "visibility": "public",
+    "date": "2026-05-05T09:56:00.492Z",
+    "image": null,
+    "location": null,
+    "duration": null,
+    "likes": [],
+    "dislikes": [],
+    "children": []
+  },
+  {
+    "id": "1777975338452",
+    "type": "initiative",
+    "title": "Hejsan jag är Majken",
+    "author": {
+      "id": 3,
+      "username": "Majken",
+      "email": "majken00@gmail.com"
+    },
+    "body": "hihihihihih",
+    "visibility": "public",
+    "date": "2026-05-05T10:02:18.452Z",
+    "image": null,
+    "location": null,
+    "duration": null,
+    "likes": [],
+    "dislikes": [],
+    "children": []
+  },
+  {
+    "id": "1777975361470",
+    "type": "initiative",
+    "title": "hejsan vem e jag???",
+    "author": {
+      "id": 5,
+      "username": "Fredrik",
+      "email": "fredde@proton.se"
+    },
+    "body": "awdawdawd",
+    "visibility": "public",
+    "date": "2026-05-05T10:02:41.470Z",
+    "image": null,
+    "location": null,
+    "duration": null,
+    "likes": [],
+    "dislikes": [],
+    "children": []
+  },
+  {
+    "id": "1777975385821",
+    "type": "initiative",
+    "title": "Hejsan vem",
+    "author": {
+      "id": 6,
+      "username": "Lina",
+      "email": "lina02@hotmail.se"
+    },
+    "body": "Veeem e jag",
+    "visibility": "public",
+    "date": "2026-05-05T10:03:05.821Z",
+    "image": null,
+    "location": null,
+    "duration": null,
+    "likes": [],
+    "dislikes": [],
+    "children": []
   }
 ]

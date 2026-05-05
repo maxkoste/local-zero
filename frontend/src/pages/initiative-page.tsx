@@ -11,11 +11,19 @@ export function InitiativePage() {
 	useEffect(() => {
 		async function fetchCurrentUser() {
 			try {
-				const res = await fetch('http://localhost:3001/api/me');
+				const token = localStorage.getItem('token');
+
+				const res = await fetch('http://localhost:3001/api/me', {
+					headers: {
+						Authorization: `Bearer ${token}`
+					}
+				});
+
 				if (!res.ok) throw new Error();
+
 				const data = await res.json();
-				setAuthor(data);
-				console.log("logged in user : " + data);
+				setAuthor(data.user);
+
 			} catch {
 				setAuthor(null);
 			}
@@ -65,7 +73,7 @@ export function InitiativePage() {
 						type: "update",
 						title: updateTitle.trim(),
 						body: updateBody.trim(),
-						author: author.username,
+						author: author,
 						visibility: initiative?.visibility ?? Visibility.PUBLIC,
 					}),
 				}

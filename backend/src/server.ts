@@ -1,12 +1,41 @@
 import express from 'express';
 import cors from 'cors';
 import { storage, ContentRecord, UserRecord } from './storage/storage-system';
+import dotenv from 'dotenv';
+import jwt from 'jsonwebtoken';
+import cookieParser from 'cookie-parser';
+
+dotenv.config();
 
 const app = express();
 const PORT = 3001;
 app.use(express.json());
 app.use(cors());
-let currentUser: UserRecord | null = null;
+app.use(cookieParser());
+
+const JWT_SECRET = process.env.JWT_SECRET as string;
+
+type JwtPayload = {
+	userId: number;
+};
+
+if (!JWT_SECRET) {
+	throw new Error('JWT_SECRET is not defined in environment variables - Just add a .env with JWT_SECRET="Randomgibberishnumbers"');
+}
+
+//Tokens
+function generateToken(user: UserRecord){
+	return jwt.sign(
+		{ userId: user.id },
+		JWT_SECRET,
+		{ expiresIn: '1h'}
+	);
+}
+
+function verifyToken(token: string) : JwtPayload {
+	return jwt.verify(token, JWT_SECRET) as JwtPayload;
+}
+
 
 //Users
 
@@ -44,10 +73,13 @@ app.post('/api/login', (req, res) => {
 	);
 
 	if (match) {
-		res.status(200).json({ message: 'login successful', user: match });
-		currentUser = match;
+		const token = generateToken(match);
+		res.status(200).json({ message: 'login successful', token, user: {
+			id: match.id,
+			username: match.username,
+			email: match.email
+		}});
 
-		console.log("CURRENT USER:", currentUser);
 	} else {
 		res.status(401).json({ error: 'no such user' });
 	}
@@ -55,13 +87,30 @@ app.post('/api/login', (req, res) => {
 });
 
 app.get('/api/me', (req, res) => {
+	const header = req.headers.authorization;
 
-	if (!currentUser) {
-		return res.status(401).json({ error: 'Not logged in' });
+	if (!header){
+		return res.status(401).json({error: 'no token to validify'})
 	}
 
-	console.log("CURRENT USER:", currentUser);
-	res.json(currentUser);
+	const token = header.split(' ')[1];
+
+	try {
+		const jwtPayload = verifyToken(token);
+		const user = storage.getUserById(jwtPayload.userId);
+
+		if(!user){
+			return res.status(404).json({error: 'User not found'});
+		}
+
+		return res.status(200).json({user:{
+			id: user.id,
+			username: user.username ,
+			email: user.email
+		}});
+	} catch (error) {
+		return res.status(401).json({error: 'Invalid or expired token'});
+	}
 });
 
 //Initiatives
