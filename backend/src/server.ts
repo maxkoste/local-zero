@@ -80,6 +80,8 @@ app.post('/api/login', (req, res) => {
 			email: match.email
 		}});
 
+		console.log("user : " + match.username + " logged in ");
+
 	} else {
 		res.status(401).json({ error: 'no such user' });
 	}

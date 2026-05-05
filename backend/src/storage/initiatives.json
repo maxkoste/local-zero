@@ -215,5 +215,81 @@
     "likes": [],
     "dislikes": [],
     "children": []
+  },
+  {
+    "id": "1777976551228",
+    "type": "initiative",
+    "title": "LARS",
+    "author": {
+      "id": 4,
+      "username": "Lars",
+      "email": "lars_da_killah04@yahoo.com"
+    },
+    "body": "jag heter lars",
+    "visibility": "public",
+    "date": "2026-05-05T10:22:31.228Z",
+    "image": null,
+    "location": null,
+    "duration": null,
+    "likes": [],
+    "dislikes": [],
+    "children": []
+  },
+  {
+    "id": "1777976571617",
+    "type": "initiative",
+    "title": "jag är gayrat4ever",
+    "author": {
+      "id": 2,
+      "username": "Bob",
+      "email": "bob@hotmail.se"
+    },
+    "body": "yoloyloyloy",
+    "visibility": "public",
+    "date": "2026-05-05T10:22:51.617Z",
+    "image": null,
+    "location": null,
+    "duration": null,
+    "likes": [],
+    "dislikes": [],
+    "children": []
+  },
+  {
+    "id": "1777976585899",
+    "type": "initiative",
+    "title": "<ax<ax",
+    "author": {
+      "id": 3,
+      "username": "Majken",
+      "email": "majken00@gmail.com"
+    },
+    "body": "<ax<x<sadvdfav",
+    "visibility": "public",
+    "date": "2026-05-05T10:23:05.899Z",
+    "image": null,
+    "location": null,
+    "duration": null,
+    "likes": [],
+    "dislikes": [],
+    "children": []
+  },
+  {
+    "id": "1777976732966",
+    "type": "initiative",
+    "title": "awdawdawd",
+    "author": {
+      "id": 2,
+      "username": "Bob",
+      "email": "bob@hotmail.se"
+    },
+    "body": "awdawdawd",
+    "visibility": "public",
+    "date": "2026-05-05T10:25:32.966Z",
+    "image": null,
+    "location": null,
+    "duration": null,
+    "likes": [],
+    "dislikes": [],
+    "children": []
   }
 ]
