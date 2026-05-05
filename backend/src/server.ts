@@ -142,23 +142,70 @@ app.get('/api/me', (req, res) => {
 
 //Initiatives
 
+
+
 app.get('/api/initiatives', (req, res) => {
-    // preparation for adding userid in this call
-    const userId = req.query.userId ? Number(req.query.userId) : null;
-    const user = userId !== null ? storage.getUserById(userId) : null;
-    const userVisibility = user?.visibility ?? null;
+	const header = req.headers.authorization;
 
-    const initiatives = storage.getInitiatives();
+	if (!header){
+		return res.status(401).json({error: 'no token to validify'})
+	}
 
-    if (userVisibility === 'public') {
-        return res.json(initiatives);
-    }
+	const token = header.split(' ')[1];
 
-    const filtered = initiatives.filter(i =>
-        i.visibility === 'public' || (userVisibility && i.visibility === userVisibility)
-    );
+	try {
+		const jwtPayload = verifyToken(token);
+		const userId = jwtPayload.userId;
 
-    res.json(filtered);
+		const user = storage.getUserById(userId);
+
+		if (!user) {
+			return res.status(404).json({error: 'User not found'});
+		}
+
+		const userVisibility = user?.visibility ?? null;
+		const initiatives = storage.getInitiatives();
+
+		if (userVisibility.toLocaleLowerCase() === 'public') {
+			return res.json(initiatives);
+		}
+
+		const filtered = initiatives.filter(i =>
+			i.visibility.toLowerCase() === 'public' || (userVisibility.toLowerCase() && i.visibility.toLowerCase() === userVisibility.toLocaleLowerCase())
+		);
+
+		res.json(filtered);
+
+	} catch (error) {
+		return res.status(401).json({error: 'Invalid or expired token'});
+	}
+
+});
+
+app.get('/api/initiatives/:id', (req, res) => {
+	const header = req.headers.authorization;
+
+	if (!header) {
+		return res.status(401).json({ error: 'no token to validify' });
+	}
+
+	const token = header.split(' ')[1];
+
+	try {
+		verifyToken(token);
+
+		const id = req.params.id;
+		const initiatives = storage.getInitiatives();
+		const initiative = initiatives.find(i => i.id === id);
+
+		if (!initiative) {
+			return res.status(404).json({ error: 'Initiative not found' });
+		}
+
+		res.json(initiative);
+	} catch (error) {
+		return res.status(401).json({ error: 'Invalid or expired token' });
+	}
 });
 
 app.post('/api/initiatives', (req, res) => {

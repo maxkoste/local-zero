@@ -10,7 +10,12 @@ export function FrontPage() {
     const [error, setError] = useState<string | null>(null);
 
     function fetchInitiatives() {
-        fetch("http://localhost:3001/api/initiatives")
+        const token = localStorage.getItem("token");
+        fetch(`http://localhost:3001/api/initiatives`,{
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        })
             .then((res) => res.json())
             .then((data) => setApiInitiatives(data))
             .catch(() => setError("Could not load initiatives from server."));
