@@ -26,23 +26,6 @@ type User = {
 	};
 	recentActivity: { id: number; text: string; date: string }[];
 };
-// const MOCK_USER: User = {
-// 	id: 1,
-// 	name: 'Maggan Lopez',
-// 	location: 'Möllan',
-// 	bio: 'Jag gillar att dansa och fiska',
-// 	email: 'maggan@lopez.se',
-// 	avatar: undefined, //här hade man kunnat ha en bild det hade vart kul
-// 	stats: {
-// 		Initiativ: 24, //ingen aning om detta ska visas men det kan vara kul
-// 		CarbonScore: 1340, //same här, helt random score kanske är mycket ? Kanske är lite ?
-// 	},
-// 	recentActivity: [
-// 		{ id: 1, text: 'Startade initiativet "hur man tränar en drake på ett hållbart vis"', date: '2 days ago' },
-// 		{ id: 2, text: 'Kommenterade på Lisas initiativ "Härligt lisa ! Du är verkligen lika dum som du är ful! Hahah skojjar bah lisa!"', date: '1 week ago' },
-// 		{ id: 3, text: 'Lade upp ett inlägg "Hörrni nu får det fan vara nog med alla dessa burkar på innergården"', date: '2 weeks ago' },
-// 	],
-// };
 
 const Card = styled(Paper)(({ theme }) => ({
 	backgroundColor: theme.palette.background.paper,
@@ -105,6 +88,7 @@ export function UserPage() {
 
 				console.log("Data: " + JSON.stringify(data));
 				const user = data.user;
+
 				const userId = user.id;
 
 				console.log("userId " + userId);
