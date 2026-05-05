@@ -85,45 +85,8 @@ const Label = styled(Typography)(({ theme }) => ({
 export function UserPage() {
 	const [user, setUser] = useState<User | null>(null);
 	const [loading, setLoading] = useState(true);
+	const navigate = useNavigate();
 	
-	/*
-	useEffect(() => {
-		const loadUser = async () => {
-			try {
-				const currentUserString = localStorage.getItem('currentUser');
-				if (!currentUserString) {
-					console.error("No current user found in localStorage");
-					setUser(MOCK_USER); // Fallback till MOCK_USER
-					return;
-				}
-
-				const currentUser = JSON.parse(currentUserString);
-				const response = await fetch(`http://localhost:3001/api/users/${currentUser.id}`);
-
-				if (!response.ok) {
-					throw new Error(`Failed to fetch user data: ${response.statusText}`);
-				}
-				
-				const userData = await response.json();
-				const mappedUser: User = {
-					...MOCK_USER, // Behåller mock-datan för fält som inte finns i API:et, bör kanske fixa annan fallback
-					id: userData.id,
-					name: userData.username,
-					email: userData.email,
-					//fyll på med andra fält när de finns i API:et
-				};
-				setUser(mappedUser);
-			} catch (error) {
-				console.error("Error loading user data:", error);
-				setUser(MOCK_USER); // Fallback till MOCK_USER vid fel
-			} finally {
-				setLoading(false);
-			}
-		};
-		
-		loadUser();
-	}, []);
-	*/
 	useEffect(() => {
 	const loadUser = async () => {
 		try {
