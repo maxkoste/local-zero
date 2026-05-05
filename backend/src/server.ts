@@ -111,13 +111,17 @@ app.patch('/api/users/:id', (req, res) => {
 app.get('/api/users/:id/profile', (req, res) => {
     const payload = requireAuth(req, res);
     if (!payload) return;
-
+	
+	console.log("Fetching the profile !");
+	
     const userId = Number(req.params.id);
     const profile = storage.getProfileByUserId(userId);
 
     if (!profile) {
         return res.status(404).json({ error: 'Profile not found' });
     }
+
+	console.log(JSON.stringify(profile));
 
     res.json(profile);
 });
