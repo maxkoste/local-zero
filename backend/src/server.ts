@@ -14,6 +14,17 @@ app.get('/api/users', (req, res) => {
 	res.json(storage.getUsers());
 });
 
+app.get('/api/users/:id', (req, res) => {
+    const userId = Number(req.params.id);
+    const user = storage.getUserById(userId);
+
+    if (!user) {
+        return res.status(404).json({ error: 'User not found' });
+    }
+
+    res.json(user);
+});
+
 app.post('/api/users', (req, res) => {
 	const { username, password, email, visibility } = req.body;
 
@@ -29,6 +40,22 @@ app.post('/api/users', (req, res) => {
 
 	res.status(201).json(newUser);
 });
+
+app.patch('/api/users/:id', (req, res) => {
+    const userId = Number(req.params.id);
+
+    const user = storage.getUserById(userId);
+
+    if (!user) {
+        return res.status(404).json({ error: 'User not found' });
+    }
+
+    // TODO: Implementera logik för att updatera profil attribut (visibility, bio, etc.)
+    // Just nu returneras endast användarens info utan att ändringar görs.
+
+    res.status(200).json(user);
+});
+
 
 app.post('/api/login', (req, res) => {
 	const { email, password } = req.body;
