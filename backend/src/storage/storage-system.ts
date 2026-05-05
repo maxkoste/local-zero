@@ -45,18 +45,37 @@ export interface UserRecord {
     visibility: string;
 }
 
+export interface MessageRecord {
+    id: string;
+    sender: AuthorRecord;
+    body: string;
+    date: string;
+}
+
+export interface ChatRecord {
+    id: string;
+    sender: AuthorRecord;
+    receiver: AuthorRecord;
+    body: string;
+    date: string;
+    children: MessageRecord[];
+}
+
 const INITIATIVES_FILE = path.join(process.cwd(), 'src/storage/initiatives.json');
 const USERS_FILE = path.join(process.cwd(), 'src/storage/users.json');
+const CHATS_FILE = path.join(process.cwd(), 'src/storage/chats.json');
 
 class StorageSystem {
     private static instance: StorageSystem;
 
     private initiatives: ContentRecord[] = [];
     private users: UserRecord[] = [];
+    private chats: ChatRecord[] = [];
 
     // Chained promises ensure writes to each file are safe by queueing them
     private initiativesWriteQueue: Promise<void> = Promise.resolve();
     private usersWriteQueue: Promise<void> = Promise.resolve();
+    private chatsWriteQueue: Promise<void> = Promise.resolve();
 
     private initialized = false;
 
@@ -72,13 +91,15 @@ class StorageSystem {
     async init(): Promise<void> {
         if (this.initialized) return;
 
-        const [initiativesData, usersData] = await Promise.all([
+        const [initiativesData, usersData, chatsData] = await Promise.all([
             fs.readFile(INITIATIVES_FILE, 'utf-8'),
             fs.readFile(USERS_FILE, 'utf-8'),
+            fs.readFile(CHATS_FILE, 'utf-8'),
         ]);
 
         this.initiatives = JSON.parse(initiativesData);
         this.users = JSON.parse(usersData);
+        this.chats = JSON.parse(chatsData);
         this.initialized = true;
     }
 
@@ -151,7 +172,38 @@ class StorageSystem {
     }
 
 
-    //Room for handling chats
+    //Chats
+
+    getChats(): ChatRecord[] {
+        return this.chats;
+    }
+
+    getChatById(id: string): ChatRecord | undefined {
+        return this.chats.find(c => c.id === id);
+    }
+
+    addChat(chat: ChatRecord): void {
+        this.chats.push(chat);
+        this.flushChats();
+    }
+
+    addMessage(chatId: string, message: MessageRecord): ChatRecord | null {
+        const chat = this.chats.find(c => c.id === chatId);
+        if (!chat) return null;
+        chat.children.push(message);
+        this.flushChats();
+        return chat;
+    }
+
+    deleteMessage(chatId: string, messageId: string): boolean {
+        const chat = this.chats.find(c => c.id === chatId);
+        if (!chat) return false;
+        const before = chat.children.length;
+        chat.children = chat.children.filter(m => m.id !== messageId);
+        if (chat.children.length === before) return false;
+        this.flushChats();
+        return true;
+    }
 
 
 
@@ -165,6 +217,12 @@ class StorageSystem {
     private flushUsers(): void {
         this.usersWriteQueue = this.usersWriteQueue.then(() =>
             fs.writeFile(USERS_FILE, JSON.stringify(this.users, null, 2), 'utf-8')
+        );
+    }
+
+    private flushChats(): void {
+        this.chatsWriteQueue = this.chatsWriteQueue.then(() =>
+            fs.writeFile(CHATS_FILE, JSON.stringify(this.chats, null, 2), 'utf-8')
         );
     }
 

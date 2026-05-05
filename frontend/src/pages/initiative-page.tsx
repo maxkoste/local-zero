@@ -41,11 +41,13 @@ export function InitiativePage() {
 	const [error, setError] = useState<string | null>(null);
 
 	function fetchInitiative() {
-		fetch(`http://localhost:3001/api/initiatives`)
+		const token = localStorage.getItem('token');
+		fetch(`http://localhost:3001/api/initiatives/${id}`, {
+			headers: { Authorization: `Bearer ${token}` }
+		})
 			.then((res) => res.json())
-			.then((data: IContent[]) => {
-				const found = data.find((i) => i.id === id);
-				if (found) setInitiative(found);
+			.then((data: IContent) => {
+				setInitiative(data);
 			})
 			.catch(() => { });
 	}

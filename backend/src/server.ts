@@ -1,6 +1,6 @@
 import express from 'express';
 import cors from 'cors';
-import { storage, ContentRecord, UserRecord } from './storage/storage-system';
+import { storage, ContentRecord, UserRecord, ChatRecord, MessageRecord } from './storage/storage-system';
 import dotenv from 'dotenv';
 import jwt from 'jsonwebtoken';
 import cookieParser from 'cookie-parser';
@@ -142,8 +142,70 @@ app.get('/api/me', (req, res) => {
 
 //Initiatives
 
+
+
 app.get('/api/initiatives', (req, res) => {
-	res.json(storage.getInitiatives());
+	const header = req.headers.authorization;
+
+	if (!header){
+		return res.status(401).json({error: 'no token to validify'})
+	}
+
+	const token = header.split(' ')[1];
+
+	try {
+		const jwtPayload = verifyToken(token);
+		const userId = jwtPayload.userId;
+
+		const user = storage.getUserById(userId);
+
+		if (!user) {
+			return res.status(404).json({error: 'User not found'});
+		}
+
+		const userVisibility = user?.visibility ?? null;
+		const initiatives = storage.getInitiatives();
+
+		if (userVisibility.toLocaleLowerCase() === 'public') {
+			return res.json(initiatives);
+		}
+
+		const filtered = initiatives.filter(i =>
+			i.visibility.toLowerCase() === 'public' || (userVisibility.toLowerCase() && i.visibility.toLowerCase() === userVisibility.toLocaleLowerCase())
+		);
+
+		res.json(filtered);
+
+	} catch (error) {
+		return res.status(401).json({error: 'Invalid or expired token'});
+	}
+
+});
+
+app.get('/api/initiatives/:id', (req, res) => {
+	const header = req.headers.authorization;
+
+	if (!header) {
+		return res.status(401).json({ error: 'no token to validify' });
+	}
+
+	const token = header.split(' ')[1];
+
+	try {
+		verifyToken(token);
+
+		const id = req.params.id;
+		const initiatives = storage.getInitiatives();
+		const initiative = initiatives.find(i => i.id === id);
+
+		if (!initiative) {
+			return res.status(404).json({ error: 'Initiative not found' });
+		}
+
+		res.json(initiative);
+	} catch (error) {
+		return res.status(401).json({ error: 'Invalid or expired token' });
+	}
 });
 
 app.post('/api/initiatives', (req, res) => {
@@ -249,7 +311,69 @@ app.post('/api/initiatives/:parentId/children', (req, res) => {
 
 
 
-//Room for chat-storage
+//Chats
+app.get('/api/chats', (req, res) => {
+    // preparation for sending the logged in users id
+    const userId = req.query.userId ? Number(req.query.userId) : null;
+    if (userId === null) return res.status(400).json({ error: 'userId is required' });
+
+    const chats = storage.getChats().filter(c =>
+        c.sender.id === userId || c.receiver.id === userId
+    );
+
+    res.json(chats);
+});
+
+app.get('/api/chats/:id', (req, res) => {
+    const chat = storage.getChatById(req.params.id);
+    if (!chat) return res.status(404).json({ error: 'Chat not found' });
+    res.json(chat);
+});
+
+app.post('/api/chats', (req, res) => {
+    const { sender, receiver, body } = req.body;
+
+    if (!sender || !receiver || !body) {
+        return res.status(400).json({ error: 'sender, receiver, and body are required' });
+    }
+
+    const newChat: ChatRecord = {
+        id: String(Date.now()),
+        sender,
+        receiver,
+        body,
+        date: new Date().toISOString(),
+        children: [],
+    };
+
+    storage.addChat(newChat);
+    res.status(201).json(newChat);
+});
+
+app.post('/api/chats/:id/messages', (req, res) => {
+    const { sender, body } = req.body;
+
+    if (!sender || !body) {
+        return res.status(400).json({ error: 'sender and body are required' });
+    }
+
+    const newMessage: MessageRecord = {
+        id: String(Date.now()),
+        sender,
+        body,
+        date: new Date().toISOString(),
+    };
+
+    const result = storage.addMessage(req.params.id, newMessage);
+    if (!result) return res.status(404).json({ error: 'Chat not found' });
+    res.status(201).json(newMessage);
+});
+
+app.delete('/api/chats/:id/messages/:messageId', (req, res) => {
+    const deleted = storage.deleteMessage(req.params.id, req.params.messageId);
+    if (!deleted) return res.status(404).json({ error: 'Chat or message not found' });
+    res.status(200).json({ message: 'Message deleted' });
+});
 
 
 
