@@ -40,10 +40,14 @@ export type ContentUpdate = Partial<Pick<
 export interface ProfileRecord {
     userId: number;
     username: string;
+	location: string;
     bio: string;
-    nbrInitiatives: number | null;
-    carbonScore: number | null;
-    contactInfo: string | null;
+    email: string;
+	stats: {
+		Initiativ: number,
+		CarbonScore: number,
+	};
+	recentActivity: [];
 }
 
 export interface EcoAction {

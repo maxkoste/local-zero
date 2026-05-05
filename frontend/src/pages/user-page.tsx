@@ -14,8 +14,8 @@ import { useNavigate } from 'react-router-dom';
 
 //TODO: Ändra om i variabelnamnen så att de faktiskt stämmer överrens mellan front-och backend
 type User = {
-	id: number;
-	name: string;
+	userId: number;
+	username: string;
 	location: string;
 	bio: string;
 	email: string;
@@ -139,10 +139,10 @@ export function UserPage() {
 									color: 'primary.dark', fontWeight: 600,
 								}}
 							>
-								{user.name.split(' ').map(n => n[0]).join('')}
+								{user.username.split(' ').map(n => n[0]).join('')}
 							</Avatar>
 							<Typography variant="h6" sx={{ fontWeight: 600, lineHeight: 1.2 }}>
-								{user.name}
+								{user.username}
 							</Typography>
 						</Box>
 

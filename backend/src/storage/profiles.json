@@ -2,201 +2,313 @@
   {
     "userId": 1,
     "username": "Admin",
+    "location": "",
     "bio": "Jag är kungen bruv",
-    "nbrInitiatives": 666,
-    "carbonScore": 6969420,
-    "contactInfo": "röksignaler. \n 666 - 420 69"
+    "email": "röksignaler. \n 666 - 420 69",
+    "stats": {
+      "Initiativ": 666,
+      "CarbonScore": 6969420
+    },
+    "recentActivity": []
   },
   {
     "userId": 2,
     "username": "Bob",
+    "location": "",
     "bio": "",
-    "nbrInitiatives": null,
-    "carbonScore": null,
-    "contactInfo": null
+    "email": "",
+    "stats": {
+      "Initiativ": 0,
+      "CarbonScore": 0
+    },
+    "recentActivity": []
   },
   {
     "userId": 3,
     "username": "Majken",
+    "location": "",
     "bio": "",
-    "nbrInitiatives": null,
-    "carbonScore": null,
-    "contactInfo": null
+    "email": "",
+    "stats": {
+      "Initiativ": 0,
+      "CarbonScore": 0
+    },
+    "recentActivity": []
   },
   {
     "userId": 4,
     "username": "Lars",
+    "location": "",
     "bio": "",
-    "nbrInitiatives": null,
-    "carbonScore": null,
-    "contactInfo": null
+    "email": "",
+    "stats": {
+      "Initiativ": 0,
+      "CarbonScore": 0
+    },
+    "recentActivity": []
   },
   {
     "userId": 5,
     "username": "Fredrik",
+    "location": "",
     "bio": "",
-    "nbrInitiatives": null,
-    "carbonScore": null,
-    "contactInfo": null
+    "email": "",
+    "stats": {
+      "Initiativ": 0,
+      "CarbonScore": 0
+    },
+    "recentActivity": []
   },
   {
     "userId": 6,
     "username": "Lina",
+    "location": "",
     "bio": "",
-    "nbrInitiatives": null,
-    "carbonScore": null,
-    "contactInfo": null
+    "email": "",
+    "stats": {
+      "Initiativ": 0,
+      "CarbonScore": 0
+    },
+    "recentActivity": []
   },
   {
     "userId": 8,
     "username": "Emma",
+    "location": "",
     "bio": "",
-    "nbrInitiatives": null,
-    "carbonScore": null,
-    "contactInfo": null
+    "email": "",
+    "stats": {
+      "Initiativ": 0,
+      "CarbonScore": 0
+    },
+    "recentActivity": []
   },
   {
     "userId": 9,
     "username": "Gunnar",
+    "location": "",
     "bio": "",
-    "nbrInitiatives": null,
-    "carbonScore": null,
-    "contactInfo": null
+    "email": "",
+    "stats": {
+      "Initiativ": 0,
+      "CarbonScore": 0
+    },
+    "recentActivity": []
   },
   {
     "userId": 10,
     "username": "Britta",
+    "location": "",
     "bio": "",
-    "nbrInitiatives": null,
-    "carbonScore": null,
-    "contactInfo": null
+    "email": "",
+    "stats": {
+      "Initiativ": 0,
+      "CarbonScore": 0
+    },
+    "recentActivity": []
   },
   {
     "userId": 11,
     "username": "Göran",
+    "location": "",
     "bio": "",
-    "nbrInitiatives": null,
-    "carbonScore": null,
-    "contactInfo": null
+    "email": "",
+    "stats": {
+      "Initiativ": 0,
+      "CarbonScore": 0
+    },
+    "recentActivity": []
   },
   {
     "userId": 12,
     "username": "Sigrid",
+    "location": "",
     "bio": "",
-    "nbrInitiatives": null,
-    "carbonScore": null,
-    "contactInfo": null
+    "email": "",
+    "stats": {
+      "Initiativ": 0,
+      "CarbonScore": 0
+    },
+    "recentActivity": []
   },
   {
     "userId": 13,
     "username": "Rickard",
+    "location": "",
     "bio": "",
-    "nbrInitiatives": null,
-    "carbonScore": null,
-    "contactInfo": null
+    "email": "",
+    "stats": {
+      "Initiativ": 0,
+      "CarbonScore": 0
+    },
+    "recentActivity": []
   },
   {
     "userId": 14,
     "username": "Monika",
+    "location": "",
     "bio": "",
-    "nbrInitiatives": null,
-    "carbonScore": null,
-    "contactInfo": null
+    "email": "",
+    "stats": {
+      "Initiativ": 0,
+      "CarbonScore": 0
+    },
+    "recentActivity": []
   },
   {
     "userId": 15,
     "username": "Svante",
+    "location": "",
     "bio": "",
-    "nbrInitiatives": null,
-    "carbonScore": null,
-    "contactInfo": null
+    "email": "",
+    "stats": {
+      "Initiativ": 0,
+      "CarbonScore": 0
+    },
+    "recentActivity": []
   },
   {
     "userId": 16,
     "username": "Agneta",
+    "location": "",
     "bio": "",
-    "nbrInitiatives": null,
-    "carbonScore": null,
-    "contactInfo": null
+    "email": "",
+    "stats": {
+      "Initiativ": 0,
+      "CarbonScore": 0
+    },
+    "recentActivity": []
   },
   {
     "userId": 17,
     "username": "Conny",
+    "location": "",
     "bio": "",
-    "nbrInitiatives": null,
-    "carbonScore": null,
-    "contactInfo": null
+    "email": "",
+    "stats": {
+      "Initiativ": 0,
+      "CarbonScore": 0
+    },
+    "recentActivity": []
   },
   {
     "userId": 18,
     "username": "Pirjo",
+    "location": "",
     "bio": "",
-    "nbrInitiatives": null,
-    "carbonScore": null,
-    "contactInfo": null
+    "email": "",
+    "stats": {
+      "Initiativ": 0,
+      "CarbonScore": 0
+    },
+    "recentActivity": []
   },
   {
     "userId": 19,
     "username": "Kentsson",
+    "location": "",
     "bio": "",
-    "nbrInitiatives": null,
-    "carbonScore": null,
-    "contactInfo": null
+    "email": "",
+    "stats": {
+      "Initiativ": 0,
+      "CarbonScore": 0
+    },
+    "recentActivity": []
   },
   {
     "userId": 20,
     "username": "Doris",
+    "location": "",
     "bio": "",
-    "nbrInitiatives": null,
-    "carbonScore": null,
-    "contactInfo": null
+    "email": "",
+    "stats": {
+      "Initiativ": 0,
+      "CarbonScore": 0
+    },
+    "recentActivity": []
   },
   {
     "userId": 21,
     "username": "Ragnhild",
+    "location": "",
     "bio": "",
-    "nbrInitiatives": null,
-    "carbonScore": null,
-    "contactInfo": null
+    "email": "",
+    "stats": {
+      "Initiativ": 0,
+      "CarbonScore": 0
+    },
+    "recentActivity": []
   },
   {
     "userId": 22,
     "username": "Bosse",
+    "location": "",
     "bio": "",
-    "nbrInitiatives": null,
-    "carbonScore": null,
-    "contactInfo": null
+    "email": "",
+    "stats": {
+      "Initiativ": 0,
+      "CarbonScore": 0
+    },
+    "recentActivity": []
   },
   {
     "userId": 23,
     "username": "NyyTestNamn",
+    "location": "",
     "bio": "",
-    "nbrInitiatives": null,
-    "carbonScore": null,
-    "contactInfo": null
+    "email": "",
+    "stats": {
+      "Initiativ": 0,
+      "CarbonScore": 0
+    },
+    "recentActivity": []
   },
   {
     "userId": 24,
     "username": "Test2",
+    "location": "",
     "bio": "",
-    "nbrInitiatives": null,
-    "carbonScore": null,
-    "contactInfo": null
+    "email": "",
+    "stats": {
+      "Initiativ": 0,
+      "CarbonScore": 0
+    },
+    "recentActivity": []
   },
   {
     "userId": 25,
     "username": "yolo",
+    "location": "",
     "bio": "",
-    "nbrInitiatives": null,
-    "carbonScore": null,
-    "contactInfo": null
+    "email": "",
+    "stats": {
+      "Initiativ": 0,
+      "CarbonScore": 0
+    },
+    "recentActivity": []
   },
   {
     "userId": 26,
     "username": "yolo",
+    "location": "",
     "bio": "",
-    "nbrInitiatives": null,
-    "carbonScore": null,
-    "contactInfo": null
+    "email": "",
+    "stats": {
+      "Initiativ": 0,
+      "CarbonScore": 0
+    },
+    "recentActivity": []
+  },
+  {
+    "userId": 27,
+    "username": "maggan",
+    "location": "",
+    "bio": "",
+    "email": "",
+    "stats": {
+      "Initiativ": 0,
+      "CarbonScore": 0
+    },
+    "recentActivity": []
   }
 ]

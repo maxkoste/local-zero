@@ -198,5 +198,13 @@
     "email": "baggins@max.com",
     "visibility": "kirseberg",
     "ecoActions": []
+  },
+  {
+    "id": 27,
+    "username": "maggan",
+    "password": "maggan",
+    "email": "maggan@lopez.se",
+    "visibility": "folkets_park",
+    "ecoActions": []
   }
 ]
