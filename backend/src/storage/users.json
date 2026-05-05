@@ -4,174 +4,207 @@
     "username": "Admin",
     "password": "admin",
     "email": "admin@admin.se",
-    "visibility": "PUBLIC"
+    "visibility": "PUBLIC",
+    "ecoActions": []
   },
   {
     "id": 2,
     "username": "Bob",
     "password": "kattenmorris00",
     "email": "bob@hotmail.se",
-    "visibility": "SOFIELUND"
+    "visibility": "SOFIELUND",
+    "ecoActions": []
   },
   {
     "id": 3,
     "username": "Majken",
     "password": "password123",
     "email": "majken00@gmail.com",
-    "visibility": "SORGENFRI"
+    "visibility": "SORGENFRI",
+    "ecoActions": []
   },
   {
     "id": 4,
     "username": "Lars",
     "password": "fruktkaka04",
     "email": "lars_da_killah04@yahoo.com",
-    "visibility": "KIRSEBERG"
+    "visibility": "KIRSEBERG",
+    "ecoActions": []
   },
   {
     "id": 5,
     "username": "Fredrik",
     "password": "majken99cool",
     "email": "fredde@proton.se",
-    "visibility": "FOLKETS_PARK"
+    "visibility": "FOLKETS_PARK",
+    "ecoActions": []
   },
   {
     "id": 6,
     "username": "Lina",
     "password": "smakakaka02",
     "email": "lina02@hotmail.se",
-    "visibility": "KIRSEBERG"
+    "visibility": "KIRSEBERG",
+    "ecoActions": []
   },
   {
     "id": 8,
     "username": "Emma",
     "password": "gayrat4ever",
     "email": "emma@gmail.com",
-    "visibility": "KIRSEBERG"
+    "visibility": "KIRSEBERG",
+    "ecoActions": []
   },
   {
     "id": 9,
     "username": "Gunnar",
     "password": "volvoär bäst01",
     "email": "gunnar_volvo@telia.se",
-    "visibility": "KIRSEBERG"
+    "visibility": "KIRSEBERG",
+    "ecoActions": []
   },
   {
     "id": 10,
     "username": "Britta",
     "password": "kanelbulle4ever",
     "email": "britta.karlsson@spray.se",
-    "visibility": "KIRSEBERG"
+    "visibility": "KIRSEBERG",
+    "ecoActions": []
   },
   {
     "id": 11,
     "username": "Göran",
     "password": "danskärfula99",
     "email": "goran_gott@live.se",
-    "visibility": "KIRSEBERG"
+    "visibility": "KIRSEBERG",
+    "ecoActions": []
   },
   {
     "id": 12,
     "username": "Sigrid",
     "password": "abba4ever",
     "email": "sigrid_abba@gmail.com",
-    "visibility": "KIRSEBERG"
+    "visibility": "KIRSEBERG",
+    "ecoActions": []
   },
   {
     "id": 13,
     "username": "Rickard",
     "password": "hejsansvejsan01",
     "email": "rickard_ric@hotmail.se",
-    "visibility": "KIRSEBERG"
+    "visibility": "KIRSEBERG",
+    "ecoActions": []
   },
   {
     "id": 14,
     "username": "Monika",
     "password": "blommor&bin99",
     "email": "monika.trädgård@live.se",
-    "visibility": "KIRSEBERG"
+    "visibility": "KIRSEBERG",
+    "ecoActions": []
   },
   {
     "id": 15,
     "username": "Svante",
     "password": "IkeaÄrBäst04",
     "email": "svante_möbel@telia.se",
-    "visibility": "KIRSEBERG"
+    "visibility": "KIRSEBERG",
+    "ecoActions": []
   },
   {
     "id": 16,
     "username": "Agneta",
     "password": "dansbandsälskare88",
     "email": "agneta.dans@spray.se",
-    "visibility": "KIRSEBERG"
+    "visibility": "KIRSEBERG",
+    "ecoActions": []
   },
   {
     "id": 17,
     "username": "Conny",
     "password": "connysgarage69",
     "email": "conny_mekan@yahoo.se",
-    "visibility": "KIRSEBERG"
+    "visibility": "KIRSEBERG",
+    "ecoActions": []
   },
   {
     "id": 18,
     "username": "Pirjo",
     "password": "köttbullar4life",
     "email": "pirjo.koket@gmail.com",
-    "visibility": "KIRSEBERG"
+    "visibility": "KIRSEBERG",
+    "ecoActions": []
   },
   {
     "id": 19,
     "username": "Kentsson",
     "password": "kentochlotta97",
     "email": "kent.kentsson@hotmail.se",
-    "visibility": "KIRSEBERG"
+    "visibility": "KIRSEBERG",
+    "ecoActions": []
   },
   {
     "id": 20,
     "username": "Doris",
     "password": "gosigkatt02",
     "email": "doris_kattmamma@live.se",
-    "visibility": "KIRSEBERG"
+    "visibility": "KIRSEBERG",
+    "ecoActions": []
   },
   {
     "id": 21,
     "username": "Ragnhild",
     "password": "stickning&kaffe55",
     "email": "ragnhild.stickis@telia.se",
-    "visibility": "KIRSEBERG"
+    "visibility": "KIRSEBERG",
+    "ecoActions": []
   },
   {
     "id": 22,
     "username": "Bosse",
     "password": "båtliv_sommaren03",
     "email": "bosse_båten@spray.se",
-    "visibility": "KIRSEBERG"
+    "visibility": "KIRSEBERG",
+    "ecoActions": []
   },
   {
     "id": 23,
     "username": "NyyTestNamn",
     "password": "test",
     "email": "Test@Testsson.test",
-    "visibility": "kirseberg"
+    "visibility": "kirseberg",
+    "ecoActions": []
   },
   {
     "id": 24,
     "username": "Test2",
     "password": "test",
     "email": "Test2@test2.test",
-    "visibility": "sofielund"
+    "visibility": "sofielund",
+    "ecoActions": []
   },
   {
     "id": 25,
     "username": "yolo",
     "password": "123",
     "email": "baggins@max.com",
-    "visibility": "kirseberg"
+    "visibility": "kirseberg",
+    "ecoActions": []
   },
   {
     "id": 26,
     "username": "yolo",
     "password": "123",
     "email": "baggins@max.com",
-    "visibility": "kirseberg"
+    "visibility": "kirseberg",
+    "ecoActions": []
+  },
+  {
+    "id": 27,
+    "username": "maggan",
+    "password": "maggan",
+    "email": "maggan@lopez.se",
+    "visibility": "folkets_park",
+    "ecoActions": []
   }
 ]

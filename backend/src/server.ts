@@ -1,6 +1,6 @@
 import express from 'express';
 import cors from 'cors';
-import { storage, ContentRecord, UserRecord, ChatRecord, MessageRecord } from './storage/storage-system';
+import { storage, ContentRecord, UserRecord, ChatRecord, MessageRecord, EcoAction, ProfileRecord } from './storage/storage-system';
 import dotenv from 'dotenv';
 import jwt from 'jsonwebtoken';
 import cookieParser from 'cookie-parser';
@@ -24,34 +24,47 @@ if (!JWT_SECRET) {
 }
 
 //Tokens
-function generateToken(user: UserRecord){
+function generateToken(user: UserRecord) {
 	return jwt.sign(
 		{ userId: user.id },
 		JWT_SECRET,
-		{ expiresIn: '1h'}
+		{ expiresIn: '1h' }
 	);
 }
 
-function verifyToken(token: string) : JwtPayload {
+function verifyToken(token: string): JwtPayload {
 	return jwt.verify(token, JWT_SECRET) as JwtPayload;
+}
+
+function requireAuth(req: express.Request, res: express.Response): JwtPayload | null {
+	const header = req.headers.authorization;
+	if (!header) {
+		res.status(401).json({ error: 'no token to validify' });
+		return null;
+	}
+	try {
+		return verifyToken(header.split(' ')[1]);
+	} catch {
+		res.status(401).json({ error: 'Invalid or expired token' });
+		return null;
+	}
 }
 
 
 //Users
-
 app.get('/api/users', (req, res) => {
 	res.json(storage.getUsers());
 });
 
 app.get('/api/users/:id', (req, res) => {
-    const userId = Number(req.params.id);
-    const user = storage.getUserById(userId);
+	const userId = Number(req.params.id);
+	const user = storage.getUserById(userId);
 
-    if (!user) {
-        return res.status(404).json({ error: 'User not found' });
-    }
+	if (!user) {
+		return res.status(404).json({ error: 'User not found' });
+	}
 
-    res.json(user);
+	res.json(user);
 });
 
 app.post('/api/users', (req, res) => {
@@ -64,25 +77,133 @@ app.post('/api/users', (req, res) => {
 	const users = storage.getUsers();
 	const nextId = users.length ? Math.max(...users.map(u => u.id)) + 1 : 1;
 
-	const newUser: UserRecord = { id: nextId, username, password, email, visibility };
+	const newUser: UserRecord = { id: nextId, username, password, email, visibility, ecoActions: [] };
 	storage.addUser(newUser);
+
+	const newProfile: ProfileRecord = {
+		userId: nextId,
+		username,
+		location: "",
+		bio: "",
+		email: "",
+
+		stats: {
+			Initiativ: 0,
+			CarbonScore: 0,
+		},
+
+		recentActivity: []
+	};
+	storage.addProfile(newProfile);
 
 	res.status(201).json(newUser);
 });
 
 app.patch('/api/users/:id', (req, res) => {
-    const userId = Number(req.params.id);
+	const payload = requireAuth(req, res);
+	if (!payload) return;
 
-    const user = storage.getUserById(userId);
+	const userId = Number(req.params.id);
 
-    if (!user) {
-        return res.status(404).json({ error: 'User not found' });
-    }
+	if (payload.userId !== userId) {
+		return res.status(403).json({ error: 'Forbidden' });
+	}
 
-    // TODO: Implementera logik för att updatera profil attribut (visibility, bio, etc.)
-    // Just nu returneras endast användarens info utan att ändringar görs.
+	const user = storage.getUserById(userId);
 
-    res.status(200).json(user);
+	if (!user) {
+		return res.status(404).json({ error: 'User not found' });
+	}
+
+	// TODO: Implementera logik för att updatera profil attribut (visibility, bio, etc.)
+	// Just nu returneras endast användarens info utan att ändringar görs.
+
+	res.status(200).json(user);
+});
+
+app.get('/api/users/:id/profile', (req, res) => {
+	const payload = requireAuth(req, res);
+	if (!payload) return;
+
+	console.log("Fetching the profile !");
+
+	const userId = Number(req.params.id);
+	const profile = storage.getProfileByUserId(userId);
+
+	if (!profile) {
+		return res.status(404).json({ error: 'Profile not found' });
+	}
+
+	console.log(JSON.stringify(profile));
+
+	res.json(profile);
+});
+
+app.patch('/api/users/:id/profile', (req, res) => {
+	const payload = requireAuth(req, res);
+	if (!payload) return;
+
+	const userId = Number(req.params.id);
+
+	if (payload.userId !== userId) {
+		return res.status(403).json({ error: 'Forbidden' });
+	}
+
+	const {
+		username,
+		location,
+		bio,
+		email,
+		stats
+	} = req.body;
+
+	const updated = storage.updateProfile(userId, {
+		...(username !== undefined && { username }),
+		...(location !== undefined && { location }),
+		...(bio !== undefined && { bio }),
+		...(email !== undefined && { email }),
+		...(stats && {
+			stats: {
+				...(stats.Initiativ !== undefined && { Initiativ: stats.Initiativ }),
+				...(stats.CarbonScore !== undefined && { CarbonScore: stats.CarbonScore }),
+			}
+		})
+	});
+
+	if (!updated) {
+		return res.status(404).json({ error: 'Profile not found' });
+	}
+
+	res.json(updated);
+});
+
+app.post('/api/users/:id/eco-actions', (req, res) => {
+	const payload = requireAuth(req, res);
+	if (!payload) return;
+
+	const userId = Number(req.params.id);
+
+	if (payload.userId !== userId) {
+		return res.status(403).json({ error: 'Forbidden' });
+	}
+
+	const { key } = req.body;
+	if (!key) {
+		return res.status(400).json({ error: 'key is required' });
+	}
+
+	const action: EcoAction = {
+		id: String(Date.now()),
+		key,
+		date: new Date().toISOString(),
+	};
+
+	const updated = storage.addEcoAction(userId, action);
+	if (!updated) {
+		return res.status(404).json({ error: 'User not found' });
+	}
+
+	res.status(201).json(action);
 });
 
 
@@ -101,11 +222,13 @@ app.post('/api/login', (req, res) => {
 
 	if (match) {
 		const token = generateToken(match);
-		res.status(200).json({ message: 'login successful', token, user: {
-			id: match.id,
-			username: match.username,
-			email: match.email
-		}});
+		res.status(200).json({
+			message: 'login successful', token, user: {
+				id: match.id,
+				username: match.username,
+				email: match.email
+			}
+		});
 
 	} else {
 		res.status(401).json({ error: 'no such user' });
@@ -116,8 +239,8 @@ app.post('/api/login', (req, res) => {
 app.get('/api/me', (req, res) => {
 	const header = req.headers.authorization;
 
-	if (!header){
-		return res.status(401).json({error: 'no token to validify'})
+	if (!header) {
+		return res.status(401).json({ error: 'no token to validify' })
 	}
 
 	const token = header.split(' ')[1];
@@ -126,29 +249,28 @@ app.get('/api/me', (req, res) => {
 		const jwtPayload = verifyToken(token);
 		const user = storage.getUserById(jwtPayload.userId);
 
-		if(!user){
-			return res.status(404).json({error: 'User not found'});
+		if (!user) {
+			return res.status(404).json({ error: 'User not found' });
 		}
 
-		return res.status(200).json({user:{
-			id: user.id,
-			username: user.username ,
-			email: user.email
-		}});
+		return res.status(200).json({
+			user: {
+				id: user.id,
+				username: user.username,
+				email: user.email
+			}
+		});
 	} catch (error) {
-		return res.status(401).json({error: 'Invalid or expired token'});
+		return res.status(401).json({ error: 'Invalid or expired token' });
 	}
 });
 
 //Initiatives
-
-
-
 app.get('/api/initiatives', (req, res) => {
 	const header = req.headers.authorization;
 
-	if (!header){
-		return res.status(401).json({error: 'no token to validify'})
+	if (!header) {
+		return res.status(401).json({ error: 'no token to validify' })
 	}
 
 	const token = header.split(' ')[1];
@@ -160,7 +282,7 @@ app.get('/api/initiatives', (req, res) => {
 		const user = storage.getUserById(userId);
 
 		if (!user) {
-			return res.status(404).json({error: 'User not found'});
+			return res.status(404).json({ error: 'User not found' });
 		}
 
 		const userVisibility = user?.visibility ?? null;
@@ -177,7 +299,7 @@ app.get('/api/initiatives', (req, res) => {
 		res.json(filtered);
 
 	} catch (error) {
-		return res.status(401).json({error: 'Invalid or expired token'});
+		return res.status(401).json({ error: 'Invalid or expired token' });
 	}
 
 });
@@ -195,8 +317,7 @@ app.get('/api/initiatives/:id', (req, res) => {
 		verifyToken(token);
 
 		const id = req.params.id;
-		const initiatives = storage.getInitiatives();
-		const initiative = initiatives.find(i => i.id === id);
+		const initiative = storage.getInitiativeById(id);
 
 		if (!initiative) {
 			return res.status(404).json({ error: 'Initiative not found' });
@@ -209,6 +330,9 @@ app.get('/api/initiatives/:id', (req, res) => {
 });
 
 app.post('/api/initiatives', (req, res) => {
+	const payload = requireAuth(req, res);
+	if (!payload) return;
+
 	const { title, author, body, visibility, image, location, duration } = req.body;
 
 	if (!title || !author || !body || !visibility) {
@@ -236,6 +360,9 @@ app.post('/api/initiatives', (req, res) => {
 });
 
 app.patch('/api/initiatives/:id', (req, res) => {
+	const payload = requireAuth(req, res);
+	if (!payload) return;
+
 	const { id } = req.params;
 	const { title, body, visibility, image, location, duration, likes, dislikes } = req.body;
 
@@ -259,6 +386,9 @@ app.patch('/api/initiatives/:id', (req, res) => {
 });
 
 app.delete('/api/initiatives/:id', (req, res) => {
+	const payload = requireAuth(req, res);
+	if (!payload) return;
+
 	const { id } = req.params;
 	const deleted = storage.deleteInitiative(id);
 
@@ -272,6 +402,9 @@ app.delete('/api/initiatives/:id', (req, res) => {
 
 //Updates and Comments. Is there unecessary checks now due to the factory and content types set in builder-pattern? 
 app.post('/api/initiatives/:parentId/children', (req, res) => {
+	const payload = requireAuth(req, res);
+	if (!payload) return;
+
 	const { parentId } = req.params;
 	const { type, author, body, visibility, title, image, location, duration, parentId: bodyParentId } = req.body;
 
@@ -313,66 +446,80 @@ app.post('/api/initiatives/:parentId/children', (req, res) => {
 
 //Chats
 app.get('/api/chats', (req, res) => {
-    // preparation for sending the logged in users id
-    const userId = req.query.userId ? Number(req.query.userId) : null;
-    if (userId === null) return res.status(400).json({ error: 'userId is required' });
+	const payload = requireAuth(req, res);
+	if (!payload) return;
 
-    const chats = storage.getChats().filter(c =>
-        c.sender.id === userId || c.receiver.id === userId
-    );
+	const userId = req.query.userId ? Number(req.query.userId) : null;
+	if (userId === null) return res.status(400).json({ error: 'userId is required' });
 
-    res.json(chats);
+	const chats = storage.getChats().filter(c =>
+		c.sender.id === userId || c.receiver.id === userId
+	);
+
+	res.json(chats);
 });
 
 app.get('/api/chats/:id', (req, res) => {
-    const chat = storage.getChatById(req.params.id);
-    if (!chat) return res.status(404).json({ error: 'Chat not found' });
-    res.json(chat);
+	const payload = requireAuth(req, res);
+	if (!payload) return;
+
+	const chat = storage.getChatById(req.params.id);
+	if (!chat) return res.status(404).json({ error: 'Chat not found' });
+	res.json(chat);
 });
 
 app.post('/api/chats', (req, res) => {
-    const { sender, receiver, body } = req.body;
+	const payload = requireAuth(req, res);
+	if (!payload) return;
 
-    if (!sender || !receiver || !body) {
-        return res.status(400).json({ error: 'sender, receiver, and body are required' });
-    }
+	const { sender, receiver, body } = req.body;
 
-    const newChat: ChatRecord = {
-        id: String(Date.now()),
-        sender,
-        receiver,
-        body,
-        date: new Date().toISOString(),
-        children: [],
-    };
+	if (!sender || !receiver || !body) {
+		return res.status(400).json({ error: 'sender, receiver, and body are required' });
+	}
 
-    storage.addChat(newChat);
-    res.status(201).json(newChat);
+	const newChat: ChatRecord = {
+		id: String(Date.now()),
+		sender,
+		receiver,
+		body,
+		date: new Date().toISOString(),
+		children: [],
+	};
+
+	storage.addChat(newChat);
+	res.status(201).json(newChat);
 });
 
 app.post('/api/chats/:id/messages', (req, res) => {
-    const { sender, body } = req.body;
+	const payload = requireAuth(req, res);
+	if (!payload) return;
 
-    if (!sender || !body) {
-        return res.status(400).json({ error: 'sender and body are required' });
-    }
+	const { sender, body } = req.body;
 
-    const newMessage: MessageRecord = {
-        id: String(Date.now()),
-        sender,
-        body,
-        date: new Date().toISOString(),
-    };
+	if (!sender || !body) {
+		return res.status(400).json({ error: 'sender and body are required' });
+	}
 
-    const result = storage.addMessage(req.params.id, newMessage);
-    if (!result) return res.status(404).json({ error: 'Chat not found' });
-    res.status(201).json(newMessage);
+	const newMessage: MessageRecord = {
+		id: String(Date.now()),
+		sender,
+		body,
+		date: new Date().toISOString(),
+	};
+
+	const result = storage.addMessage(req.params.id, newMessage);
+	if (!result) return res.status(404).json({ error: 'Chat not found' });
+	res.status(201).json(newMessage);
 });
 
 app.delete('/api/chats/:id/messages/:messageId', (req, res) => {
-    const deleted = storage.deleteMessage(req.params.id, req.params.messageId);
-    if (!deleted) return res.status(404).json({ error: 'Chat or message not found' });
-    res.status(200).json({ message: 'Message deleted' });
+	const payload = requireAuth(req, res);
+	if (!payload) return;
+
+	const deleted = storage.deleteMessage(req.params.id, req.params.messageId);
+	if (!deleted) return res.status(404).json({ error: 'Chat or message not found' });
+	res.status(200).json({ message: 'Message deleted' });
 });
 
 

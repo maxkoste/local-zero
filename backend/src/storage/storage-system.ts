@@ -37,12 +37,32 @@ export type ContentUpdate = Partial<Pick<
     'title' | 'body' | 'visibility' | 'image' | 'location' | 'duration' | 'likes' | 'dislikes'
 >>;
 
+export interface ProfileRecord {
+    userId: number;
+    username: string;
+	location: string;
+    bio: string;
+    email: string;
+	stats: {
+		Initiativ: number,
+		CarbonScore: number,
+	};
+	recentActivity: [];
+}
+
+export interface EcoAction {
+    id: string;
+    key: string;
+    date: string;
+}
+
 export interface UserRecord {
     id: number;
     username: string;
     password: string;
     email: string;
     visibility: string;
+    ecoActions?: EcoAction[];
 }
 
 export interface MessageRecord {
@@ -64,6 +84,7 @@ export interface ChatRecord {
 const INITIATIVES_FILE = path.join(process.cwd(), 'src/storage/initiatives.json');
 const USERS_FILE = path.join(process.cwd(), 'src/storage/users.json');
 const CHATS_FILE = path.join(process.cwd(), 'src/storage/chats.json');
+const PROFILES_FILE = path.join(process.cwd(), 'src/storage/profiles.json');
 
 class StorageSystem {
     private static instance: StorageSystem;
@@ -71,11 +92,13 @@ class StorageSystem {
     private initiatives: ContentRecord[] = [];
     private users: UserRecord[] = [];
     private chats: ChatRecord[] = [];
+    private profiles: ProfileRecord[] = [];
 
     // Chained promises ensure writes to each file are safe by queueing them
     private initiativesWriteQueue: Promise<void> = Promise.resolve();
     private usersWriteQueue: Promise<void> = Promise.resolve();
     private chatsWriteQueue: Promise<void> = Promise.resolve();
+    private profilesWriteQueue: Promise<void> = Promise.resolve();
 
     private initialized = false;
 
@@ -91,15 +114,17 @@ class StorageSystem {
     async init(): Promise<void> {
         if (this.initialized) return;
 
-        const [initiativesData, usersData, chatsData] = await Promise.all([
+        const [initiativesData, usersData, chatsData, profilesData] = await Promise.all([
             fs.readFile(INITIATIVES_FILE, 'utf-8'),
             fs.readFile(USERS_FILE, 'utf-8'),
             fs.readFile(CHATS_FILE, 'utf-8'),
+            fs.readFile(PROFILES_FILE, 'utf-8'),
         ]);
 
         this.initiatives = JSON.parse(initiativesData);
         this.users = JSON.parse(usersData);
         this.chats = JSON.parse(chatsData);
+        this.profiles = JSON.parse(profilesData);
         this.initialized = true;
     }
 
@@ -150,6 +175,34 @@ class StorageSystem {
     addUser(user: UserRecord): void {
         this.users.push(user);
         this.flushUsers();
+    }
+
+    //Profiles
+
+    getProfileByUserId(userId: number): ProfileRecord | undefined {
+        return this.profiles.find(p => p.userId === userId);
+    }
+
+    addProfile(profile: ProfileRecord): void {
+        this.profiles.push(profile);
+        this.flushProfiles();
+    }
+
+    updateProfile(userId: number, update: Partial<Omit<ProfileRecord, 'userId'>>): ProfileRecord | null {
+        const index = this.profiles.findIndex(p => p.userId === userId);
+        if (index === -1) return null;
+        this.profiles[index] = { ...this.profiles[index], ...update };
+        this.flushProfiles();
+        return this.profiles[index];
+    }
+
+    addEcoAction(userId: number, action: EcoAction): UserRecord | null {
+        const user = this.users.find(u => u.id === userId);
+        if (!user) return null;
+        user.ecoActions = user.ecoActions ?? [];
+        user.ecoActions.push(action);
+        this.flushUsers();
+        return user;
     }
 
 
@@ -223,6 +276,12 @@ class StorageSystem {
     private flushChats(): void {
         this.chatsWriteQueue = this.chatsWriteQueue.then(() =>
             fs.writeFile(CHATS_FILE, JSON.stringify(this.chats, null, 2), 'utf-8')
+        );
+    }
+
+    private flushProfiles(): void {
+        this.profilesWriteQueue = this.profilesWriteQueue.then(() =>
+            fs.writeFile(PROFILES_FILE, JSON.stringify(this.profiles, null, 2), 'utf-8')
         );
     }
 
