@@ -1,4 +1,5 @@
-import React from 'react';
+
+import React, { useState, useEffect } from 'react';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
@@ -9,21 +10,38 @@ import Button from '@mui/material/Button';
 import { styled } from '@mui/material/styles';
 import { useNavigate } from 'react-router-dom';
 
-const MOCK_USER = {
-    name: 'Maggan Lopez',
-    location: 'Möllan',
-    bio: 'Jag gillar att dansa och fiska',
-    email: 'maggan@lopez.se',
-    avatar: undefined,
-    stats: {
-        Initiativ: 24,
-        CarbonScore: 1340,
-    },
-    recentActivity: [
-        { id: 1, text: 'Startade initiativet "hur man tränar en drake på ett hållbart vis"', date: '2 days ago' },
-        { id: 2, text: 'Kommenterade på Lisas initiativ "Härligt lisa ! Du är verkligen lika dum som du är ful! Hahah skojjar bah lisa!"', date: '1 week ago' },
-        { id: 3, text: 'Lade upp ett inlägg "Hörrni nu får det fan vara nog med alla dessa burkar på innergården"', date: '2 weeks ago' },
-    ],
+// Placeholder
+
+//TODO: Ändra om i variabelnamnen så att de faktiskt stämmer överrens mellan front-och backend
+type User = {
+	id: number;
+	name: string;
+	location: string;
+	bio: string;
+	email: string;
+	avatar?: string;
+	stats: {
+		Initiativ: number;
+		CarbonScore: number;
+	};
+	recentActivity: { id: number; text: string; date: string }[];
+};
+const MOCK_USER: User = {
+	id: 1,
+	name: 'Maggan Lopez',
+	location: 'Möllan',
+	bio: 'Jag gillar att dansa och fiska',
+	email: 'maggan@lopez.se',
+	avatar: undefined, //här hade man kunnat ha en bild det hade vart kul
+	stats: {
+		Initiativ: 24, //ingen aning om detta ska visas men det kan vara kul
+		CarbonScore: 1340, //same här, helt random score kanske är mycket ? Kanske är lite ?
+	},
+	recentActivity: [
+		{ id: 1, text: 'Startade initiativet "hur man tränar en drake på ett hållbart vis"', date: '2 days ago' },
+		{ id: 2, text: 'Kommenterade på Lisas initiativ "Härligt lisa ! Du är verkligen lika dum som du är ful! Hahah skojjar bah lisa!"', date: '1 week ago' },
+		{ id: 3, text: 'Lade upp ett inlägg "Hörrni nu får det fan vara nog med alla dessa burkar på innergården"', date: '2 weeks ago' },
+	],
 };
 
 const Card = styled(Paper)(({ theme }) => ({
@@ -62,9 +80,65 @@ const Label = styled(Typography)(({ theme }) => ({
     marginBottom: theme.spacing(0.5),
 }));
 
+//TODO: Måste fixa någon sorts lagring på bio, och annan data som inte skapas när man signar upp.
+
 export function UserPage() {
-    const user = MOCK_USER;
-    const navigate = useNavigate();
+	const [user, setUser] = useState<User | null>(null);
+	const [loading, setLoading] = useState(true);
+	const navigate = useNavigate();
+	
+	useEffect(() => {
+	const loadUser = async () => {
+		try {
+			const currentUserString = localStorage.getItem('currentUser');
+			console.log("currentUserString:", currentUserString);
+
+			if (!currentUserString) {
+				console.error("No current user found in localStorage");
+				setUser(MOCK_USER);
+				return;
+			}
+
+			const currentUser = JSON.parse(currentUserString);
+			console.log("currentUser parsed:", currentUser);
+
+			const response = await fetch(`http://localhost:3001/api/users/${currentUser.id}`);
+			console.log("response status:", response.status);
+
+			if (!response.ok) {
+				throw new Error(`Failed to fetch user data: ${response.statusText}`);
+			}
+
+			const userData = await response.json();
+			console.log("userData from backend:", userData);
+
+			const mappedUser: User = {
+				...MOCK_USER,
+				id: userData.id,
+				name: userData.username,
+				email: userData.email,
+			};
+
+			console.log("mappedUser:", mappedUser);
+			setUser(mappedUser);
+		} catch (error) {
+			console.error("Error loading user data:", error);
+			setUser(MOCK_USER);
+		} finally {
+			setLoading(false);
+		}
+	};
+
+	loadUser();
+}, []);
+	
+	if (loading) {
+		return <Box sx={{ p: 4 }}>Loading profile...</Box>;
+	}
+
+	if (!user) {
+		return <Box sx={{ p: 4 }}>Could not load user.</Box>;
+	}
 
     return (
         <Box sx={{ maxWidth: 900, mx: 'auto', px: 2, py: 4 }}>
