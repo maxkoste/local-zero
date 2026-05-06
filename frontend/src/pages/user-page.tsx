@@ -9,10 +9,8 @@ import Divider from '@mui/material/Divider';
 import Button from '@mui/material/Button';
 import { styled } from '@mui/material/styles';
 import { useNavigate } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
-// Placeholder
-
-//TODO: Ändra om i variabelnamnen så att de faktiskt stämmer överrens mellan front-och backend
 type User = {
 	userId: number;
 	username: string;
@@ -69,27 +67,32 @@ export function UserPage() {
 	const [user, setUser] = useState<User | null>(null);
 	const [loading, setLoading] = useState(true);
 	const navigate = useNavigate();
+	const { id } = useParams<{ id?: string }>();
 
 	useEffect(() => {
 		const loadUser = async () => {
 			try {
 				const token = localStorage.getItem('token');
+				let userId = id;
 
-				const res = await fetch('http://localhost:3001/api/me', {
-					headers: {
-						Authorization: `Bearer ${token}`
-					}
-				});
+				if(!userId){
 
-				console.log("Authentication user")
+					const res = await fetch('http://localhost:3001/api/me', {
+						headers: {
+							Authorization: `Bearer ${token}`
+						}
+					});
 
-				if (!res.ok) throw new Error();
-				const data = await res.json();
+					console.log("Authentication user")
 
-				console.log("Data: " + JSON.stringify(data));
-				const user = data.user;
+					if (!res.ok) throw new Error();
+					const data = await res.json();
 
-				const userId = user.id;
+					console.log("Data: " + JSON.stringify(data));
+					const user = data.user;
+
+					userId = user.id;
+				}
 
 				console.log("userId " + userId);
 
@@ -113,7 +116,7 @@ export function UserPage() {
 		};
 
 		loadUser();
-	}, []);
+	}, [id]);
 
 	if (loading) {
 		return <Box sx={{ p: 4 }}>Loading profile...</Box>;

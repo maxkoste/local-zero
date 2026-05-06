@@ -27,7 +27,7 @@ function App() {
                     <Route path="/" element={<LoginPage />} />
                     <Route element={<MainLayout />}>
                         <Route path="/front" element={<FrontPage />} />
-                        <Route path="/profile" element={<UserPage />} />
+                        <Route path="/profile/:id" element={<UserPage />} />
                         <Route path="/sign-up" element={<SignUp />} />
                         <Route path="/initiative/:id" element={<InitiativePage />} />
                         <Route path="/create-initiative" element={<CreateInitiativePage />} />

@@ -40,7 +40,7 @@ export function BaseContentCard({ content, children, onDelete }: BaseProps) {
 						< Typography
 
 							component="span"
-							onClick={() => navigate(`/profile`)}
+							onClick={() => navigate(`/profile/${content.author.id}`)}
 							sx={{
 								cursor: "pointer",
 								color: "primary.main",

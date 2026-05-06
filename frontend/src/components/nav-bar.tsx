@@ -22,19 +22,40 @@ const pages = [
 ];
 
 const settings = [
-	{ label: 'Profile', path: '/profile' },
-	{ label: 'Logout', path: '/' },
+	'Profile', 'Logout'
 ];
 
 function ResponsiveAppBar() {
 	const navigate = useNavigate();
 	const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
 	const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
+	const [userId, setUserId] = React.useState<number | null> (null);
 
 	const handleOpenNavMenu = (e: React.MouseEvent<HTMLElement>) => setAnchorElNav(e.currentTarget);
 	const handleOpenUserMenu = (e: React.MouseEvent<HTMLElement>) => setAnchorElUser(e.currentTarget);
 	const handleCloseNavMenu = () => setAnchorElNav(null);
 	const handleCloseUserMenu = () => setAnchorElUser(null);
+
+	React.useEffect(() => {
+
+		const loadUser = async () => {
+			try {
+				const token = localStorage.getItem('token');
+				const res = await fetch('http://localhost:3001/api/me', {
+					headers: {
+						Authorization: `Bearer ${token}`
+					}
+				});
+				if (!res.ok) throw new Error();
+				const data = await res.json();
+				setUserId(data.user.id);
+			} catch (err) {
+				console.error(err);
+			}
+		};
+		loadUser();
+
+	}, []);
 
 	const handleNavClick = (path: string) => {
 		handleCloseNavMenu();
@@ -43,7 +64,16 @@ function ResponsiveAppBar() {
 
 	const handleSettingClick = (path: string) => {
 		handleCloseUserMenu();
-		navigate(path);
+
+		if (path == 'Profile') {
+			if(!userId) return;
+			navigate(`/profile/${userId}`);
+			return;
+		}
+
+		if (path === 'Logout') {
+			navigate('/');
+		}
 	};
 
 	return (
@@ -157,8 +187,8 @@ function ResponsiveAppBar() {
 							open={Boolean(anchorElUser)}
 							onClose={handleCloseUserMenu}
 						>
-							{settings.map(({ label, path }) => (
-								<MenuItem key={label} onClick={() => handleSettingClick(path)}>
+							{settings.map((label ) => (
+								<MenuItem key={label} onClick={() => handleSettingClick(label)}>
 									<Typography sx={{ textAlign: 'center' }}>{label}</Typography>
 								</MenuItem>
 							))}
