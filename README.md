@@ -8,17 +8,15 @@ cd src/backend
 
 ### Install Dependencies
 
-npm install (Both in backend and frontend)
-
-
+npm install
 npm install typescript
 
-
+add a .env file in the backend folder with JWT_SECRET="Your-own-random-string"
 --------------------------------------------------
 
 ### Run the Development Server
 
-Run the script in local-zero/package.json: dev
+npm run dev
 
 --------------------------------------------------
 
