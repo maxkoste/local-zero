@@ -12,6 +12,7 @@ cd src/backend
 - npm install typescript
 - add a .env file in the backend folder with JWT_SECRET="Your-own-random-string"
 
+add a .env file in the backend folder with JWT_SECRET="Your-own-random-string"
 --------------------------------------------------
 
 ### Run the Development Server
