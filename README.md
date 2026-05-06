@@ -8,8 +8,9 @@ cd src/backend
 
 ### Install Dependencies
 
-npm install
-npm install typescript
+- npm install
+- npm install typescript
+- add a .env file in the backend folder with JWT_SECRET="Your-own-random-string"
 
 add a .env file in the backend folder with JWT_SECRET="Your-own-random-string"
 --------------------------------------------------

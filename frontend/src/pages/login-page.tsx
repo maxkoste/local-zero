@@ -2,12 +2,39 @@ import './login-page.css';
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
+
 function LoginPage() {
 	const navigate = useNavigate();
 
-	const handleLogin = (e: React.FormEvent<HTMLFormElement>) => {
-		e.preventDefault(); // prevent page reload
-		navigate("/front");
+	const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
+		e.preventDefault();
+
+		const formData = new FormData(e.currentTarget);
+		const email = formData.get("email") as string;
+		const password = formData.get("password") as string;
+
+		const response = await fetch('http://localhost:3001/api/login', {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json"
+			},
+			body: JSON.stringify({ email, password })
+		});
+
+		if (response.ok) {
+			const data = await response.json();
+
+			if (!data.token) {
+				throw new Error("No token returned from server");
+			}
+
+			localStorage.setItem('token', data.token)
+
+			navigate("/front");
+		} else {
+			const err = await response.json();
+			alert(err.error);
+		}
 	};
 
 	const handleSignUp = () => {

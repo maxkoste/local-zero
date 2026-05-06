@@ -1,0 +1,354 @@
+[
+  {
+    "id": "1775993689571",
+    "type": "initiative",
+    "title": "Stop pissing in the stairwell",
+    "author": {
+      "id": 1,
+      "username": "Lolita",
+      "email": "lolita@email.com",
+      "visibility": "public"
+    },
+    "body": "Hello. I think we should make a collective effort to keep the stairwell clean so we don’t have to step in urine. Anyone interested in joining?",
+    "visibility": "kirseberg",
+    "date": "2026-04-12T11:34:49.571Z",
+    "image": null,
+    "location": "The stairwell at Ryttaregatan 5b",
+    "duration": "2 weeks",
+    "likes": [],
+    "dislikes": [],
+    "children": []
+  },
+  {
+    "id": "1776327565058",
+    "type": "initiative",
+    "title": "Rensa kirseberg från alla med efternamnet Skön",
+    "author": {
+      "id": 1,
+      "username": "Lolita",
+      "email": "lolita@email.com",
+      "visibility": "public"
+    },
+    "body": "En djävel bara iallafall. Det är han som fucking kissar i trappan asså",
+    "visibility": "kirseberg",
+    "date": "2026-04-16T08:19:25.058Z",
+    "image": null,
+    "location": "Ryttaregatan 5b",
+    "duration": "Så länge det är nödvändigt",
+    "likes": [],
+    "dislikes": [],
+    "children": [
+      {
+        "id": "1776600328272",
+        "type": "update",
+        "author": {
+          "id": 1,
+          "username": "Lolita",
+          "email": "lolita@email.com",
+          "visibility": "public"
+        },
+        "body": "Längst upp i trapphuset. Hjälp mig att få ut honom ikväll?",
+        "visibility": "kirseberg",
+        "date": "2026-04-19T12:05:28.272Z",
+        "title": "Har hittat var han bor",
+        "image": null,
+        "location": null,
+        "duration": null,
+        "likes": [],
+        "dislikes": [],
+        "children": [
+          {
+            "id": "1776600346134",
+            "type": "comment",
+            "author": {
+              "id": 1,
+              "username": "Lolita",
+              "email": "lolita@email.com",
+              "visibility": "public"
+            },
+            "body": "Vi kör. Kl 18?",
+            "visibility": "kirseberg",
+            "date": "2026-04-19T12:05:46.134Z",
+            "image": null,
+            "location": null,
+            "duration": null,
+            "likes": [],
+            "dislikes": [],
+            "children": [
+              {
+                "id": "1776600362915",
+                "type": "comment",
+                "author": {
+                  "id": 1,
+                  "username": "Lolita",
+                  "email": "lolita@email.com",
+                  "visibility": "public"
+                },
+                "body": "18.30 funkar bättre för mig. Ses utanför.",
+                "visibility": "kirseberg",
+                "date": "2026-04-19T12:06:02.915Z",
+                "image": null,
+                "location": null,
+                "duration": null,
+                "likes": [],
+                "dislikes": [],
+                "children": []
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "1777901454878",
+    "type": "initiative",
+    "title": "Hejsan Admin här",
+    "author": {
+      "id": 1,
+      "username": "Admin",
+      "password": "admin",
+      "email": "admin@admin.se",
+      "visibility": "PUBLIC"
+    },
+    "body": "tjo tjo tjo",
+    "visibility": "public",
+    "date": "2026-05-04T13:30:54.878Z",
+    "image": null,
+    "location": null,
+    "duration": null,
+    "likes": [],
+    "dislikes": [],
+    "children": [
+      {
+        "id": "1777983221563",
+        "type": "update",
+        "author": {
+          "id": 2,
+          "username": "Bob",
+          "email": "bob@hotmail.se"
+        },
+        "body": "..",
+        "visibility": "public",
+        "date": "2026-05-05T12:13:41.563Z",
+        "title": "comment",
+        "image": null,
+        "location": null,
+        "duration": null,
+        "likes": [],
+        "dislikes": [],
+        "children": []
+      }
+    ]
+  },
+  {
+    "id": "1777974815478",
+    "type": "initiative",
+    "title": "awdawd",
+    "author": {
+      "id": 1,
+      "username": "Admin",
+      "email": "admin@admin.se"
+    },
+    "body": "awdawdawd",
+    "visibility": "public",
+    "date": "2026-05-05T09:53:35.478Z",
+    "image": null,
+    "location": null,
+    "duration": null,
+    "likes": [],
+    "dislikes": [],
+    "children": []
+  },
+  {
+    "id": "1777974960492",
+    "type": "initiative",
+    "title": "HEjsan",
+    "author": {
+      "id": 8,
+      "username": "Emma",
+      "email": "emma@gmail.com"
+    },
+    "body": "Jag är emma",
+    "visibility": "public",
+    "date": "2026-05-05T09:56:00.492Z",
+    "image": null,
+    "location": null,
+    "duration": null,
+    "likes": [],
+    "dislikes": [],
+    "children": []
+  },
+  {
+    "id": "1777975338452",
+    "type": "initiative",
+    "title": "Hejsan jag är Majken",
+    "author": {
+      "id": 3,
+      "username": "Majken",
+      "email": "majken00@gmail.com"
+    },
+    "body": "hihihihihih",
+    "visibility": "public",
+    "date": "2026-05-05T10:02:18.452Z",
+    "image": null,
+    "location": null,
+    "duration": null,
+    "likes": [],
+    "dislikes": [],
+    "children": []
+  },
+  {
+    "id": "1777975361470",
+    "type": "initiative",
+    "title": "hejsan vem e jag???",
+    "author": {
+      "id": 5,
+      "username": "Fredrik",
+      "email": "fredde@proton.se"
+    },
+    "body": "awdawdawd",
+    "visibility": "public",
+    "date": "2026-05-05T10:02:41.470Z",
+    "image": null,
+    "location": null,
+    "duration": null,
+    "likes": [],
+    "dislikes": [],
+    "children": []
+  },
+  {
+    "id": "1777975385821",
+    "type": "initiative",
+    "title": "Hejsan vem",
+    "author": {
+      "id": 6,
+      "username": "Lina",
+      "email": "lina02@hotmail.se"
+    },
+    "body": "Veeem e jag",
+    "visibility": "public",
+    "date": "2026-05-05T10:03:05.821Z",
+    "image": null,
+    "location": null,
+    "duration": null,
+    "likes": [],
+    "dislikes": [],
+    "children": []
+  },
+  {
+    "id": "1777978667378",
+    "type": "initiative",
+    "title": "bök",
+    "author": {
+      "id": 2,
+      "username": "Bob",
+      "email": "bob@hotmail.se"
+    },
+    "body": "bruv",
+    "visibility": "public",
+    "date": "2026-05-05T10:57:47.378Z",
+    "image": null,
+    "location": null,
+    "duration": null,
+    "likes": [],
+    "dislikes": [],
+    "children": []
+  },
+  {
+    "id": "1777978705779",
+    "type": "initiative",
+    "title": "bruv",
+    "author": {
+      "id": 2,
+      "username": "Bob",
+      "email": "bob@hotmail.se"
+    },
+    "body": "bruv",
+    "visibility": "sofielund",
+    "date": "2026-05-05T10:58:25.779Z",
+    "image": null,
+    "location": null,
+    "duration": null,
+    "likes": [],
+    "dislikes": [],
+    "children": []
+  },
+  {
+    "id": "1777980707379",
+    "type": "initiative",
+    "title": "kirse",
+    "author": {
+      "id": 23,
+      "username": "NyyTestNamn",
+      "email": "Test@Testsson.test"
+    },
+    "body": "berg",
+    "visibility": "kirseberg",
+    "date": "2026-05-05T11:31:47.379Z",
+    "image": null,
+    "location": null,
+    "duration": null,
+    "likes": [],
+    "dislikes": [],
+    "children": []
+  },
+  {
+    "id": "1777981510025",
+    "type": "initiative",
+    "title": "soff",
+    "author": {
+      "id": 2,
+      "username": "Bob",
+      "email": "bob@hotmail.se"
+    },
+    "body": "sfoie",
+    "visibility": "sofielund",
+    "date": "2026-05-05T11:45:10.025Z",
+    "image": null,
+    "location": null,
+    "duration": null,
+    "likes": [],
+    "dislikes": [],
+    "children": [
+      {
+        "id": "1777983207330",
+        "type": "update",
+        "author": {
+          "id": 2,
+          "username": "Bob",
+          "email": "bob@hotmail.se"
+        },
+        "body": "comment",
+        "visibility": "sofielund",
+        "date": "2026-05-05T12:13:27.330Z",
+        "title": "bruv",
+        "image": null,
+        "location": null,
+        "duration": null,
+        "likes": [],
+        "dislikes": [],
+        "children": []
+      }
+    ]
+  },
+  {
+    "id": "1777982392370",
+    "type": "initiative",
+    "title": "KIRSE",
+    "author": {
+      "id": 2,
+      "username": "Bob",
+      "email": "bob@hotmail.se"
+    },
+    "body": "bruv",
+    "visibility": "kirseberg",
+    "date": "2026-05-05T11:59:52.370Z",
+    "image": null,
+    "location": null,
+    "duration": null,
+    "likes": [],
+    "dislikes": [],
+    "children": []
+  }
+]

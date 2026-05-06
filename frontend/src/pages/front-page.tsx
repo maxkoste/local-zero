@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Stack, Box, Button, Typography } from "@mui/material";
-import { initiatives as mockInitiatives, IContent } from "shared";
+import { IContent } from "shared";
 import { ContentCard } from "../components/content-card";
 import { useNavigate } from "react-router-dom";
 
@@ -10,7 +10,12 @@ export function FrontPage() {
     const [error, setError] = useState<string | null>(null);
 
     function fetchInitiatives() {
-        fetch("http://localhost:3001/api/initiatives")
+        const token = localStorage.getItem("token");
+        fetch(`http://localhost:3001/api/initiatives`,{
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        })
             .then((res) => res.json())
             .then((data) => setApiInitiatives(data))
             .catch(() => setError("Could not load initiatives from server."));
@@ -27,7 +32,8 @@ export function FrontPage() {
         fetchInitiatives();
     }
 
-    const allInitiatives = [...mockInitiatives, ...apiInitiatives]
+    
+    const allInitiatives = [...apiInitiatives]
         .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 
     return (

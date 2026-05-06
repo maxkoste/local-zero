@@ -9,5 +9,11 @@
   },
   "devDependencies": {
     "concurrently": "^8.2.2"
+  },
+  "dependencies": {
+    "cookie-parser": "^1.4.7",
+    "dotenv": "^17.4.2",
+    "jsonwebtoken": "^9.0.3",
+    "typescript": "^6.0.2"
   }
 }

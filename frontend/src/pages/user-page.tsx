@@ -1,29 +1,30 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
 import Avatar from '@mui/material/Avatar';
 import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
+import Button from '@mui/material/Button';
 import { styled } from '@mui/material/styles';
+import { useNavigate } from 'react-router-dom';
 
 // Placeholder
-const MOCK_USER = {
-	name: 'Maggan Lopez',
-	location: 'Möllan',
-	bio: 'Jag gillar att dansa och fiska',
-	email: 'maggan@lopez.se',
-	avatar: undefined, //här hade man kunnat ha en bild det hade vart kul
+
+//TODO: Ändra om i variabelnamnen så att de faktiskt stämmer överrens mellan front-och backend
+type User = {
+	userId: number;
+	username: string;
+	location: string;
+	bio: string;
+	email: string;
+	avatar?: string;
 	stats: {
-		Initiativ: 24, //ingen aning om detta ska visas men det kan vara kul
-		CarbonScore: 1340, //same här, helt random score kanske är mycket ? Kanske är lite ?
-	},
-	recentActivity: [
-		{ id: 1, text: 'Startade initiativet "hur man tränar en drake på ett hållbart vis"', date: '2 days ago' },
-		{ id: 2, text: 'Kommenterade på Lisas initiativ "Härligt lisa ! Du är verkligen lika dum som du är ful! Hahah skojjar bah lisa!"', date: '1 week ago' },
-		{ id: 3, text: 'Lade upp ett inlägg "Hörrni nu får det fan vara nog med alla dessa burkar på innergården"', date: '2 weeks ago' },
-	],
+		Initiativ: number;
+		CarbonScore: number;
+	};
+	recentActivity: { id: number; text: string; date: string }[];
 };
 
 const Card = styled(Paper)(({ theme }) => ({
@@ -32,7 +33,7 @@ const Card = styled(Paper)(({ theme }) => ({
 	padding: theme.spacing(3),
 	border: `1px solid ${theme.palette.divider}`,
 	boxShadow: 'none',
-	alignItems: 'center'
+	alignItems: 'center',
 }));
 
 const StatBox = styled(Box)(({ theme }) => ({
@@ -40,7 +41,7 @@ const StatBox = styled(Box)(({ theme }) => ({
 	padding: theme.spacing(1.5),
 	borderRadius: 12,
 	backgroundColor: theme.palette.action.hover,
-	alignItems:'center'
+	alignItems: 'center',
 }));
 
 const ActivityRow = styled(Box)(({ theme }) => ({
@@ -62,40 +63,92 @@ const Label = styled(Typography)(({ theme }) => ({
 	marginBottom: theme.spacing(0.5),
 }));
 
+//TODO: Måste fixa någon sorts lagring på bio, och annan data som inte skapas när man signar upp.
+
 export function UserPage() {
-	const user = MOCK_USER;
+	const [user, setUser] = useState<User | null>(null);
+	const [loading, setLoading] = useState(true);
+	const navigate = useNavigate();
+
+	useEffect(() => {
+		const loadUser = async () => {
+			try {
+				const token = localStorage.getItem('token');
+
+				const res = await fetch('http://localhost:3001/api/me', {
+					headers: {
+						Authorization: `Bearer ${token}`
+					}
+				});
+
+				console.log("Authentication user")
+
+				if (!res.ok) throw new Error();
+				const data = await res.json();
+
+				console.log("Data: " + JSON.stringify(data));
+				const user = data.user;
+
+				const userId = user.id;
+
+				console.log("userId " + userId);
+
+				const profileRes = await fetch(`http://localhost:3001/api/users/${userId}/profile`,{
+					headers: {
+						Authorization: `Bearer ${token}`
+					}
+				});
+
+				const profileData = await profileRes.json();
+
+				console.log("Profile Data " + JSON.stringify(profileRes));
+
+				setUser(profileData);
+				
+			} catch (error) {
+				console.error("Error loading user data:", error);
+			} finally {
+				setLoading(false);
+			}
+		};
+
+		loadUser();
+	}, []);
+
+	if (loading) {
+		return <Box sx={{ p: 4 }}>Loading profile...</Box>;
+	}
+
+	if (!user) {
+		return <Box sx={{ p: 4 }}>Could not load user.</Box>;
+	}
 
 	return (
 		<Box sx={{ maxWidth: 900, mx: 'auto', px: 2, py: 4 }}>
 			<Grid container spacing={3}>
 
-				{/*Left Column - profile pic and initiativ and shietzzz*/}
+				{/* Left column */}
 				<Grid size={{ xs: 12, md: 4 }}>
 					<Card>
 						<Box sx={{ textAlign: 'center', mb: 3 }}>
 							<Avatar
 								src={user.avatar}
 								sx={{
-									width: 88,
-									height: 88,
-									mx: 'auto',
-									mb: 2,
-									fontSize: 28,
-									bgcolor: 'primary.light',
-									color: 'primary.dark',
-									fontWeight: 600,
+									width: 88, height: 88, mx: 'auto', mb: 2,
+									fontSize: 28, bgcolor: 'primary.light',
+									color: 'primary.dark', fontWeight: 600,
 								}}
 							>
-								{user.name.split(' ').map(n => n[0]).join('')}
+								{user.username.split(' ').map(n => n[0]).join('')}
 							</Avatar>
 							<Typography variant="h6" sx={{ fontWeight: 600, lineHeight: 1.2 }}>
-								{user.name}
+								{user.username}
 							</Typography>
 						</Box>
 
 						<Divider sx={{ my: 2 }} />
 
-						<Grid container spacing={1} sx={{ mb: 2, justifyContent:'center' }}>
+						<Grid container spacing={1} sx={{ mb: 2, justifyContent: 'center' }}>
 							{Object.entries(user.stats).map(([key, val]) => (
 								<Grid size={8} key={key}>
 									<StatBox>
@@ -109,10 +162,18 @@ export function UserPage() {
 								</Grid>
 							))}
 						</Grid>
+						<Button
+							variant="outlined"
+							fullWidth
+							onClick={() => navigate('/chat/chat-1')}
+							sx={{ mt: 1, borderRadius: 2 }}
+						>
+							Skicka meddelande
+						</Button>
 					</Card>
 				</Grid>
 
-				{/*Right column*/}
+				{/* Right column */}
 				<Grid size={{ xs: 12, md: 8 }}>
 					<Grid container spacing={3}>
 
@@ -125,7 +186,7 @@ export function UserPage() {
 							</Card>
 						</Grid>
 
-						<Grid size={{ xs: 12, sm:  12}}>
+						<Grid size={{ xs: 12, sm: 12 }}>
 							<Card sx={{ height: '100%' }}>
 								<Label>Contact</Label>
 								{[
@@ -133,11 +194,7 @@ export function UserPage() {
 									{ label: 'Location', value: user.location },
 								].map(({ label, value }) => (
 									<Box key={label} sx={{ mb: 1.5 }}>
-										<Typography
-											variant="caption"
-											color="text.disabled"
-											sx={{ display: 'block', fontWeight: 600 }}
-										>
+										<Typography variant="caption" color="text.disabled" sx={{ display: 'block', fontWeight: 600 }}>
 											{label}
 										</Typography>
 										<Typography variant="body2">{value}</Typography>
@@ -145,6 +202,7 @@ export function UserPage() {
 								))}
 							</Card>
 						</Grid>
+
 						<Grid size={12}>
 							<Card>
 								<Label>Recent activity</Label>
@@ -167,4 +225,3 @@ export function UserPage() {
 		</Box>
 	);
 }
-
