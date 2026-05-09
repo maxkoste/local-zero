@@ -199,11 +199,45 @@ app.post('/api/users/:id/eco-actions', (req, res) => {
 	};
 
 	const updated = storage.addEcoAction(userId, action);
+
+    // Uppdatera CarbonScore i profilen
+    const actionPoints: Record<string, number> = {
+        BIKE: 10, TREE: 20, PANTA: 5, CEO: 1000, OIL: -500, FLIGHT: -50,
+    };
+    const points = actionPoints[key] ?? 0;
+    const profile = storage.getProfileByUserId(userId);
+    if (profile) {
+        storage.updateProfile(userId, {
+            stats: {
+                Initiativ: profile.stats.Initiativ,
+                CarbonScore: profile.stats.CarbonScore + points,
+            }
+        });
+    }
+
 	if (!updated) {
 		return res.status(404).json({ error: 'User not found' });
 	}
 
 	res.status(201).json(action);
+});
+
+app.get('/api/community-scores', (req, res) => {
+    const payload = requireAuth(req, res);
+    if (!payload) return;
+
+    const profiles = storage.getProfiles();
+    const users = storage.getUsers();
+    const scores: Record<string, number> = {};
+
+    for (const profile of profiles) {
+        const user = users.find(u => u.id === profile.userId);
+        if (!user) continue;
+        const vis = user.visibility.toLowerCase();
+        scores[vis] = (scores[vis] ?? 0) + profile.stats.CarbonScore;
+    }
+
+    res.json(scores);
 });
 
 

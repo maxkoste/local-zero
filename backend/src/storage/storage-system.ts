@@ -179,6 +179,10 @@ class StorageSystem {
 
     //Profiles
 
+    getProfiles(): ProfileRecord[] {
+        return this.profiles;
+    }
+
     getProfileByUserId(userId: number): ProfileRecord | undefined {
         return this.profiles.find(p => p.userId === userId);
     }
