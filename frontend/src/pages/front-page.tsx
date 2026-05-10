@@ -21,6 +21,7 @@ type LoggedInUser = {
     id: number;
     username: string;
     email: string;
+    role: 'user' | 'admin';
 };
 
 export function FrontPage() {
@@ -30,11 +31,10 @@ export function FrontPage() {
     const [error, setError] = useState<string | null>(null);
     const [activeTab, setActiveTab] = useState(0);
     const [loggedInUser, setLoggedInUser] = useState<LoggedInUser | null>(null);
-    const [userVisibility, setUserVisibility] = useState<string>('public');
+    const [userVisibility, setUserVisibility] = useState<string>('kirseberg');
 
     const token = localStorage.getItem("token");
 
-    // Fetch current user info + their visibility from /api/users/:id
     useEffect(() => {
         async function loadCurrentUser() {
             try {
@@ -43,16 +43,16 @@ export function FrontPage() {
                 });
                 if (!meRes.ok) return;
                 const meData = await meRes.json();
-                setLoggedInUser(meData.user);
+                setLoggedInUser(meData.user);  // now includes role
 
                 const userRes = await fetch(`http://localhost:3001/api/users/${meData.user.id}`, {
                     headers: { Authorization: `Bearer ${token}` }
                 });
                 if (!userRes.ok) return;
                 const userData = await userRes.json();
-                setUserVisibility(userData.visibility?.toLowerCase() ?? 'public');
+                setUserVisibility(userData.visibility?.toLowerCase() ?? 'kirseberg');
             } catch {
-                // fail silently, defaults to 'public'
+                // fail silently
             }
         }
         loadCurrentUser();
@@ -89,14 +89,12 @@ export function FrontPage() {
         fetchInitiatives();
     }
 
-    // Users with visibility "public" are admins and see all tabs
-    const isAdmin = userVisibility === 'public';
+    const isAdmin = loggedInUser?.role === 'admin';
 
     const visibleNeighborhoods = isAdmin
         ? ALL_NEIGHBORHOODS
         : ALL_NEIGHBORHOODS.filter(n => n === 'public' || n === userVisibility);
 
-    // Clamp activeTab if visible tabs change
     const safeTab = Math.min(activeTab, visibleNeighborhoods.length - 1);
     const activeNeighborhood = visibleNeighborhoods[safeTab];
 
@@ -114,7 +112,6 @@ export function FrontPage() {
 
     return (
         <Box sx={{ maxWidth: 700, margin: "0 auto", padding: 2 }}>
-
             <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", mb: 2 }}>
                 <Typography variant="h6">Initiatives</Typography>
                 <Button variant="contained" onClick={() => navigate("/create-initiative")}>
@@ -135,7 +132,6 @@ export function FrontPage() {
                     ))}
                 </Tabs>
 
-                {/* Community score banner – hidden on the "All" tab */}
                 {activeNeighborhood !== 'public' && (
                     <Box sx={{
                         px: 2.5, py: 1.5,

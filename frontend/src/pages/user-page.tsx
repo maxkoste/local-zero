@@ -39,6 +39,12 @@ type User = {
     recentActivity: { id: number; text: string; date: string }[];
 };
 
+// Extra info from /api/users/:id (not in profile)
+type UserRecord = {
+    visibility: string;
+    role: 'user' | 'admin';
+};
+
 const Card = styled(Paper)(({ theme }) => ({
     backgroundColor: theme.palette.background.paper,
     borderRadius: 16,
@@ -77,6 +83,7 @@ const Label = styled(Typography)(({ theme }) => ({
 
 export function UserPage() {
     const [user, setUser] = useState<User | null>(null);
+    const [userRecord, setUserRecord] = useState<UserRecord | null>(null);
     const [loading, setLoading] = useState(true);
     const [selectedAction, setSelectedAction] = useState<string>('BIKE');
     const [logging, setLogging] = useState(false);
@@ -103,13 +110,19 @@ export function UserPage() {
                     if (!userId) userId = String(meData.user.id);
                 }
 
+                // Fetch profile (bio, stats, etc.)
                 const profileRes = await fetch(`http://localhost:3001/api/users/${userId}/profile`, {
                     headers: { Authorization: `Bearer ${token}` }
                 });
-
                 if (!profileRes.ok) throw new Error('Profile fetch failed');
-                const profileData = await profileRes.json();
-                setUser(profileData);
+                setUser(await profileRes.json());
+
+                // Fetch user record (visibility/neighborhood + role)
+                const userRes = await fetch(`http://localhost:3001/api/users/${userId}`, {
+                    headers: { Authorization: `Bearer ${token}` }
+                });
+                if (userRes.ok) setUserRecord(await userRes.json());
+
             } catch (error) {
                 console.error('Error loading user data:', error);
             } finally {
@@ -145,10 +158,7 @@ export function UserPage() {
 
             setUser(prev => prev ? {
                 ...prev,
-                stats: {
-                    ...prev.stats,
-                    CarbonScore: prev.stats.CarbonScore + pointDelta,
-                }
+                stats: { ...prev.stats, CarbonScore: prev.stats.CarbonScore + pointDelta }
             } : prev);
 
             setSnackbar({
@@ -189,6 +199,25 @@ export function UserPage() {
                             <Typography variant="h6" sx={{ fontWeight: 600, lineHeight: 1.2 }}>
                                 {user.username}
                             </Typography>
+                            {/* Role + neighborhood badges */}
+                            <Box sx={{ display: 'flex', gap: 1, justifyContent: 'center', mt: 1, flexWrap: 'wrap' }}>
+                                {userRecord?.role && (
+                                    <Chip
+                                        label={userRecord.role}
+                                        size="small"
+                                        color={userRecord.role === 'admin' ? 'warning' : 'default'}
+                                        sx={{ textTransform: 'capitalize', fontSize: 11 }}
+                                    />
+                                )}
+                                {userRecord?.visibility && (
+                                    <Chip
+                                        label={userRecord.visibility.replace('_', ' ')}
+                                        size="small"
+                                        variant="outlined"
+                                        sx={{ textTransform: 'capitalize', fontSize: 11 }}
+                                    />
+                                )}
+                            </Box>
                         </Box>
 
                         <Divider sx={{ my: 2 }} />

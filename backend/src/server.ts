@@ -64,11 +64,11 @@ app.get('/api/users/:id', (req, res) => {
 		return res.status(404).json({ error: 'User not found' });
 	}
 
-	res.json(user);
+    res.json({ id: user.id, username: user.username, email: user.email, visibility: user.visibility, role: user.role });
 });
 
 app.post('/api/users', (req, res) => {
-	const { username, password, email, visibility } = req.body;
+	const { username, password, email, visibility, role } = req.body;
 
 	if (!username || !password || !email || !visibility) {
 		return res.status(400).json({ error: 'username, password, email, and visibility are required' });
@@ -77,8 +77,8 @@ app.post('/api/users', (req, res) => {
 	const users = storage.getUsers();
 	const nextId = users.length ? Math.max(...users.map(u => u.id)) + 1 : 1;
 
-	const newUser: UserRecord = { id: nextId, username, password, email, visibility, ecoActions: [] };
-	storage.addUser(newUser);
+    const newUser: UserRecord = { id: nextId, username, password, email, visibility, role: role ?? 'user', ecoActions: [] };
+    storage.addUser(newUser);
 
 	const newProfile: ProfileRecord = {
 		userId: nextId,
@@ -287,13 +287,8 @@ app.get('/api/me', (req, res) => {
 			return res.status(404).json({ error: 'User not found' });
 		}
 
-		return res.status(200).json({
-			user: {
-				id: user.id,
-				username: user.username,
-				email: user.email
-			}
-		});
+        return res.status(200).json({ user: { id: user.id, username: user.username, email: user.email, role: user.role } });
+
 	} catch (error) {
 		return res.status(401).json({ error: 'Invalid or expired token' });
 	}

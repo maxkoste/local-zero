@@ -8,27 +8,23 @@ export function SignUp() {
         username: '',
         password: '',
         email: '',
-        visibility: Visibility.PUBLIC
+        visibility: Visibility.KIRSEBERG,
+        role: 'user',
     });
     const [error, setError] = useState<string | null>(null);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-        setFormData({
-            ...formData,
-            [e.target.name]: e.target.value
-        });
+        setFormData({ ...formData, [e.target.name]: e.target.value });
     };
 
-    const handleSubmit = async (e: React.FormEvent) => {   // <-- var React.ChangeEvent, ska vara React.FormEvent
+    const handleSubmit = async (e: React.SyntheticEvent) => {
         e.preventDefault();
         setError(null);
 
         try {
             const res = await fetch('http://localhost:3001/api/users', {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
+                headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(formData),
             });
 
@@ -38,10 +34,7 @@ export function SignUp() {
                 return;
             }
 
-            const data = await res.json();
-            console.log('Created user:', data);
-            navigate('/');  // redirect to login after signup
-
+            navigate('/');
         } catch (err) {
             console.error('Error:', err);
             setError('Could not connect to server.');
@@ -50,7 +43,7 @@ export function SignUp() {
 
     return (
         <>
-            <h1>THIS IS FAKE AND UNSAFE USE A DUMMY PSWRD</h1>
+            <h1>THIS IS FAKE AND UNSAFE – USE A DUMMY PASSWORD</h1>
             {error && <p style={{ color: 'red' }}>{error}</p>}
             <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1rem', width: '300px' }}>
                 <label>
@@ -58,21 +51,28 @@ export function SignUp() {
                     <input type="text" name="username" value={formData.username} onChange={handleChange} required />
                 </label>
                 <label>
-                    Email:
+                    Email
                     <input type="email" name="email" value={formData.email} onChange={handleChange} required />
                 </label>
                 <label>
-                    Password:
+                    Password
                     <input type="password" name="password" value={formData.password} onChange={handleChange} required />
                 </label>
                 <label>
-                    Visibility:
+                    Neighborhood
                     <select name="visibility" value={formData.visibility} onChange={handleChange}>
-                        {Object.keys(Visibility).map((key) => (
-                            <option key={key} value={Visibility[key as keyof typeof Visibility]}>
-                                {key}
-                            </option>
-                        ))}
+                        {Object.entries(Visibility)
+                            .filter(([, val]) => val !== Visibility.PUBLIC)
+                            .map(([key, val]) => (
+                                <option key={key} value={val}>{key}</option>
+                            ))}
+                    </select>
+                </label>
+                <label>
+                    Role
+                    <select name="role" value={formData.role} onChange={handleChange}>
+                        <option value="user">User</option>
+                        <option value="admin">Admin</option>
                     </select>
                 </label>
                 <button type="submit">Sign Up</button>

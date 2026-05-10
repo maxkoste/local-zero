@@ -62,6 +62,7 @@ export interface UserRecord {
     password: string;
     email: string;
     visibility: string;
+    role?: 'user' | 'admin';
     ecoActions?: EcoAction[];
 }
 
