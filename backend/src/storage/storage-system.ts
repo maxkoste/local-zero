@@ -62,6 +62,7 @@ export interface UserRecord {
     password: string;
     email: string;
     visibility: string;
+    role?: 'user' | 'admin';
     ecoActions?: EcoAction[];
 }
 
@@ -178,6 +179,10 @@ class StorageSystem {
     }
 
     //Profiles
+
+    getProfiles(): ProfileRecord[] {
+        return this.profiles;
+    }
 
     getProfileByUserId(userId: number): ProfileRecord | undefined {
         return this.profiles.find(p => p.userId === userId);
