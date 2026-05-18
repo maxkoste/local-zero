@@ -66,11 +66,12 @@ export function InitiativePage() {
 		setError(null);
 
 		try {
+			const token = localStorage.getItem('token');
 			const response = await fetch(
 				`http://localhost:3001/api/initiatives/${id}/children`,
 				{
 					method: "POST",
-					headers: { "Content-Type": "application/json" },
+					headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
 					body: JSON.stringify({
 						type: "update",
 						title: updateTitle.trim(),
@@ -122,6 +123,7 @@ export function InitiativePage() {
 								content={update}
 								initiativeId={id!}
 								onRefresh={fetchInitiative}
+								author={author}
 							/>
 						))}
 					</>

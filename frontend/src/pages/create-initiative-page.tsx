@@ -57,9 +57,10 @@ export function CreateInitiativePage() {
 		setError(null);
 
 		try {
+			const token = localStorage.getItem('token');
 			const response = await fetch("http://localhost:3001/api/initiatives", {
 				method: "POST",
-				headers: { "Content-Type": "application/json" },
+				headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
 				body: JSON.stringify({
 					title: title.trim(),
 					author: author,

@@ -329,6 +329,45 @@
         "likes": [],
         "dislikes": [],
         "children": []
+      },
+      {
+        "id": "1779105522624",
+        "type": "update",
+        "author": {
+          "id": 2,
+          "username": "Bob",
+          "email": "bob@hotmail.se"
+        },
+        "body": "gkjfh",
+        "visibility": "sofielund",
+        "date": "2026-05-18T11:58:42.624Z",
+        "title": "sdhf",
+        "image": null,
+        "location": null,
+        "duration": null,
+        "likes": [],
+        "dislikes": [],
+        "children": []
+      },
+      {
+        "id": "1779105666610",
+        "type": "update",
+        "author": {
+          "id": 2,
+          "username": "Bob",
+          "email": "bob@hotmail.se",
+          "role": "user"
+        },
+        "body": "what",
+        "visibility": "sofielund",
+        "date": "2026-05-18T12:01:06.610Z",
+        "title": "wow",
+        "image": null,
+        "location": null,
+        "duration": null,
+        "likes": [],
+        "dislikes": [],
+        "children": []
       }
     ]
   },
