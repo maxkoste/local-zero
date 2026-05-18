@@ -4,6 +4,7 @@ import { storage, ContentRecord, UserRecord, ChatRecord, MessageRecord, EcoActio
 import dotenv from 'dotenv';
 import jwt from 'jsonwebtoken';
 import cookieParser from 'cookie-parser';
+import { Notification } from 'shared';
 
 dotenv.config();
 
@@ -588,7 +589,86 @@ app.delete('/api/chats/:id/messages/:messageId', (req, res) => {
 	res.status(200).json({ message: 'Message deleted' });
 });
 
-
+app.get('/api/notifications', (req, res) => {
+    const payload = requireAuth(req, res);
+    if (!payload) return;
+ 
+    const userId = Number(req.query.userId);
+    if (!userId || isNaN(userId)) {
+        return res.status(400).json({ error: 'userId query param is required' });
+    }
+ 
+    const sinceParam = req.query.since as string | undefined;
+    const since = sinceParam ? new Date(sinceParam) : new Date(Date.now() - 24 * 60 * 60 * 1000);
+ 
+    const user = storage.getUserById(userId);
+    if (!user) {
+        return res.status(404).json({ error: 'User not found' });
+    }
+ 
+    const userNeighborhood = user.visibility?.toLowerCase() ?? null;
+    const initiatives = storage.getInitiatives();
+    const notifications: Notification[] = [];
+ 
+    function walkChildren(
+        nodes: import('./storage/storage-system').ContentRecord[],
+        cb: (node: import('./storage/storage-system').ContentRecord) => void
+    ) {
+        for (const node of nodes) {
+            cb(node);
+            if (node.children?.length) walkChildren(node.children, cb);
+        }
+    }
+ 
+    for (const initiative of initiatives) {
+        const initiativeAuthorId = initiative.author.id;
+        const initiativeDate = new Date(initiative.date);
+ 
+        if (initiativeAuthorId === userId) {
+            walkChildren(initiative.children, (node) => {
+                if (node.author.id === userId) return; // ignore your own replies
+                const nodeDate = new Date(node.date);
+                if (nodeDate <= since) return;
+ 
+                notifications.push({
+                    id: `reply-${node.id}`,
+                    type: 'reply',
+                    initiativeId: initiative.id,
+                    initiativeTitle: initiative.title ?? '(untitled)',
+                    actorUsername: node.author.username,
+                    contentType: node.type,   // 'update' | 'comment'
+                    body: node.body,
+                    date: node.date,
+                    read: false,
+                });
+            });
+        }
+ 
+        if (
+            userNeighborhood &&
+            initiativeAuthorId !== userId &&
+            initiativeDate > since &&
+            initiative.visibility.toLowerCase() === userNeighborhood
+        ) {
+            notifications.push({
+                id: `neighborhood-${initiative.id}`,
+                type: 'neighborhood',
+                initiativeId: initiative.id,
+                initiativeTitle: initiative.title ?? '(untitled)',
+                actorUsername: initiative.author.username,
+                contentType: 'initiative',
+                body: initiative.body,
+                date: initiative.date,
+                read: false,
+            });
+        }
+    }
+ 
+    // Newest first
+    notifications.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+ 
+    res.json(notifications);
+});
 
 //Initialization
 

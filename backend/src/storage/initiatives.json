@@ -329,6 +329,45 @@
         "likes": [],
         "dislikes": [],
         "children": []
+      },
+      {
+        "id": "1779105522624",
+        "type": "update",
+        "author": {
+          "id": 2,
+          "username": "Bob",
+          "email": "bob@hotmail.se"
+        },
+        "body": "gkjfh",
+        "visibility": "sofielund",
+        "date": "2026-05-18T11:58:42.624Z",
+        "title": "sdhf",
+        "image": null,
+        "location": null,
+        "duration": null,
+        "likes": [],
+        "dislikes": [],
+        "children": []
+      },
+      {
+        "id": "1779105666610",
+        "type": "update",
+        "author": {
+          "id": 2,
+          "username": "Bob",
+          "email": "bob@hotmail.se",
+          "role": "user"
+        },
+        "body": "what",
+        "visibility": "sofielund",
+        "date": "2026-05-18T12:01:06.610Z",
+        "title": "wow",
+        "image": null,
+        "location": null,
+        "duration": null,
+        "likes": [],
+        "dislikes": [],
+        "children": []
       }
     ]
   },
@@ -350,5 +389,66 @@
     "likes": [],
     "dislikes": [],
     "children": []
+  },
+  {
+    "id": "1779108819195",
+    "type": "initiative",
+    "title": "Hello",
+    "author": {
+      "id": 1,
+      "username": "Admin",
+      "email": "admin@admin.se",
+      "role": "admin"
+    },
+    "body": "goodbye",
+    "visibility": "folkets_park",
+    "date": "2026-05-18T12:53:39.195Z",
+    "image": null,
+    "location": null,
+    "duration": null,
+    "likes": [],
+    "dislikes": [],
+    "children": [
+      {
+        "id": "1779108910762",
+        "type": "update",
+        "author": {
+          "id": 30,
+          "username": "Ragnhild",
+          "email": "ragnhild@gmail.com",
+          "role": "user"
+        },
+        "body": "najs",
+        "visibility": "folkets_park",
+        "date": "2026-05-18T12:55:10.762Z",
+        "title": "Siick brev",
+        "image": null,
+        "location": null,
+        "duration": null,
+        "likes": [],
+        "dislikes": [],
+        "children": []
+      },
+      {
+        "id": "1779109014659",
+        "type": "update",
+        "author": {
+          "id": 30,
+          "username": "Ragnhild",
+          "email": "ragnhild@gmail.com",
+          "role": "user"
+        },
+        "body": "den suger faktiskt",
+        "visibility": "folkets_park",
+        "date": "2026-05-18T12:56:54.659Z",
+        "title": "Nvm",
+        "image": null,
+        "location": null,
+        "duration": null,
+        "likes": [],
+        "dislikes": [],
+        "children": []
+      }
+    ]
   }
 ]
