@@ -146,54 +146,38 @@ export function ChatPage() {
     }, [chat?.children.length]);
 
     async function handleSend() {
-        if (!messageBody.trim()) return;
+        if (!messageBody.trim() || !currentUser) return;
+
         setSending(true);
         setError(null);
 
-        // ── POST /api/chats/:id/messages ─────────────────────────────────────
-        // Expected request body (mirrors your ContentRecord pattern):
-        // {
-        //     sender: { id, username, email },
-        //     body: string,
-        //     date: new Date().toISOString(),
-        // }
-        //
-        // Wire up once storage.addMessage(chatId, message) and
-        // POST /api/chats/:id/messages exist:
-        //
-        // try {
-        //     const res = await fetch(`http://localhost:3001/api/chats/${id}/messages`, {
-        //         method: "POST",
-        //         headers: { "Content-Type": "application/json" },
-        //         body: JSON.stringify({
-        //             sender: currentUser,
-        //             body: messageBody.trim(),
-        //             date: new Date().toISOString(),
-        //         }),
-        //     });
-        //     if (!res.ok) {
-        //         const data = await res.json();
-        //         throw new Error(data.error ?? "Something went wrong.");
-        //     }
-        //     setMessageBody("");
-        //     await fetchChat();
-        // } catch (err: any) {
-        //     setError(err.message);
-        // } finally {
-        //     setSending(false);
-        // }
-        // ────────────────────────────────────────────────────────────────────
+        try {
+            const token = localStorage.getItem("token");
 
-        // Mock: append locally
-        const newMsg = {
-            id: `msg-${Date.now()}`,
-            sender: currentUser,
-            body: messageBody.trim(),
-            date: new Date(),
-        };
-        setChat((prev: any) => ({ ...prev, children: [...prev.children, newMsg] }));
-        setMessageBody("");
-        setSending(false);
+            const res = await fetch(`http://localhost:3001/api/chats/${id}/messages`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`,
+                },
+                body: JSON.stringify({
+                    sender: currentUser,
+                    body: messageBody.trim(),
+                }),
+            });
+
+            if (!res.ok) {
+                const data = await res.json();
+                throw new Error(data.error ?? "Something went wrong.");
+            }
+
+            setMessageBody("");
+            await fetchChat();
+        } catch (err: any) {
+            setError(err.message);
+        } finally {
+            setSending(false);
+        }
     }
 
     async function handleDelete(messageId: string) {
