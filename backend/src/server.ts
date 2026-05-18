@@ -610,13 +610,66 @@ app.get('/api/notifications', (req, res) => {
     const initiatives = storage.getInitiatives();
     const notifications: Notification[] = [];
  
+    const seen = new Set<string>();
+ 
+    type ContentRecord = import('./storage/storage-system').ContentRecord;
+ 
     function walkChildren(
-        nodes: import('./storage/storage-system').ContentRecord[],
-        cb: (node: import('./storage/storage-system').ContentRecord) => void
+        nodes: ContentRecord[],
+        parentAuthorId: number,
+        initiativeId: string,
+        initiativeTitle: string,
+        initiativeAuthorId: number,
     ) {
         for (const node of nodes) {
-            cb(node);
-            if (node.children?.length) walkChildren(node.children, cb);
+            const nodeDate = new Date(node.date);
+            const notifId = `reply-${node.id}`;
+ 
+            if (
+                node.author.id !== userId &&   // not your own post
+                nodeDate > since &&             // within the time window
+                !seen.has(notifId)             // not already queued
+            ) {
+                if (initiativeAuthorId === userId && parentAuthorId === userId) {
+                    seen.add(notifId);
+                    notifications.push({
+                        id: notifId,
+                        type: 'reply',
+                        initiativeId,
+                        initiativeTitle,
+                        actorUsername: node.author.username,
+                        contentType: node.type,
+                        body: node.body,
+                        date: node.date,
+                        read: false,
+                    });
+                }
+ 
+                else if (parentAuthorId === userId) {
+                    seen.add(notifId);
+                    notifications.push({
+                        id: notifId,
+                        type: 'thread-reply',
+                        initiativeId,
+                        initiativeTitle,
+                        actorUsername: node.author.username,
+                        contentType: node.type,
+                        body: node.body,
+                        date: node.date,
+                        read: false,
+                    });
+                }
+            }
+ 
+            if (node.children?.length) {
+                walkChildren(
+                    node.children,
+                    node.author.id,
+                    initiativeId,
+                    initiativeTitle,
+                    initiativeAuthorId,
+                );
+            }
         }
     }
  
@@ -624,25 +677,13 @@ app.get('/api/notifications', (req, res) => {
         const initiativeAuthorId = initiative.author.id;
         const initiativeDate = new Date(initiative.date);
  
-        if (initiativeAuthorId === userId) {
-            walkChildren(initiative.children, (node) => {
-                if (node.author.id === userId) return; // ignore your own replies
-                const nodeDate = new Date(node.date);
-                if (nodeDate <= since) return;
- 
-                notifications.push({
-                    id: `reply-${node.id}`,
-                    type: 'reply',
-                    initiativeId: initiative.id,
-                    initiativeTitle: initiative.title ?? '(untitled)',
-                    actorUsername: node.author.username,
-                    contentType: node.type,   // 'update' | 'comment'
-                    body: node.body,
-                    date: node.date,
-                    read: false,
-                });
-            });
-        }
+        walkChildren(
+            initiative.children,
+            initiativeAuthorId,
+            initiative.id,
+            initiative.title ?? '(untitled)',
+            initiativeAuthorId,
+        );
  
         if (
             userNeighborhood &&

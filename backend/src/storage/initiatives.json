@@ -447,7 +447,47 @@
         "duration": null,
         "likes": [],
         "dislikes": [],
-        "children": []
+        "children": [
+          {
+            "id": "1779114822411",
+            "type": "comment",
+            "author": {
+              "id": 1,
+              "username": "Admin",
+              "email": "admin@admin.se",
+              "role": "admin"
+            },
+            "body": "fuck off",
+            "visibility": "folkets_park",
+            "date": "2026-05-18T14:33:42.411Z",
+            "image": null,
+            "location": null,
+            "duration": null,
+            "likes": [],
+            "dislikes": [],
+            "children": [
+              {
+                "id": "1779114849360",
+                "type": "comment",
+                "author": {
+                  "id": 30,
+                  "username": "Ragnhild",
+                  "email": "ragnhild@gmail.com",
+                  "role": "user"
+                },
+                "body": "YOU fuck off",
+                "visibility": "folkets_park",
+                "date": "2026-05-18T14:34:09.360Z",
+                "image": null,
+                "location": null,
+                "duration": null,
+                "likes": [],
+                "dislikes": [],
+                "children": []
+              }
+            ]
+          }
+        ]
       }
     ]
   }

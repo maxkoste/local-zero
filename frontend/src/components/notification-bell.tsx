@@ -1,11 +1,3 @@
-// src/components/NotificationBell.tsx
-//
-// Drop-in replacement for the placeholder bell in ResponsiveAppBar.
-// Renders a badge with unread count and a dropdown list of notifications.
-//
-// Usage in the navbar (replace the existing <Box> with the bell):
-//   <NotificationBell userId={userId} />
-
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
@@ -26,9 +18,8 @@ import NotificationsIcon from '@mui/icons-material/Notifications';
 import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
 import ForumIcon from '@mui/icons-material/Forum';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
-import { useNotifications, AppNotification } from '../notification-poller';
-
-// ── Helpers ───────────────────────────────────────────────────────────────────
+import { useNotifications} from '../notification-poller';
+import { Notification } from 'shared';
 
 function relativeTime(iso: string): string {
     const diff = Date.now() - new Date(iso).getTime();
@@ -40,15 +31,18 @@ function relativeTime(iso: string): string {
     return `${Math.floor(hrs / 24)}d ago`;
 }
 
-function notificationLabel(n: AppNotification): string {
+function notificationLabel(n: Notification): string {
     if (n.type === 'reply') {
         const action = n.contentType === 'update' ? 'posted an update on' : 'commented on';
         return `${n.actorUsername} ${action}`;
     }
+    if (n.type === 'thread-reply') {
+        return `${n.actorUsername} replied to your ${n.contentType} in`;
+    }
     return `${n.actorUsername} posted in your neighborhood`;
 }
 
-function notificationIcon(n: AppNotification) {
+function notificationIcon(n: Notification) {
     if (n.type === 'reply') {
         return <ForumIcon fontSize="small" sx={{ color: 'primary.main', mt: 0.3, flexShrink: 0 }} />;
     }
@@ -76,11 +70,11 @@ export function NotificationBell({ userId }: Props) {
         setAnchor(null);
     }
 
-    function handleNotificationClick(n: AppNotification) {
+    function handleNotificationClick(n: Notification) {
         markOneRead(n.id);
         handleClose();
         navigate(`/initiative/${n.initiativeId}`);
-    }3
+    }
 
     return (
         <>
