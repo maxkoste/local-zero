@@ -173,6 +173,32 @@ export function UserPage() {
         }
     }
 
+    async function handleOpenChat() {
+        try {
+            const token = localStorage.getItem("token");
+
+            const res = await fetch(
+                `http://localhost:3001/api/chats/with/${user?.userId}`,
+                {
+                    method: "POST",
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                }
+            );
+
+            if (!res.ok) {
+                throw new Error("Could not open chat.");
+            }
+
+            const chat = await res.json();
+
+            navigate(`/chat/${chat.id}`);
+        } catch (err) {
+            console.error(err);
+        }
+    }
+
     if (loading) return <Box sx={{ p: 4 }}>Loading profile...</Box>;
     if (!user) return <Box sx={{ p: 4 }}>Could not load user.</Box>;
 
@@ -282,7 +308,7 @@ export function UserPage() {
                             <Button
                                 variant="outlined"
                                 fullWidth
-                                onClick={() => navigate('/chat/chat-1')}
+                                onClick={handleOpenChat}
                                 sx={{ mt: 1, borderRadius: 2 }}
                             >
                                 Send message

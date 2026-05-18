@@ -488,6 +488,43 @@ app.get('/api/chats', (req, res) => {
 	res.json(chats);
 });
 
+app.post('/api/chats/with/:userId', (req, res) => {
+	const payload = requireAuth(req, res);
+	if (!payload) return;
+
+	const currentUserId = payload.userId;
+	const otherUserId = Number(req.params.userId);
+
+	const existingChat = storage.getChats().find(c =>
+		(c.sender.id === currentUserId && c.receiver.id === otherUserId) ||
+		(c.sender.id === otherUserId && c.receiver.id === currentUserId)
+	);
+
+	if (existingChat) {
+		return res.json(existingChat);
+	}
+
+	const sender = storage.getUserById(currentUserId);
+	const receiver = storage.getUserById(otherUserId);
+
+	if (!sender || !receiver) {
+		return res.status(404).json({ error: 'User not found' });
+	}
+
+	const newChat: ChatRecord = {
+		id: String(Date.now()),
+		sender,
+		receiver,
+		body: '',
+		date: new Date().toISOString(),
+		children: [],
+	};
+
+	storage.addChat(newChat);
+
+	res.status(201).json(newChat);
+});
+
 app.get('/api/chats/:id', (req, res) => {
 	const payload = requireAuth(req, res);
 	if (!payload) return;

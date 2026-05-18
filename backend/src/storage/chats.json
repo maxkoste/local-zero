@@ -1,1 +1,74 @@
-[]
+[
+  {
+    "id": "chat-1",
+    "sender": {
+      "id": 1,
+      "username": "Lolita"
+    },
+    "receiver": {
+      "id": 2,
+      "username": "Maggan"
+    },
+    "children": []
+  },
+  {
+    "id": "1779110961481",
+    "sender": {
+      "id": 2,
+      "username": "Bob",
+      "password": "kattenmorris00",
+      "email": "bob@hotmail.se",
+      "visibility": "SOFIELUND",
+      "role": "user",
+      "ecoActions": [
+        {
+          "id": "1778336225349",
+          "key": "PANTA",
+          "date": "2026-05-09T14:17:05.349Z"
+        }
+      ]
+    },
+    "receiver": {
+      "id": 5,
+      "username": "Fredrik",
+      "password": "majken99cool",
+      "email": "fredde@proton.se",
+      "visibility": "FOLKETS_PARK",
+      "role": "user",
+      "ecoActions": []
+    },
+    "body": "",
+    "date": "2026-05-18T13:29:21.481Z",
+    "children": []
+  },
+  {
+    "id": "1779110973511",
+    "sender": {
+      "id": 2,
+      "username": "Bob",
+      "password": "kattenmorris00",
+      "email": "bob@hotmail.se",
+      "visibility": "SOFIELUND",
+      "role": "user",
+      "ecoActions": [
+        {
+          "id": "1778336225349",
+          "key": "PANTA",
+          "date": "2026-05-09T14:17:05.349Z"
+        }
+      ]
+    },
+    "receiver": {
+      "id": 8,
+      "username": "Emma",
+      "password": "gayrat4ever",
+      "email": "emma@gmail.com",
+      "visibility": "KIRSEBERG",
+      "role": "user",
+      "ecoActions": []
+    },
+    "body": "",
+    "date": "2026-05-18T13:29:33.511Z",
+    "children": []
+  }
+]
