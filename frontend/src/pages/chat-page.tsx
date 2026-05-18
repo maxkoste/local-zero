@@ -102,25 +102,34 @@ export function ChatPage() {
     const [sending, setSending] = useState(false);
     const [error, setError] = useState<string | null>(null);
     const bottomRef = useRef<HTMLDivElement>(null);
+    const [currentUser, setCurrentUser] = useState<any>(null);
 
     async function fetchChat() {
-        // ── GET /api/chats/:id ───────────────────────────────────────────────
-        // Wire up once storage.getChatById(id) and GET /api/chats/:id exist:
-        //
-        // try {
-        //     const res = await fetch(`http://localhost:3001/api/chats/${id}`);
-        //     if (!res.ok) throw new Error("Failed to load chat.");
-        //     const data = await res.json();
-        //     setChat(data);
-        // } catch {
-        //     // silently keep existing data on poll failure
-        // } finally {
-        //     setLoading(false);
-        // }
-        // ────────────────────────────────────────────────────────────────────
+        try {
+            const token = localStorage.getItem("token");
 
-        setChat({ ...MOCK_CHAT, children: [...MOCK_CHAT.children] });
-        setLoading(false);
+            const meRes = await fetch("http://localhost:3001/api/me", {
+                headers: { Authorization: `Bearer ${token}` },
+            });
+
+            if (!meRes.ok) throw new Error("Could not authenticate user.");
+
+            const meData = await meRes.json();
+            setCurrentUser(meData.user);
+
+            const chatRes = await fetch(`http://localhost:3001/api/chats/${id}`, {
+                headers: { Authorization: `Bearer ${token}` },
+            });
+
+            if (!chatRes.ok) throw new Error("Failed to load chat.");
+
+            const chatData = await chatRes.json();
+            setChat(chatData);
+        } catch (err: any) {
+            setError(err.message);
+        } finally {
+            setLoading(false);
+        }
     }
 
     useEffect(() => {
@@ -137,81 +146,63 @@ export function ChatPage() {
     }, [chat?.children.length]);
 
     async function handleSend() {
-        if (!messageBody.trim()) return;
+        if (!messageBody.trim() || !currentUser) return;
+
         setSending(true);
         setError(null);
 
-        // ── POST /api/chats/:id/messages ─────────────────────────────────────
-        // Expected request body (mirrors your ContentRecord pattern):
-        // {
-        //     sender: { id, username, email },
-        //     body: string,
-        //     date: new Date().toISOString(),
-        // }
-        //
-        // Wire up once storage.addMessage(chatId, message) and
-        // POST /api/chats/:id/messages exist:
-        //
-        // try {
-        //     const res = await fetch(`http://localhost:3001/api/chats/${id}/messages`, {
-        //         method: "POST",
-        //         headers: { "Content-Type": "application/json" },
-        //         body: JSON.stringify({
-        //             sender: hardcodedSender,
-        //             body: messageBody.trim(),
-        //             date: new Date().toISOString(),
-        //         }),
-        //     });
-        //     if (!res.ok) {
-        //         const data = await res.json();
-        //         throw new Error(data.error ?? "Something went wrong.");
-        //     }
-        //     setMessageBody("");
-        //     await fetchChat();
-        // } catch (err: any) {
-        //     setError(err.message);
-        // } finally {
-        //     setSending(false);
-        // }
-        // ────────────────────────────────────────────────────────────────────
+        try {
+            const token = localStorage.getItem("token");
 
-        // Mock: append locally
-        const newMsg = {
-            id: `msg-${Date.now()}`,
-            sender: hardcodedSender,
-            body: messageBody.trim(),
-            date: new Date(),
-        };
-        setChat((prev: any) => ({ ...prev, children: [...prev.children, newMsg] }));
-        setMessageBody("");
-        setSending(false);
+            const res = await fetch(`http://localhost:3001/api/chats/${id}/messages`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`,
+                },
+                body: JSON.stringify({
+                    sender: currentUser,
+                    body: messageBody.trim(),
+                }),
+            });
+
+            if (!res.ok) {
+                const data = await res.json();
+                throw new Error(data.error ?? "Something went wrong.");
+            }
+
+            setMessageBody("");
+            await fetchChat();
+        } catch (err: any) {
+            setError(err.message);
+        } finally {
+            setSending(false);
+        }
     }
 
     async function handleDelete(messageId: string) {
-        // ── DELETE /api/chats/:id/messages/:messageId ────────────────────────
-        // Wire up once storage.deleteMessage(chatId, messageId) and
-        // DELETE /api/chats/:id/messages/:messageId exist:
-        //
-        // try {
-        //     const res = await fetch(
-        //         `http://localhost:3001/api/chats/${id}/messages/${messageId}`,
-        //         { method: "DELETE" }
-        //     );
-        //     if (!res.ok) {
-        //         const data = await res.json();
-        //         throw new Error(data.error ?? "Could not delete message.");
-        //     }
-        //     await fetchChat();
-        // } catch (err: any) {
-        //     setError(err.message);
-        // }
-        // ────────────────────────────────────────────────────────────────────
+        try {
+            const token = localStorage.getItem("token");
 
-        // Mock: remove locally
-        setChat((prev: any) => ({
-            ...prev,
-            children: prev.children.filter((m: any) => m.id !== messageId),
-        }));
+            const res = await fetch(
+                `http://localhost:3001/api/chats/${id}/messages/${messageId}`,
+                {
+                    method: "DELETE",
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                }
+            );
+
+            if (!res.ok) {
+                const data = await res.json();
+                throw new Error(data.error ?? "Could not delete message.");
+            }
+
+            await fetchChat();
+        } catch (err: any) {
+            setError(err.message);
+        }
     }
 
     function handleKeyDown(e: React.KeyboardEvent) {
@@ -234,7 +225,15 @@ export function ChatPage() {
         );
     }
 
-    const otherUser = chat.sender.id === hardcodedSender.id ? chat.receiver : chat.sender;
+    if (!currentUser) {
+        return (
+            <Box sx={{ maxWidth: 700, margin: "0 auto", padding: 2 }}>
+                <Typography>Could not load current user.</Typography>
+            </Box>
+        );
+    }
+
+    const otherUser = chat.sender.id === currentUser.id ? chat.receiver : chat.sender;
     const messages = chat.children ?? [];
 
     return (
@@ -262,7 +261,7 @@ export function ChatPage() {
                         <MessageBubble
                             key={msg.id}
                             message={msg}
-                            isMine={msg.sender.id === hardcodedSender.id}
+                            isMine={msg.sender.id === currentUser.id}
                             onDelete={handleDelete}
                         />
                     ))}
