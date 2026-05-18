@@ -181,30 +181,28 @@ export function ChatPage() {
     }
 
     async function handleDelete(messageId: string) {
-        // ── DELETE /api/chats/:id/messages/:messageId ────────────────────────
-        // Wire up once storage.deleteMessage(chatId, messageId) and
-        // DELETE /api/chats/:id/messages/:messageId exist:
-        //
-        // try {
-        //     const res = await fetch(
-        //         `http://localhost:3001/api/chats/${id}/messages/${messageId}`,
-        //         { method: "DELETE" }
-        //     );
-        //     if (!res.ok) {
-        //         const data = await res.json();
-        //         throw new Error(data.error ?? "Could not delete message.");
-        //     }
-        //     await fetchChat();
-        // } catch (err: any) {
-        //     setError(err.message);
-        // }
-        // ────────────────────────────────────────────────────────────────────
+        try {
+            const token = localStorage.getItem("token");
 
-        // Mock: remove locally
-        setChat((prev: any) => ({
-            ...prev,
-            children: prev.children.filter((m: any) => m.id !== messageId),
-        }));
+            const res = await fetch(
+                `http://localhost:3001/api/chats/${id}/messages/${messageId}`,
+                {
+                    method: "DELETE",
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                }
+            );
+
+            if (!res.ok) {
+                const data = await res.json();
+                throw new Error(data.error ?? "Could not delete message.");
+            }
+
+            await fetchChat();
+        } catch (err: any) {
+            setError(err.message);
+        }
     }
 
     function handleKeyDown(e: React.KeyboardEvent) {
