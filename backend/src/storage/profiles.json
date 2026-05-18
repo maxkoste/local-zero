@@ -7,7 +7,7 @@
     "email": "röksignaler. \n 666 - 420 69",
     "stats": {
       "Initiativ": 666,
-      "CarbonScore": 6969420
+      "CarbonScore": 6970420
     },
     "recentActivity": []
   },
@@ -19,7 +19,7 @@
     "email": "",
     "stats": {
       "Initiativ": 0,
-      "CarbonScore": 0
+      "CarbonScore": 5
     },
     "recentActivity": []
   },
@@ -62,6 +62,18 @@
   {
     "userId": 6,
     "username": "Lina",
+    "location": "",
+    "bio": "",
+    "email": "",
+    "stats": {
+      "Initiativ": 0,
+      "CarbonScore": 0
+    },
+    "recentActivity": []
+  },
+  {
+    "userId": 7,
+    "username": "Lukas",
     "location": "",
     "bio": "",
     "email": "",
@@ -229,7 +241,7 @@
   },
   {
     "userId": 21,
-    "username": "Ragnhild",
+    "username": "Raj",
     "location": "",
     "bio": "",
     "email": "",
@@ -302,6 +314,42 @@
   {
     "userId": 27,
     "username": "maggan",
+    "location": "",
+    "bio": "",
+    "email": "",
+    "stats": {
+      "Initiativ": 0,
+      "CarbonScore": 0
+    },
+    "recentActivity": []
+  },
+  {
+    "userId": 28,
+    "username": "Ragnar",
+    "location": "",
+    "bio": "",
+    "email": "",
+    "stats": {
+      "Initiativ": 0,
+      "CarbonScore": 10
+    },
+    "recentActivity": []
+  },
+  {
+    "userId": 29,
+    "username": "Per",
+    "location": "",
+    "bio": "",
+    "email": "",
+    "stats": {
+      "Initiativ": 0,
+      "CarbonScore": 0
+    },
+    "recentActivity": []
+  },
+  {
+    "userId": 30,
+    "username": "Ragnhild",
     "location": "",
     "bio": "",
     "email": "",

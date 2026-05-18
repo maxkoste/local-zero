@@ -4,6 +4,7 @@ import { storage, ContentRecord, UserRecord, ChatRecord, MessageRecord, EcoActio
 import dotenv from 'dotenv';
 import jwt from 'jsonwebtoken';
 import cookieParser from 'cookie-parser';
+import { Notification } from 'shared';
 
 dotenv.config();
 
@@ -64,11 +65,11 @@ app.get('/api/users/:id', (req, res) => {
 		return res.status(404).json({ error: 'User not found' });
 	}
 
-	res.json(user);
+    res.json({ id: user.id, username: user.username, email: user.email, visibility: user.visibility, role: user.role });
 });
 
 app.post('/api/users', (req, res) => {
-	const { username, password, email, visibility } = req.body;
+	const { username, password, email, visibility, role } = req.body;
 
 	if (!username || !password || !email || !visibility) {
 		return res.status(400).json({ error: 'username, password, email, and visibility are required' });
@@ -77,8 +78,8 @@ app.post('/api/users', (req, res) => {
 	const users = storage.getUsers();
 	const nextId = users.length ? Math.max(...users.map(u => u.id)) + 1 : 1;
 
-	const newUser: UserRecord = { id: nextId, username, password, email, visibility, ecoActions: [] };
-	storage.addUser(newUser);
+    const newUser: UserRecord = { id: nextId, username, password, email, visibility, role: role ?? 'user', ecoActions: [] };
+    storage.addUser(newUser);
 
 	const newProfile: ProfileRecord = {
 		userId: nextId,
@@ -199,11 +200,45 @@ app.post('/api/users/:id/eco-actions', (req, res) => {
 	};
 
 	const updated = storage.addEcoAction(userId, action);
+
+    // Uppdatera CarbonScore i profilen
+    const actionPoints: Record<string, number> = {
+        BIKE: 10, TREE: 20, PANTA: 5, CEO: 1000, OIL: -500, FLIGHT: -50,
+    };
+    const points = actionPoints[key] ?? 0;
+    const profile = storage.getProfileByUserId(userId);
+    if (profile) {
+        storage.updateProfile(userId, {
+            stats: {
+                Initiativ: profile.stats.Initiativ,
+                CarbonScore: profile.stats.CarbonScore + points,
+            }
+        });
+    }
+
 	if (!updated) {
 		return res.status(404).json({ error: 'User not found' });
 	}
 
 	res.status(201).json(action);
+});
+
+app.get('/api/community-scores', (req, res) => {
+    const payload = requireAuth(req, res);
+    if (!payload) return;
+
+    const profiles = storage.getProfiles();
+    const users = storage.getUsers();
+    const scores: Record<string, number> = {};
+
+    for (const profile of profiles) {
+        const user = users.find(u => u.id === profile.userId);
+        if (!user) continue;
+        const vis = user.visibility.toLowerCase();
+        scores[vis] = (scores[vis] ?? 0) + profile.stats.CarbonScore;
+    }
+
+    res.json(scores);
 });
 
 
@@ -253,13 +288,8 @@ app.get('/api/me', (req, res) => {
 			return res.status(404).json({ error: 'User not found' });
 		}
 
-		return res.status(200).json({
-			user: {
-				id: user.id,
-				username: user.username,
-				email: user.email
-			}
-		});
+        return res.status(200).json({ user: { id: user.id, username: user.username, email: user.email, role: user.role } });
+
 	} catch (error) {
 		return res.status(401).json({ error: 'Invalid or expired token' });
 	}
@@ -522,7 +552,86 @@ app.delete('/api/chats/:id/messages/:messageId', (req, res) => {
 	res.status(200).json({ message: 'Message deleted' });
 });
 
-
+app.get('/api/notifications', (req, res) => {
+    const payload = requireAuth(req, res);
+    if (!payload) return;
+ 
+    const userId = Number(req.query.userId);
+    if (!userId || isNaN(userId)) {
+        return res.status(400).json({ error: 'userId query param is required' });
+    }
+ 
+    const sinceParam = req.query.since as string | undefined;
+    const since = sinceParam ? new Date(sinceParam) : new Date(Date.now() - 24 * 60 * 60 * 1000);
+ 
+    const user = storage.getUserById(userId);
+    if (!user) {
+        return res.status(404).json({ error: 'User not found' });
+    }
+ 
+    const userNeighborhood = user.visibility?.toLowerCase() ?? null;
+    const initiatives = storage.getInitiatives();
+    const notifications: Notification[] = [];
+ 
+    function walkChildren(
+        nodes: import('./storage/storage-system').ContentRecord[],
+        cb: (node: import('./storage/storage-system').ContentRecord) => void
+    ) {
+        for (const node of nodes) {
+            cb(node);
+            if (node.children?.length) walkChildren(node.children, cb);
+        }
+    }
+ 
+    for (const initiative of initiatives) {
+        const initiativeAuthorId = initiative.author.id;
+        const initiativeDate = new Date(initiative.date);
+ 
+        if (initiativeAuthorId === userId) {
+            walkChildren(initiative.children, (node) => {
+                if (node.author.id === userId) return; // ignore your own replies
+                const nodeDate = new Date(node.date);
+                if (nodeDate <= since) return;
+ 
+                notifications.push({
+                    id: `reply-${node.id}`,
+                    type: 'reply',
+                    initiativeId: initiative.id,
+                    initiativeTitle: initiative.title ?? '(untitled)',
+                    actorUsername: node.author.username,
+                    contentType: node.type,   // 'update' | 'comment'
+                    body: node.body,
+                    date: node.date,
+                    read: false,
+                });
+            });
+        }
+ 
+        if (
+            userNeighborhood &&
+            initiativeAuthorId !== userId &&
+            initiativeDate > since &&
+            initiative.visibility.toLowerCase() === userNeighborhood
+        ) {
+            notifications.push({
+                id: `neighborhood-${initiative.id}`,
+                type: 'neighborhood',
+                initiativeId: initiative.id,
+                initiativeTitle: initiative.title ?? '(untitled)',
+                actorUsername: initiative.author.username,
+                contentType: 'initiative',
+                body: initiative.body,
+                date: initiative.date,
+                read: false,
+            });
+        }
+    }
+ 
+    // Newest first
+    notifications.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+ 
+    res.json(notifications);
+});
 
 //Initialization
 

@@ -15,23 +15,16 @@ import {
 } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutlineRounded";
-import { IContent, Visibility } from "shared";
-
-// TODO: replace with logged-in user from auth context when that exists
-const hardcodedAuthor = {
-    id: 1,
-    username: "Lolita",
-    email: "lolita@email.com",
-    visibility: Visibility.PUBLIC,
-};
+import { IContent } from "shared";
 
 type Props = {
     content: IContent;
     initiativeId: string;
     onRefresh: () => void;
+    author: any;
 };
 
-export function UpdateCard({ content, initiativeId, onRefresh }: Props) {
+export function UpdateCard({ content, initiativeId, onRefresh, author }: Props) {
     const [expanded, setExpanded] = useState(false);
     const [commentBody, setCommentBody] = useState("");
     const [posting, setPosting] = useState(false);
@@ -52,16 +45,17 @@ export function UpdateCard({ content, initiativeId, onRefresh }: Props) {
         setError(null);
 
         try {
+            const token = localStorage.getItem('token');
             const response = await fetch(
                 `http://localhost:3001/api/initiatives/${initiativeId}/children`,
                 {
                     method: "POST",
-                    headers: { "Content-Type": "application/json" },
+                    headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
                     body: JSON.stringify({
                         type: "comment",
                         parentId: content.id,
                         body: commentBody.trim(),
-                        author: hardcodedAuthor,
+                        author,
                         visibility: content.visibility,
                     }),
                 }
@@ -133,6 +127,7 @@ export function UpdateCard({ content, initiativeId, onRefresh }: Props) {
                                     depth={0}
                                     initiativeId={initiativeId}
                                     onRefresh={onRefresh}
+                                    author={author}
                                 />
                             ))}
                         </Stack>
@@ -177,9 +172,10 @@ type CommentProps = {
     depth: number;
     initiativeId: string;
     onRefresh: () => void;
+    author: any;
 };
 
-function CommentItem({ comment, depth, initiativeId, onRefresh }: CommentProps) {
+function CommentItem({ comment, depth, initiativeId, onRefresh, author }: CommentProps) {
     const replies = comment.children.filter((c) => c.type === "comment");
     const [replying, setReplying] = useState(false);
     const [replyBody, setReplyBody] = useState("");
@@ -193,16 +189,17 @@ function CommentItem({ comment, depth, initiativeId, onRefresh }: CommentProps) 
         setError(null);
 
         try {
+            const token = localStorage.getItem('token');
             const response = await fetch(
                 `http://localhost:3001/api/initiatives/${initiativeId}/children`,
                 {
                     method: "POST",
-                    headers: { "Content-Type": "application/json" },
+                    headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
                     body: JSON.stringify({
                         type: "comment",
                         parentId: comment.id,
                         body: replyBody.trim(),
-                        author: hardcodedAuthor,
+                        author,
                         visibility: comment.visibility,
                     }),
                 }
@@ -286,6 +283,7 @@ function CommentItem({ comment, depth, initiativeId, onRefresh }: CommentProps) 
                                 depth={depth + 1}
                                 initiativeId={initiativeId}
                                 onRefresh={onRefresh}
+                                author={author}
                             />
                         ))}
                     </Stack>
