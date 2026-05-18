@@ -1,3 +1,4 @@
+// src/components/ResponsiveAppBar.tsx  (full replacement)
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import AppBar from '@mui/material/AppBar';
@@ -11,25 +12,21 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
-import NotificationsIcon from '@mui/icons-material/Notifications';
 import Box from '@mui/material/Box';
-import Badge from '@mui/material/Badge';
 import ParkIcon from '@mui/icons-material/Park';
+import { NotificationBell } from './notification-bell';
 
-//lägg till pages här ifall det kommer flera
 const pages = [
 	{ label: 'Initiativ', path: '/front' },
 ];
 
-const settings = [
-	'Profile', 'Logout'
-];
+const settings = ['Profile', 'Logout'];
 
 function ResponsiveAppBar() {
 	const navigate = useNavigate();
 	const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
 	const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
-	const [userId, setUserId] = React.useState<number | null> (null);
+	const [userId, setUserId] = React.useState<number | null>(null);
 
 	const handleOpenNavMenu = (e: React.MouseEvent<HTMLElement>) => setAnchorElNav(e.currentTarget);
 	const handleOpenUserMenu = (e: React.MouseEvent<HTMLElement>) => setAnchorElUser(e.currentTarget);
@@ -37,14 +34,11 @@ function ResponsiveAppBar() {
 	const handleCloseUserMenu = () => setAnchorElUser(null);
 
 	React.useEffect(() => {
-
 		const loadUser = async () => {
 			try {
 				const token = localStorage.getItem('token');
 				const res = await fetch('http://localhost:3001/api/me', {
-					headers: {
-						Authorization: `Bearer ${token}`
-					}
+					headers: { Authorization: `Bearer ${token}` }
 				});
 				if (!res.ok) throw new Error();
 				const data = await res.json();
@@ -54,7 +48,6 @@ function ResponsiveAppBar() {
 			}
 		};
 		loadUser();
-
 	}, []);
 
 	const handleNavClick = (path: string) => {
@@ -64,13 +57,11 @@ function ResponsiveAppBar() {
 
 	const handleSettingClick = (path: string) => {
 		handleCloseUserMenu();
-
-		if (path == 'Profile') {
-			if(!userId) return;
+		if (path === 'Profile') {
+			if (!userId) return;
 			navigate(`/profile/${userId}`);
 			return;
 		}
-
 		if (path === 'Logout') {
 			navigate('/');
 		}
@@ -81,7 +72,7 @@ function ResponsiveAppBar() {
 			<Container maxWidth="xl">
 				<Toolbar disableGutters>
 
-					{/* Desktop logo*/}
+					{/* Desktop logo */}
 					<ParkIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
 					<Typography
 						variant="h6"
@@ -101,7 +92,7 @@ function ResponsiveAppBar() {
 						LOCAL HERO
 					</Typography>
 
-					{/* Hamburgare */}
+					{/* Hamburger */}
 					<Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
 						<IconButton
 							size="large"
@@ -131,7 +122,7 @@ function ResponsiveAppBar() {
 						</Menu>
 					</Box>
 
-					{/*Mobile logo centered */}
+					{/* Mobile logo centered */}
 					<ParkIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
 					<Typography
 						variant="h5"
@@ -152,7 +143,7 @@ function ResponsiveAppBar() {
 						LOCAL HERO
 					</Typography>
 
-					{/*Desktop nav links*/}
+					{/* Desktop nav links */}
 					<Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
 						{pages.map(({ label, path }) => (
 							<Button
@@ -165,12 +156,12 @@ function ResponsiveAppBar() {
 						))}
 					</Box>
 
-					{/*right side + settings menu*/}
-					<Box sx={{flexgrow: 1, paddingRight: 4, height: 15}}>
-						<Badge badgeContent={2000} color="error">
-							<NotificationsIcon />
-						</Badge>
+					{/* ── Notification bell ── */}
+					<Box sx={{ paddingRight: 1 }}>
+						<NotificationBell userId={userId} />
 					</Box>
+
+					{/* User avatar + settings menu */}
 					<Box sx={{ flexGrow: 0 }}>
 						<Tooltip title="Open settings">
 							<IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
@@ -187,7 +178,7 @@ function ResponsiveAppBar() {
 							open={Boolean(anchorElUser)}
 							onClose={handleCloseUserMenu}
 						>
-							{settings.map((label ) => (
+							{settings.map((label) => (
 								<MenuItem key={label} onClick={() => handleSettingClick(label)}>
 									<Typography sx={{ textAlign: 'center' }}>{label}</Typography>
 								</MenuItem>
