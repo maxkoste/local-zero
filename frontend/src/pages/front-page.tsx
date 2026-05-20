@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Stack, Box, Button, Typography, Tabs, Tab, Paper, Chip } from "@mui/material";
-import { IContent } from "shared";
+import { ContentRecord } from "shared";
 import { ContentCard } from "../components/content-card";
 import { useNavigate } from "react-router-dom";
 
@@ -26,12 +26,12 @@ type LoggedInUser = {
 
 export function FrontPage() {
     const navigate = useNavigate();
-    const [apiInitiatives, setApiInitiatives] = useState<IContent[]>([]);
+    const [apiInitiatives, setApiInitiatives]   = useState<ContentRecord[]>([]);
     const [communityScores, setCommunityScores] = useState<CommunityScores>({});
-    const [error, setError] = useState<string | null>(null);
-    const [activeTab, setActiveTab] = useState(0);
-    const [loggedInUser, setLoggedInUser] = useState<LoggedInUser | null>(null);
-    const [userVisibility, setUserVisibility] = useState<string>('kirseberg');
+    const [error, setError]                     = useState<string | null>(null);
+    const [activeTab, setActiveTab]             = useState(0);
+    const [loggedInUser, setLoggedInUser]       = useState<LoggedInUser | null>(null);
+    const [userVisibility, setUserVisibility]   = useState<string>('kirseberg');
 
     const token = localStorage.getItem("token");
 
@@ -39,14 +39,14 @@ export function FrontPage() {
         async function loadCurrentUser() {
             try {
                 const meRes = await fetch('http://localhost:3001/api/me', {
-                    headers: { Authorization: `Bearer ${token}` }
+                    headers: { Authorization: `Bearer ${token}` },
                 });
                 if (!meRes.ok) return;
                 const meData = await meRes.json();
-                setLoggedInUser(meData.user);  // now includes role
+                setLoggedInUser(meData.user);
 
                 const userRes = await fetch(`http://localhost:3001/api/users/${meData.user.id}`, {
-                    headers: { Authorization: `Bearer ${token}` }
+                    headers: { Authorization: `Bearer ${token}` },
                 });
                 if (!userRes.ok) return;
                 const userData = await userRes.json();
@@ -60,16 +60,16 @@ export function FrontPage() {
 
     function fetchInitiatives() {
         fetch(`http://localhost:3001/api/initiatives`, {
-            headers: { Authorization: `Bearer ${token}` }
+            headers: { Authorization: `Bearer ${token}` },
         })
             .then(res => res.json())
-            .then(data => setApiInitiatives(data))
+            .then((data: ContentRecord[]) => setApiInitiatives(data))
             .catch(() => setError("Could not load initiatives from server."));
     }
 
     function fetchCommunityScores() {
         fetch(`http://localhost:3001/api/community-scores`, {
-            headers: { Authorization: `Bearer ${token}` }
+            headers: { Authorization: `Bearer ${token}` },
         })
             .then(res => res.json())
             .then(data => setCommunityScores(data))
@@ -79,12 +79,12 @@ export function FrontPage() {
     useEffect(() => {
         fetchInitiatives();
         fetchCommunityScores();
-    }, []);
+    }, [token]);
 
     async function handleDelete(id: string) {
         await fetch(`http://localhost:3001/api/initiatives/${id}`, {
             method: "DELETE",
-            headers: { Authorization: `Bearer ${token}` }
+            headers: { Authorization: `Bearer ${token}` },
         });
         fetchInitiatives();
     }
@@ -170,6 +170,7 @@ export function FrontPage() {
                             onDelete={apiInitiatives.some(i => i.id === initiative.id)
                                 ? () => handleDelete(initiative.id)
                                 : undefined}
+                            onRefresh={fetchInitiatives}
                         />
                     ))
                 )}
