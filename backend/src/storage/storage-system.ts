@@ -1,36 +1,6 @@
 import fs from 'fs/promises';
 import path from 'path';
-
-export interface AuthorRecord {
-    id: number;
-    username: string;
-    email: string;
-    visibility: string;
-}
-
-export interface ImageRecord {
-    id: string;
-    url: string;
-    alt?: string;
-}
-
-export type ContentType = 'initiative' | 'update' | 'comment';
-
-export interface ContentRecord {
-    id: string;
-    type: ContentType;
-    title?: string;
-    author: AuthorRecord;
-    body: string;
-    visibility: string;
-    date: string;
-    image: ImageRecord | null;
-    location: string | null;
-    duration: string | null;
-    likes: string[];
-    dislikes: string[];
-    children: ContentRecord[];
-}
+import { IContent, Content, Author, ContentRecord } from 'shared';
 
 export type ContentUpdate = Partial<Pick<
     ContentRecord,
@@ -40,14 +10,14 @@ export type ContentUpdate = Partial<Pick<
 export interface ProfileRecord {
     userId: number;
     username: string;
-	location: string;
+    location: string;
     bio: string;
     email: string;
-	stats: {
-		Initiativ: number,
-		CarbonScore: number,
-	};
-	recentActivity: [];
+    stats: {
+        Initiativ: number;
+        CarbonScore: number;
+    };
+    recentActivity: [];
 }
 
 export interface EcoAction {
@@ -68,38 +38,37 @@ export interface UserRecord {
 
 export interface MessageRecord {
     id: string;
-    sender: AuthorRecord;
+    sender: Author;
     body: string;
     date: string;
 }
 
 export interface ChatRecord {
     id: string;
-    sender: AuthorRecord;
-    receiver: AuthorRecord;
+    sender: Author;
+    receiver: Author;
     body: string;
     date: string;
     children: MessageRecord[];
 }
 
 const INITIATIVES_FILE = path.join(process.cwd(), 'src/storage/initiatives.json');
-const USERS_FILE = path.join(process.cwd(), 'src/storage/users.json');
-const CHATS_FILE = path.join(process.cwd(), 'src/storage/chats.json');
-const PROFILES_FILE = path.join(process.cwd(), 'src/storage/profiles.json');
+const USERS_FILE       = path.join(process.cwd(), 'src/storage/users.json');
+const CHATS_FILE       = path.join(process.cwd(), 'src/storage/chats.json');
+const PROFILES_FILE    = path.join(process.cwd(), 'src/storage/profiles.json');
 
 class StorageSystem {
     private static instance: StorageSystem;
 
-    private initiatives: ContentRecord[] = [];
-    private users: UserRecord[] = [];
-    private chats: ChatRecord[] = [];
+    private initiatives: IContent[] = [];
+    private users: UserRecord[]     = [];
+    private chats: ChatRecord[]     = [];
     private profiles: ProfileRecord[] = [];
 
-    // Chained promises ensure writes to each file are safe by queueing them
     private initiativesWriteQueue: Promise<void> = Promise.resolve();
-    private usersWriteQueue: Promise<void> = Promise.resolve();
-    private chatsWriteQueue: Promise<void> = Promise.resolve();
-    private profilesWriteQueue: Promise<void> = Promise.resolve();
+    private usersWriteQueue:        Promise<void> = Promise.resolve();
+    private chatsWriteQueue:        Promise<void> = Promise.resolve();
+    private profilesWriteQueue:     Promise<void> = Promise.resolve();
 
     private initialized = false;
 
@@ -117,53 +86,72 @@ class StorageSystem {
 
         const [initiativesData, usersData, chatsData, profilesData] = await Promise.all([
             fs.readFile(INITIATIVES_FILE, 'utf-8'),
-            fs.readFile(USERS_FILE, 'utf-8'),
-            fs.readFile(CHATS_FILE, 'utf-8'),
-            fs.readFile(PROFILES_FILE, 'utf-8'),
+            fs.readFile(USERS_FILE,       'utf-8'),
+            fs.readFile(CHATS_FILE,       'utf-8'),
+            fs.readFile(PROFILES_FILE,    'utf-8'),
         ]);
 
-        this.initiatives = JSON.parse(initiativesData);
-        this.users = JSON.parse(usersData);
-        this.chats = JSON.parse(chatsData);
+        this.initiatives = (JSON.parse(initiativesData) as ContentRecord[])
+            .map(record => Content.fromJSON(record));
+
+        this.users    = JSON.parse(usersData);
+        this.chats    = JSON.parse(chatsData);
         this.profiles = JSON.parse(profilesData);
+
         this.initialized = true;
     }
 
-    //Initiatives
-
-    getInitiatives(): ContentRecord[] {
+    getInitiatives(): IContent[] {
         return this.initiatives;
     }
 
-    getInitiativeById(id: string): ContentRecord | undefined {
+    getInitiativeById(id: string): IContent | undefined {
         return this.initiatives.find(i => i.id === id);
     }
 
-    addInitiative(initiative: ContentRecord): void {
+    findById(id: string): IContent | undefined {
+        return this.findNode(this.initiatives, id);
+    }
+
+    addInitiative(initiative: IContent): void {
         this.initiatives.push(initiative);
         this.flushInitiatives();
     }
 
+    updateInitiative(id: string, update: ContentUpdate): IContent | null {
+        const node = this.findById(id);
+        if (!node) return null;
 
-    updateInitiative(id: string, update: ContentUpdate): ContentRecord | null {
-        const index = this.initiatives.findIndex(i => i.id === id);
-        if (index === -1) return null;
+        if (update.title      !== undefined) node.title    = update.title;
+        if (update.body       !== undefined) node.body     = update.body;
+        if (update.visibility !== undefined) node.visibility = update.visibility as any;
+        if (update.image      !== undefined) node.image    = update.image    ?? undefined;
+        if (update.location   !== undefined) node.location = update.location ?? undefined;
+        if (update.duration   !== undefined) node.duration = update.duration ?? undefined;
+        if (update.likes      !== undefined) node.likes    = new Set(update.likes);
+        if (update.dislikes   !== undefined) node.dislikes = new Set(update.dislikes);
 
-        this.initiatives[index] = { ...this.initiatives[index], ...update };
         this.flushInitiatives();
-        return this.initiatives[index];
+        return node;
     }
 
     deleteInitiative(id: string): boolean {
         const before = this.initiatives.length;
         this.initiatives = this.initiatives.filter(i => i.id !== id);
-        if (this.initiatives.length === before) return false; //if initiative not found
-
+        if (this.initiatives.length === before) return false;
         this.flushInitiatives();
         return true;
     }
 
-    //Users
+    addChild(parentId: string, child: IContent): IContent | null {
+        const parent = this.findNode(this.initiatives, parentId);
+        if (!parent) return null;
+
+        parent.addChild(child);
+
+        this.flushInitiatives();
+        return parent;
+    }
 
     getUsers(): UserRecord[] {
         return this.users;
@@ -177,8 +165,6 @@ class StorageSystem {
         this.users.push(user);
         this.flushUsers();
     }
-
-    //Profiles
 
     getProfiles(): ProfileRecord[] {
         return this.profiles;
@@ -209,28 +195,6 @@ class StorageSystem {
         this.flushUsers();
         return user;
     }
-
-
-    //Updates and comments
-    addChild(parentId: string, child: ContentRecord): ContentRecord | null {
-        const parent = this.findNode(this.initiatives, parentId);
-        if (!parent) return null;
-
-        const validParent: Record<ContentType, ContentType[]> = {
-            initiative: ['update'],
-            update: ['comment'],
-            comment: ['comment'],
-        };
-
-        if (!validParent[parent.type].includes(child.type)) return null;
-
-        parent.children.push(child);
-        this.flushInitiatives();
-        return parent;
-    }
-
-
-    //Chats
 
     getChats(): ChatRecord[] {
         return this.chats;
@@ -263,12 +227,10 @@ class StorageSystem {
         return true;
     }
 
-
-
-    //Flushes - handles concurrency
     private flushInitiatives(): void {
+        const serialised = this.initiatives.map(i => (i as Content).toJSON());
         this.initiativesWriteQueue = this.initiativesWriteQueue.then(() =>
-            fs.writeFile(INITIATIVES_FILE, JSON.stringify(this.initiatives, null, 2), 'utf-8')
+            fs.writeFile(INITIATIVES_FILE, JSON.stringify(serialised, null, 2), 'utf-8')
         );
     }
 
@@ -290,14 +252,13 @@ class StorageSystem {
         );
     }
 
-    //Helper method to traverse children
-    private findNode(nodes: ContentRecord[], id: string): ContentRecord | null {
+    private findNode(nodes: IContent[], id: string): IContent | undefined {
         for (const node of nodes) {
             if (node.id === id) return node;
-            const found = this.findNode(node.children, id);
+            const found = this.findNode(node.getChildren(), id);
             if (found) return found;
         }
-        return null;
+        return undefined;
     }
 }
 

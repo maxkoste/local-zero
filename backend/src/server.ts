@@ -1,10 +1,11 @@
 import express from 'express';
 import cors from 'cors';
-import { storage, ContentRecord, UserRecord, ChatRecord, MessageRecord, EcoAction, ProfileRecord } from './storage/storage-system';
+import { storage, UserRecord, ChatRecord, MessageRecord, EcoAction, ProfileRecord } from './storage/storage-system';
 import dotenv from 'dotenv';
 import jwt from 'jsonwebtoken';
 import cookieParser from 'cookie-parser';
-import { Notification } from 'shared';
+import { ContentFactory } from './content/content-factory';
+import { Notification, Content, IContent, Visibility, Author } from 'shared';
 
 dotenv.config();
 
@@ -16,708 +17,531 @@ app.use(cookieParser());
 
 const JWT_SECRET = process.env.JWT_SECRET as string;
 
-type JwtPayload = {
-	userId: number;
-};
+type JwtPayload = { userId: number };
 
 if (!JWT_SECRET) {
-	throw new Error('JWT_SECRET is not defined in environment variables - Just add a .env with JWT_SECRET="Randomgibberishnumbers"');
+    throw new Error('JWT_SECRET is not defined. Add a .env with JWT_SECRET="<random string>"');
 }
 
-//Tokens
 function generateToken(user: UserRecord) {
-	return jwt.sign(
-		{ userId: user.id },
-		JWT_SECRET,
-		{ expiresIn: '1h' }
-	);
+    return jwt.sign({ userId: user.id }, JWT_SECRET, { expiresIn: '1h' });
 }
 
 function verifyToken(token: string): JwtPayload {
-	return jwt.verify(token, JWT_SECRET) as JwtPayload;
+    return jwt.verify(token, JWT_SECRET) as JwtPayload;
 }
 
 function requireAuth(req: express.Request, res: express.Response): JwtPayload | null {
-	const header = req.headers.authorization;
-	if (!header) {
-		res.status(401).json({ error: 'no token to validify' });
-		return null;
-	}
-	try {
-		return verifyToken(header.split(' ')[1]);
-	} catch {
-		res.status(401).json({ error: 'Invalid or expired token' });
-		return null;
-	}
+    const header = req.headers.authorization;
+    if (!header) {
+        res.status(401).json({ error: 'No token provided' });
+        return null;
+    }
+    try {
+        return verifyToken(header.split(' ')[1]);
+    } catch {
+        res.status(401).json({ error: 'Invalid or expired token' });
+        return null;
+    }
 }
 
+function resolveAuthor(payload: JwtPayload, res: express.Response): Author | null {
+    const user = storage.getUserById(payload.userId);
+    if (!user) {
+        res.status(404).json({ error: 'Authenticated user not found' });
+        return null;
+    }
+    return { id: user.id, username: user.username, email: user.email, role: user.role };
+}
 
-//Users
+function collectReplyNotifications(
+    nodes: IContent[],
+    parent: IContent,
+    initiativeId: string,
+    initiativeTitle: string,
+    userId: number,
+    since: Date,
+    seen: Set<string>,
+    notifications: Notification[],
+): void {
+    for (const node of nodes) {
+        const notifId = `reply-${node.id}`;
+
+        if (
+            node.author.id !== userId &&   
+            node.date > since &&          
+            !seen.has(notifId)             
+        ) {
+            if (parent.author.id === userId) {
+                seen.add(notifId);
+
+                const type: Notification['type'] =
+                    parent.type === 'initiative' || parent.type === 'update'
+                        ? 'reply'
+                        : 'thread-reply';
+
+                notifications.push({
+                    id: notifId,
+                    type,
+                    initiativeId,
+                    initiativeTitle,
+                    actorUsername: node.author.username,
+                    contentType: node.type,
+                    body: node.body,
+                    date: node.date.toISOString(),
+                    read: false,
+                });
+            }
+        }
+
+        collectReplyNotifications(
+            node.getChildren(),
+            node,
+            initiativeId,
+            initiativeTitle,
+            userId,
+            since,
+            seen,
+            notifications,
+        );
+    }
+}
+
 app.get('/api/users', (req, res) => {
-	res.json(storage.getUsers());
+    res.json(storage.getUsers());
 });
 
 app.get('/api/users/:id', (req, res) => {
-	const userId = Number(req.params.id);
-	const user = storage.getUserById(userId);
-
-	if (!user) {
-		return res.status(404).json({ error: 'User not found' });
-	}
-
+    const user = storage.getUserById(Number(req.params.id));
+    if (!user) return res.status(404).json({ error: 'User not found' });
     res.json({ id: user.id, username: user.username, email: user.email, visibility: user.visibility, role: user.role });
 });
 
 app.post('/api/users', (req, res) => {
-	const { username, password, email, visibility, role } = req.body;
+    const { username, password, email, visibility, role } = req.body;
+    if (!username || !password || !email || !visibility) {
+        return res.status(400).json({ error: 'username, password, email, and visibility are required' });
+    }
 
-	if (!username || !password || !email || !visibility) {
-		return res.status(400).json({ error: 'username, password, email, and visibility are required' });
-	}
+    const users = storage.getUsers();
+    const nextId = users.length ? Math.max(...users.map(u => u.id)) + 1 : 1;
 
-	const users = storage.getUsers();
-	const nextId = users.length ? Math.max(...users.map(u => u.id)) + 1 : 1;
-
-    const newUser: UserRecord = { id: nextId, username, password, email, visibility, role: role ?? 'user', ecoActions: [] };
+    const newUser: UserRecord = {
+        id: nextId, username, password, email, visibility,
+        role: role ?? 'user', ecoActions: [],
+    };
     storage.addUser(newUser);
 
-	const newProfile: ProfileRecord = {
-		userId: nextId,
-		username,
-		location: "",
-		bio: "",
-		email: "",
+    const newProfile: ProfileRecord = {
+        userId: nextId, username,
+        location: '', bio: '', email: '',
+        stats: { Initiativ: 0, CarbonScore: 0 },
+        recentActivity: [],
+    };
+    storage.addProfile(newProfile);
 
-		stats: {
-			Initiativ: 0,
-			CarbonScore: 0,
-		},
-
-		recentActivity: []
-	};
-	storage.addProfile(newProfile);
-
-	res.status(201).json(newUser);
+    res.status(201).json(newUser);
 });
 
 app.patch('/api/users/:id', (req, res) => {
-	const payload = requireAuth(req, res);
-	if (!payload) return;
+    const payload = requireAuth(req, res);
+    if (!payload) return;
 
-	const userId = Number(req.params.id);
+    const userId = Number(req.params.id);
+    if (payload.userId !== userId) return res.status(403).json({ error: 'Forbidden' });
 
-	if (payload.userId !== userId) {
-		return res.status(403).json({ error: 'Forbidden' });
-	}
+    const user = storage.getUserById(userId);
+    if (!user) return res.status(404).json({ error: 'User not found' });
 
-	const user = storage.getUserById(userId);
-
-	if (!user) {
-		return res.status(404).json({ error: 'User not found' });
-	}
-
-	// TODO: Implementera logik för att updatera profil attribut (visibility, bio, etc.)
-	// Just nu returneras endast användarens info utan att ändringar görs.
-
-	res.status(200).json(user);
+    // TODO: implement attribute updates (visibility, bio, etc.)
+    res.status(200).json(user);
 });
 
 app.get('/api/users/:id/profile', (req, res) => {
-	const payload = requireAuth(req, res);
-	if (!payload) return;
+    const payload = requireAuth(req, res);
+    if (!payload) return;
 
-	console.log("Fetching the profile !");
-
-	const userId = Number(req.params.id);
-	const profile = storage.getProfileByUserId(userId);
-
-	if (!profile) {
-		return res.status(404).json({ error: 'Profile not found' });
-	}
-
-	console.log(JSON.stringify(profile));
-
-	res.json(profile);
+    const profile = storage.getProfileByUserId(Number(req.params.id));
+    if (!profile) return res.status(404).json({ error: 'Profile not found' });
+    res.json(profile);
 });
 
 app.patch('/api/users/:id/profile', (req, res) => {
-	const payload = requireAuth(req, res);
-	if (!payload) return;
+    const payload = requireAuth(req, res);
+    if (!payload) return;
 
-	const userId = Number(req.params.id);
+    const userId = Number(req.params.id);
+    if (payload.userId !== userId) return res.status(403).json({ error: 'Forbidden' });
 
-	if (payload.userId !== userId) {
-		return res.status(403).json({ error: 'Forbidden' });
-	}
+    const { username, location, bio, email, stats } = req.body;
 
-	const {
-		username,
-		location,
-		bio,
-		email,
-		stats
-	} = req.body;
+    const updated = storage.updateProfile(userId, {
+        ...(username !== undefined && { username }),
+        ...(location !== undefined && { location }),
+        ...(bio      !== undefined && { bio }),
+        ...(email    !== undefined && { email }),
+        ...(stats && {
+            stats: {
+                ...(stats.Initiativ   !== undefined && { Initiativ:   stats.Initiativ }),
+                ...(stats.CarbonScore !== undefined && { CarbonScore: stats.CarbonScore }),
+            },
+        }),
+    });
 
-	const updated = storage.updateProfile(userId, {
-		...(username !== undefined && { username }),
-		...(location !== undefined && { location }),
-		...(bio !== undefined && { bio }),
-		...(email !== undefined && { email }),
-		...(stats && {
-			stats: {
-				...(stats.Initiativ !== undefined && { Initiativ: stats.Initiativ }),
-				...(stats.CarbonScore !== undefined && { CarbonScore: stats.CarbonScore }),
-			}
-		})
-	});
-
-	if (!updated) {
-		return res.status(404).json({ error: 'Profile not found' });
-	}
-
-	res.json(updated);
+    if (!updated) return res.status(404).json({ error: 'Profile not found' });
+    res.json(updated);
 });
 
 app.post('/api/users/:id/eco-actions', (req, res) => {
-	const payload = requireAuth(req, res);
-	if (!payload) return;
+    const payload = requireAuth(req, res);
+    if (!payload) return;
 
-	const userId = Number(req.params.id);
+    const userId = Number(req.params.id);
+    if (payload.userId !== userId) return res.status(403).json({ error: 'Forbidden' });
 
-	if (payload.userId !== userId) {
-		return res.status(403).json({ error: 'Forbidden' });
-	}
+    const { key } = req.body;
+    if (!key) return res.status(400).json({ error: 'key is required' });
 
-	const { key } = req.body;
-	if (!key) {
-		return res.status(400).json({ error: 'key is required' });
-	}
+    const action: EcoAction = { id: String(Date.now()), key, date: new Date().toISOString() };
+    const updated = storage.addEcoAction(userId, action);
+    if (!updated) return res.status(404).json({ error: 'User not found' });
 
-	const action: EcoAction = {
-		id: String(Date.now()),
-		key,
-		date: new Date().toISOString(),
-	};
-
-	const updated = storage.addEcoAction(userId, action);
-
-    // Uppdatera CarbonScore i profilen
     const actionPoints: Record<string, number> = {
         BIKE: 10, TREE: 20, PANTA: 5, CEO: 1000, OIL: -500, FLIGHT: -50,
     };
-    const points = actionPoints[key] ?? 0;
     const profile = storage.getProfileByUserId(userId);
     if (profile) {
         storage.updateProfile(userId, {
             stats: {
                 Initiativ: profile.stats.Initiativ,
-                CarbonScore: profile.stats.CarbonScore + points,
-            }
+                CarbonScore: profile.stats.CarbonScore + (actionPoints[key] ?? 0),
+            },
         });
     }
 
-	if (!updated) {
-		return res.status(404).json({ error: 'User not found' });
-	}
-
-	res.status(201).json(action);
+    res.status(201).json(action);
 });
 
 app.get('/api/community-scores', (req, res) => {
     const payload = requireAuth(req, res);
     if (!payload) return;
 
-    const profiles = storage.getProfiles();
-    const users = storage.getUsers();
     const scores: Record<string, number> = {};
-
-    for (const profile of profiles) {
-        const user = users.find(u => u.id === profile.userId);
+    for (const profile of storage.getProfiles()) {
+        const user = storage.getUserById(profile.userId);
         if (!user) continue;
         const vis = user.visibility.toLowerCase();
         scores[vis] = (scores[vis] ?? 0) + profile.stats.CarbonScore;
     }
-
     res.json(scores);
 });
 
-
 app.post('/api/login', (req, res) => {
-	const { email, password } = req.body;
+    const { email, password } = req.body;
+    if (!email || !password) return res.status(400).json({ error: 'email and password required' });
 
-	if (!email || !password) {
-		return res.status(400).json({ error: 'email and password required' });
-	}
+    const match = storage.getUsers().find(u => u.email === email && u.password === password);
+    if (!match) return res.status(401).json({ error: 'Invalid email or password' });
 
-	const users = storage.getUsers();
-
-	const match = users.find(
-		(u: any) => u.email === email && u.password === password
-	);
-
-	if (match) {
-		const token = generateToken(match);
-		res.status(200).json({
-			message: 'login successful', token, user: {
-				id: match.id,
-				username: match.username,
-				email: match.email
-			}
-		});
-
-	} else {
-		res.status(401).json({ error: 'no such user' });
-	}
-
+    res.status(200).json({
+        message: 'login successful',
+        token: generateToken(match),
+        user: { id: match.id, username: match.username, email: match.email },
+    });
 });
 
 app.get('/api/me', (req, res) => {
-	const header = req.headers.authorization;
+    const payload = requireAuth(req, res);
+    if (!payload) return;
 
-	if (!header) {
-		return res.status(401).json({ error: 'no token to validify' })
-	}
+    const user = storage.getUserById(payload.userId);
+    if (!user) return res.status(404).json({ error: 'User not found' });
 
-	const token = header.split(' ')[1];
-
-	try {
-		const jwtPayload = verifyToken(token);
-		const user = storage.getUserById(jwtPayload.userId);
-
-		if (!user) {
-			return res.status(404).json({ error: 'User not found' });
-		}
-
-        return res.status(200).json({ user: { id: user.id, username: user.username, email: user.email, role: user.role } });
-
-	} catch (error) {
-		return res.status(401).json({ error: 'Invalid or expired token' });
-	}
+    res.status(200).json({
+        user: { id: user.id, username: user.username, email: user.email, role: user.role },
+    });
 });
 
-//Initiatives
 app.get('/api/initiatives', (req, res) => {
-	const header = req.headers.authorization;
+    const payload = requireAuth(req, res);
+    if (!payload) return;
 
-	if (!header) {
-		return res.status(401).json({ error: 'no token to validify' })
-	}
+    const user = storage.getUserById(payload.userId);
+    if (!user) return res.status(404).json({ error: 'User not found' });
 
-	const token = header.split(' ')[1];
+    const userVisibility = user.visibility?.toLowerCase() ?? 'public';
+    const initiatives    = storage.getInitiatives();
 
-	try {
-		const jwtPayload = verifyToken(token);
-		const userId = jwtPayload.userId;
+    if (userVisibility === 'public') {
+        return res.json(initiatives.map(i => (i as Content).toJSON()));
+    }
 
-		const user = storage.getUserById(userId);
+    const filtered = initiatives.filter(i =>
+        i.visibility === Visibility.PUBLIC ||
+        i.visibility.toLowerCase() === userVisibility
+    );
 
-		if (!user) {
-			return res.status(404).json({ error: 'User not found' });
-		}
-
-		const userVisibility = user?.visibility ?? null;
-		const initiatives = storage.getInitiatives();
-
-		if (userVisibility.toLocaleLowerCase() === 'public') {
-			return res.json(initiatives);
-		}
-
-		const filtered = initiatives.filter(i =>
-			i.visibility.toLowerCase() === 'public' || (userVisibility.toLowerCase() && i.visibility.toLowerCase() === userVisibility.toLocaleLowerCase())
-		);
-
-		res.json(filtered);
-
-	} catch (error) {
-		return res.status(401).json({ error: 'Invalid or expired token' });
-	}
-
+    res.json(filtered.map(i => (i as Content).toJSON()));
 });
 
 app.get('/api/initiatives/:id', (req, res) => {
-	const header = req.headers.authorization;
+    const payload = requireAuth(req, res);
+    if (!payload) return;
 
-	if (!header) {
-		return res.status(401).json({ error: 'no token to validify' });
-	}
-
-	const token = header.split(' ')[1];
-
-	try {
-		verifyToken(token);
-
-		const id = req.params.id;
-		const initiative = storage.getInitiativeById(id);
-
-		if (!initiative) {
-			return res.status(404).json({ error: 'Initiative not found' });
-		}
-
-		res.json(initiative);
-	} catch (error) {
-		return res.status(401).json({ error: 'Invalid or expired token' });
-	}
+    const initiative = storage.getInitiativeById(req.params.id);
+    if (!initiative) return res.status(404).json({ error: 'Initiative not found' });
+    res.json((initiative as Content).toJSON());
 });
 
 app.post('/api/initiatives', (req, res) => {
-	const payload = requireAuth(req, res);
-	if (!payload) return;
+    const payload = requireAuth(req, res);
+    if (!payload) return;
 
-	const { title, author, body, visibility, image, location, duration } = req.body;
+    const author = resolveAuthor(payload, res);
+    if (!author) return;
 
-	if (!title || !author || !body || !visibility) {
-		return res.status(400).json({ error: 'title, author, body, and visibility are required' });
-	}
+    const { title, body, visibility, image, location, duration } = req.body;
+    if (!title || !body || !visibility) {
+        return res.status(400).json({ error: 'title, body, and visibility are required' });
+    }
 
-	const newInitiative: ContentRecord = {
-		id: String(Date.now()),
-		type: 'initiative',
-		title,
-		author,
-		body,
-		visibility,
-		date: new Date().toISOString(),
-		image: image ?? null,
-		location: location ?? null,
-		duration: duration ?? null,
-		likes: [],
-		dislikes: [],
-		children: [],
-	};
+    const initiative = ContentFactory.createInitiative(
+        String(Date.now()), title, author, body,
+        visibility as Visibility, image, location, duration,
+    );
 
-	storage.addInitiative(newInitiative);
-	res.status(201).json(newInitiative);
+    storage.addInitiative(initiative);
+    res.status(201).json((initiative as Content).toJSON());
 });
 
 app.patch('/api/initiatives/:id', (req, res) => {
-	const payload = requireAuth(req, res);
-	if (!payload) return;
+    const payload = requireAuth(req, res);
+    if (!payload) return;
 
-	const { id } = req.params;
-	const { title, body, visibility, image, location, duration, likes, dislikes } = req.body;
+    const { title, body, visibility, image, location, duration, likes, dislikes } = req.body;
 
-	//If not including a change - will skip
-	const updated = storage.updateInitiative(id, {
-		...(title !== undefined && { title }),
-		...(body !== undefined && { body }),
-		...(visibility !== undefined && { visibility }),
-		...(image !== undefined && { image }),
-		...(location !== undefined && { location }),
-		...(duration !== undefined && { duration }),
-		...(likes !== undefined && { likes }),
-		...(dislikes !== undefined && { dislikes }),
-	});
+    const updated = storage.updateInitiative(req.params.id, {
+        ...(title      !== undefined && { title }),
+        ...(body       !== undefined && { body }),
+        ...(visibility !== undefined && { visibility }),
+        ...(image      !== undefined && { image }),
+        ...(location   !== undefined && { location }),
+        ...(duration   !== undefined && { duration }),
+        ...(likes      !== undefined && { likes }),
+        ...(dislikes   !== undefined && { dislikes }),
+    });
 
-	if (!updated) {
-		return res.status(404).json({ error: 'Initiative not found' });
-	}
-
-	res.json(updated);
+    if (!updated) return res.status(404).json({ error: 'Initiative not found' });
+    res.json((updated as Content).toJSON());
 });
 
 app.delete('/api/initiatives/:id', (req, res) => {
-	const payload = requireAuth(req, res);
-	if (!payload) return;
+    const payload = requireAuth(req, res);
+    if (!payload) return;
 
-	const { id } = req.params;
-	const deleted = storage.deleteInitiative(id);
-
-	if (!deleted) {
-		return res.status(404).json({ error: 'Initiative not found' });
-	}
-
-	res.status(200).json({ message: 'Initiative deleted' });
+    const deleted = storage.deleteInitiative(req.params.id);
+    if (!deleted) return res.status(404).json({ error: 'Initiative not found' });
+    res.status(200).json({ message: 'Initiative deleted' });
 });
 
-
-//Updates and Comments. Is there unecessary checks now due to the factory and content types set in builder-pattern? 
 app.post('/api/initiatives/:parentId/children', (req, res) => {
-	const payload = requireAuth(req, res);
-	if (!payload) return;
+    const payload = requireAuth(req, res);
+    if (!payload) return;
 
-	const { parentId } = req.params;
-	const { type, author, body, visibility, title, image, location, duration, parentId: bodyParentId } = req.body;
+    const author = resolveAuthor(payload, res);
+    if (!author) return;
 
-	if (!type || !author || !body || !visibility) {
-		return res.status(400).json({ error: 'type, author, body, and visibility are required' });
-	}
+    const { parentId: urlParentId } = req.params;
+    const { type, body, visibility, title, image, location, duration, parentId: bodyParentId } = req.body;
 
-	if (type === 'initiative') {
-		return res.status(400).json({ error: 'Cannot create an initiative as a child' });
-	}
+    if (!type || !body || !visibility) {
+        return res.status(400).json({ error: 'type, body, and visibility are required' });
+    }
+    if (type === 'initiative') {
+        return res.status(400).json({ error: 'Cannot create an initiative as a child' });
+    }
 
-	const newChild: ContentRecord = {
-		id: String(Date.now()),
-		type,
-		author,
-		body,
-		visibility,
-		date: new Date().toISOString(),
-		title: title ?? undefined,
-		image: image ?? null,
-		location: location ?? null,
-		duration: duration ?? null,
-		likes: [],
-		dislikes: [],
-		children: [],
-	};
+    const targetParentId = bodyParentId ?? urlParentId;
+    const parent = storage.findById(targetParentId);
+    if (!parent) return res.status(404).json({ error: 'Parent not found' });
 
-	const targetId = bodyParentId ?? parentId;
-	const result = storage.addChild(targetId, newChild);
+    try {
+        const child = type === 'update'
+            ? ContentFactory.createUpdate(
+                String(Date.now()),
+                title || `Update ${Date.now()}`,
+                author, body, visibility as Visibility,
+                image, location, duration,
+            )
+            : ContentFactory.createComment(
+                String(Date.now()),
+                title || `Comment ${Date.now()}`,
+                author, body, visibility as Visibility,
+            );
 
-	if (!result) {
-		return res.status(404).json({ error: 'Parent not found or invalid type for parent' });
-	}
-
-	res.status(201).json(newChild);
+        storage.addChild(targetParentId, child);
+        res.status(201).json((child as Content).toJSON());
+    } catch (err: any) {
+        return res.status(400).json({ error: err.message });
+    }
 });
 
-
-
-//Chats
 app.get('/api/chats', (req, res) => {
-	const payload = requireAuth(req, res);
-	if (!payload) return;
+    const payload = requireAuth(req, res);
+    if (!payload) return;
 
-	const userId = req.query.userId ? Number(req.query.userId) : null;
-	if (userId === null) return res.status(400).json({ error: 'userId is required' });
+    const userId = req.query.userId ? Number(req.query.userId) : null;
+    if (userId === null) return res.status(400).json({ error: 'userId is required' });
 
-	const chats = storage.getChats().filter(c =>
-		c.sender.id === userId || c.receiver.id === userId
-	);
-
-	res.json(chats);
+    const chats = storage.getChats().filter(c =>
+        c.sender.id === userId || c.receiver.id === userId
+    );
+    res.json(chats);
 });
 
 app.post('/api/chats/with/:userId', (req, res) => {
-	const payload = requireAuth(req, res);
-	if (!payload) return;
+    const payload = requireAuth(req, res);
+    if (!payload) return;
 
-	const currentUserId = payload.userId;
-	const otherUserId = Number(req.params.userId);
+    const currentUserId = payload.userId;
+    const otherUserId   = Number(req.params.userId);
 
-	const existingChat = storage.getChats().find(c =>
-		(c.sender.id === currentUserId && c.receiver.id === otherUserId) ||
-		(c.sender.id === otherUserId && c.receiver.id === currentUserId)
-	);
+    const existing = storage.getChats().find(c =>
+        (c.sender.id === currentUserId && c.receiver.id === otherUserId) ||
+        (c.sender.id === otherUserId   && c.receiver.id === currentUserId)
+    );
+    if (existing) return res.json(existing);
 
-	if (existingChat) {
-		return res.json(existingChat);
-	}
+    const sender   = storage.getUserById(currentUserId);
+    const receiver = storage.getUserById(otherUserId);
+    if (!sender || !receiver) return res.status(404).json({ error: 'User not found' });
 
-	const sender = storage.getUserById(currentUserId);
-	const receiver = storage.getUserById(otherUserId);
-
-	if (!sender || !receiver) {
-		return res.status(404).json({ error: 'User not found' });
-	}
-
-	const newChat: ChatRecord = {
-		id: String(Date.now()),
-		sender,
-		receiver,
-		body: '',
-		date: new Date().toISOString(),
-		children: [],
-	};
-
-	storage.addChat(newChat);
-
-	res.status(201).json(newChat);
+    const newChat: ChatRecord = {
+        id: String(Date.now()), sender, receiver,
+        body: '', date: new Date().toISOString(), children: [],
+    };
+    storage.addChat(newChat);
+    res.status(201).json(newChat);
 });
 
 app.get('/api/chats/:id', (req, res) => {
-	const payload = requireAuth(req, res);
-	if (!payload) return;
+    const payload = requireAuth(req, res);
+    if (!payload) return;
 
-	const chat = storage.getChatById(req.params.id);
-	if (!chat) return res.status(404).json({ error: 'Chat not found' });
-	res.json(chat);
+    const chat = storage.getChatById(req.params.id);
+    if (!chat) return res.status(404).json({ error: 'Chat not found' });
+    res.json(chat);
 });
 
 app.post('/api/chats', (req, res) => {
-	const payload = requireAuth(req, res);
-	if (!payload) return;
+    const payload = requireAuth(req, res);
+    if (!payload) return;
 
-	const { sender, receiver, body } = req.body;
+    const { sender, receiver, body } = req.body;
+    if (!sender || !receiver || !body) {
+        return res.status(400).json({ error: 'sender, receiver, and body are required' });
+    }
 
-	if (!sender || !receiver || !body) {
-		return res.status(400).json({ error: 'sender, receiver, and body are required' });
-	}
-
-	const newChat: ChatRecord = {
-		id: String(Date.now()),
-		sender,
-		receiver,
-		body,
-		date: new Date().toISOString(),
-		children: [],
-	};
-
-	storage.addChat(newChat);
-	res.status(201).json(newChat);
+    const newChat: ChatRecord = {
+        id: String(Date.now()), sender, receiver,
+        body, date: new Date().toISOString(), children: [],
+    };
+    storage.addChat(newChat);
+    res.status(201).json(newChat);
 });
 
 app.post('/api/chats/:id/messages', (req, res) => {
-	const payload = requireAuth(req, res);
-	if (!payload) return;
+    const payload = requireAuth(req, res);
+    if (!payload) return;
 
-	const { sender, body } = req.body;
+    const { sender, body } = req.body;
+    if (!sender || !body) return res.status(400).json({ error: 'sender and body are required' });
 
-	if (!sender || !body) {
-		return res.status(400).json({ error: 'sender and body are required' });
-	}
-
-	const newMessage: MessageRecord = {
-		id: String(Date.now()),
-		sender,
-		body,
-		date: new Date().toISOString(),
-	};
-
-	const result = storage.addMessage(req.params.id, newMessage);
-	if (!result) return res.status(404).json({ error: 'Chat not found' });
-	res.status(201).json(newMessage);
+    const newMessage: MessageRecord = {
+        id: String(Date.now()), sender, body, date: new Date().toISOString(),
+    };
+    const result = storage.addMessage(req.params.id, newMessage);
+    if (!result) return res.status(404).json({ error: 'Chat not found' });
+    res.status(201).json(newMessage);
 });
 
 app.delete('/api/chats/:id/messages/:messageId', (req, res) => {
-	const payload = requireAuth(req, res);
-	if (!payload) return;
+    const payload = requireAuth(req, res);
+    if (!payload) return;
 
-	const deleted = storage.deleteMessage(req.params.id, req.params.messageId);
-	if (!deleted) return res.status(404).json({ error: 'Chat or message not found' });
-	res.status(200).json({ message: 'Message deleted' });
+    const deleted = storage.deleteMessage(req.params.id, req.params.messageId);
+    if (!deleted) return res.status(404).json({ error: 'Chat or message not found' });
+    res.status(200).json({ message: 'Message deleted' });
 });
 
 app.get('/api/notifications', (req, res) => {
     const payload = requireAuth(req, res);
     if (!payload) return;
- 
-    const userId = Number(req.query.userId);
-    if (!userId || isNaN(userId)) {
-        return res.status(400).json({ error: 'userId query param is required' });
-    }
- 
+
+    const userId = payload.userId;
+
     const sinceParam = req.query.since as string | undefined;
-    const since = sinceParam ? new Date(sinceParam) : new Date(Date.now() - 24 * 60 * 60 * 1000);
- 
+    const since = sinceParam
+        ? new Date(sinceParam)
+        : new Date(Date.now() - 24 * 60 * 60 * 1000);
+
     const user = storage.getUserById(userId);
-    if (!user) {
-        return res.status(404).json({ error: 'User not found' });
-    }
- 
+    if (!user) return res.status(404).json({ error: 'User not found' });
+
     const userNeighborhood = user.visibility?.toLowerCase() ?? null;
-    const initiatives = storage.getInitiatives();
+    const initiatives      = storage.getInitiatives();
     const notifications: Notification[] = [];
- 
     const seen = new Set<string>();
- 
-    type ContentRecord = import('./storage/storage-system').ContentRecord;
- 
-    function walkChildren(
-        nodes: ContentRecord[],
-        parentAuthorId: number,
-        initiativeId: string,
-        initiativeTitle: string,
-        initiativeAuthorId: number,
-    ) {
-        for (const node of nodes) {
-            const nodeDate = new Date(node.date);
-            const notifId = `reply-${node.id}`;
- 
-            if (
-                node.author.id !== userId &&   // not your own post
-                nodeDate > since &&             // within the time window
-                !seen.has(notifId)             // not already queued
-            ) {
-                if (initiativeAuthorId === userId && parentAuthorId === userId) {
-                    seen.add(notifId);
-                    notifications.push({
-                        id: notifId,
-                        type: 'reply',
-                        initiativeId,
-                        initiativeTitle,
-                        actorUsername: node.author.username,
-                        contentType: node.type,
-                        body: node.body,
-                        date: node.date,
-                        read: false,
-                    });
-                }
- 
-                else if (parentAuthorId === userId) {
-                    seen.add(notifId);
-                    notifications.push({
-                        id: notifId,
-                        type: 'thread-reply',
-                        initiativeId,
-                        initiativeTitle,
-                        actorUsername: node.author.username,
-                        contentType: node.type,
-                        body: node.body,
-                        date: node.date,
-                        read: false,
-                    });
-                }
-            }
- 
-            if (node.children?.length) {
-                walkChildren(
-                    node.children,
-                    node.author.id,
-                    initiativeId,
-                    initiativeTitle,
-                    initiativeAuthorId,
-                );
-            }
-        }
-    }
- 
+
     for (const initiative of initiatives) {
-        const initiativeAuthorId = initiative.author.id;
-        const initiativeDate = new Date(initiative.date);
- 
-        walkChildren(
-            initiative.children,
-            initiativeAuthorId,
-            initiative.id,
-            initiative.title ?? '(untitled)',
-            initiativeAuthorId,
+        const init            = initiative as Content;
+        const initiativeId    = init.id;
+        const initiativeTitle = init.title ?? '(untitled)';
+
+        collectReplyNotifications(
+            init.getChildren(),
+            init,
+            initiativeId,
+            initiativeTitle,
+            userId,
+            since,
+            seen,
+            notifications,
         );
- 
+
+        const neighborhoodId = `neighborhood-${init.id}`;
         if (
             userNeighborhood &&
-            initiativeAuthorId !== userId &&
-            initiativeDate > since &&
-            initiative.visibility.toLowerCase() === userNeighborhood
+            init.author.id !== userId &&
+            init.date > since &&
+            init.visibility.toLowerCase() === userNeighborhood &&
+            !seen.has(neighborhoodId)
         ) {
+            seen.add(neighborhoodId);
             notifications.push({
-                id: `neighborhood-${initiative.id}`,
+                id: neighborhoodId,
                 type: 'neighborhood',
-                initiativeId: initiative.id,
-                initiativeTitle: initiative.title ?? '(untitled)',
-                actorUsername: initiative.author.username,
+                initiativeId,
+                initiativeTitle,
+                actorUsername: init.author.username,
                 contentType: 'initiative',
-                body: initiative.body,
-                date: initiative.date,
+                body: init.body,
+                date: init.date.toISOString(),
                 read: false,
             });
         }
     }
- 
-    // Newest first
-    notifications.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
- 
+
+    notifications.sort((a, b) =>
+        new Date(b.date).getTime() - new Date(a.date).getTime()
+    );
+
     res.json(notifications);
 });
 
-//Initialization
-
 storage.init().then(() => {
-	app.listen(PORT, () => {
-		console.log(`Server running at http://localhost:${PORT}`);
-	});
+    app.listen(PORT, () => console.log(`Server running at http://localhost:${PORT}`));
 }).catch(err => {
-	console.error('Failed to initialize storage:', err);
-	process.exit(1);
+    console.error('Failed to initialise storage:', err);
+    process.exit(1);
 });

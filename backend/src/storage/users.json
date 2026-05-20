@@ -11,6 +11,26 @@
         "id": "1778409829075",
         "key": "CEO",
         "date": "2026-05-10T10:43:49.075Z"
+      },
+      {
+        "id": "1778412000000",
+        "key": "BIKE",
+        "date": "2026-05-19T08:15:00.000Z"
+      },
+      {
+        "id": "1778456789012",
+        "key": "TREE",
+        "date": "2026-05-14T09:00:00.000Z"
+      },
+      {
+        "id": "1779281466119",
+        "key": "BIKE",
+        "date": "2026-05-20T12:51:06.119Z"
+      },
+      {
+        "id": "1779281475680",
+        "key": "OIL",
+        "date": "2026-05-20T12:51:15.681Z"
       }
     ]
   },
@@ -19,13 +39,23 @@
     "username": "Bob",
     "password": "kattenmorris00",
     "email": "bob@hotmail.se",
-    "visibility": "SOFIELUND",
+    "visibility": "sofielund",
     "role": "user",
     "ecoActions": [
       {
         "id": "1778336225349",
         "key": "PANTA",
         "date": "2026-05-09T14:17:05.349Z"
+      },
+      {
+        "id": "1778500000000",
+        "key": "BIKE",
+        "date": "2026-05-15T07:30:00.000Z"
+      },
+      {
+        "id": "1778551111111",
+        "key": "PANTA",
+        "date": "2026-05-18T16:45:00.000Z"
       }
     ]
   },
@@ -34,34 +64,62 @@
     "username": "Majken",
     "password": "password123",
     "email": "majken00@gmail.com",
-    "visibility": "SORGENFRI",
+    "visibility": "sorgenfri",
     "role": "user",
-    "ecoActions": []
+    "ecoActions": [
+      {
+        "id": "1778551234567",
+        "key": "TREE",
+        "date": "2026-05-17T10:20:00.000Z"
+      },
+      {
+        "id": "1778623456789",
+        "key": "BIKE",
+        "date": "2026-05-20T07:50:00.000Z"
+      }
+    ]
   },
   {
     "id": 4,
     "username": "Lars",
     "password": "fruktkaka04",
     "email": "lars_da_killah04@yahoo.com",
-    "visibility": "KIRSEBERG",
+    "visibility": "kirseberg",
     "role": "user",
-    "ecoActions": []
+    "ecoActions": [
+      {
+        "id": "1778405000000",
+        "key": "PANTA",
+        "date": "2026-05-12T11:00:00.000Z"
+      }
+    ]
   },
   {
     "id": 5,
     "username": "Fredrik",
     "password": "majken99cool",
     "email": "fredde@proton.se",
-    "visibility": "FOLKETS_PARK",
+    "visibility": "folkets_park",
     "role": "user",
-    "ecoActions": []
+    "ecoActions": [
+      {
+        "id": "1778600000000",
+        "key": "BIKE",
+        "date": "2026-05-18T06:45:00.000Z"
+      },
+      {
+        "id": "1778630000000",
+        "key": "TREE",
+        "date": "2026-05-19T15:30:00.000Z"
+      }
+    ]
   },
   {
     "id": 6,
     "username": "Lina",
     "password": "smakakaka02",
     "email": "lina02@hotmail.se",
-    "visibility": "KIRSEBERG",
+    "visibility": "kirseberg",
     "role": "user",
     "ecoActions": []
   },
@@ -72,23 +130,35 @@
     "email": "lukas@hotmail.se",
     "visibility": "sofielund",
     "role": "user",
-    "ecoActions": []
+    "ecoActions": [
+      {
+        "id": "1778580000000",
+        "key": "BIKE",
+        "date": "2026-05-16T08:10:00.000Z"
+      }
+    ]
   },
   {
     "id": 8,
     "username": "Emma",
     "password": "gayrat4ever",
     "email": "emma@gmail.com",
-    "visibility": "KIRSEBERG",
+    "visibility": "kirseberg",
     "role": "user",
-    "ecoActions": []
+    "ecoActions": [
+      {
+        "id": "1778620000000",
+        "key": "PANTA",
+        "date": "2026-05-19T14:10:00.000Z"
+      }
+    ]
   },
   {
     "id": 9,
     "username": "Gunnar",
     "password": "volvoär bäst01",
     "email": "gunnar_volvo@telia.se",
-    "visibility": "KIRSEBERG",
+    "visibility": "kirseberg",
     "role": "user",
     "ecoActions": []
   },
@@ -97,16 +167,22 @@
     "username": "Britta",
     "password": "kanelbulle4ever",
     "email": "britta.karlsson@spray.se",
-    "visibility": "KIRSEBERG",
+    "visibility": "kirseberg",
     "role": "user",
-    "ecoActions": []
+    "ecoActions": [
+      {
+        "id": "1778590000000",
+        "key": "PANTA",
+        "date": "2026-05-17T13:20:00.000Z"
+      }
+    ]
   },
   {
     "id": 11,
     "username": "Göran",
     "password": "danskärfula99",
     "email": "goran_gott@live.se",
-    "visibility": "KIRSEBERG",
+    "visibility": "kirseberg",
     "role": "user",
     "ecoActions": []
   },
@@ -115,7 +191,7 @@
     "username": "Sigrid",
     "password": "abba4ever",
     "email": "sigrid_abba@gmail.com",
-    "visibility": "KIRSEBERG",
+    "visibility": "kirseberg",
     "role": "user",
     "ecoActions": []
   },
@@ -124,25 +200,37 @@
     "username": "Rickard",
     "password": "hejsansvejsan01",
     "email": "rickard_ric@hotmail.se",
-    "visibility": "KIRSEBERG",
+    "visibility": "kirseberg",
     "role": "user",
-    "ecoActions": []
+    "ecoActions": [
+      {
+        "id": "1778640000000",
+        "key": "BIKE",
+        "date": "2026-05-20T09:00:00.000Z"
+      }
+    ]
   },
   {
     "id": 14,
     "username": "Monika",
     "password": "blommor&bin99",
     "email": "monika.trädgård@live.se",
-    "visibility": "KIRSEBERG",
+    "visibility": "kirseberg",
     "role": "user",
-    "ecoActions": []
+    "ecoActions": [
+      {
+        "id": "1778610000000",
+        "key": "TREE",
+        "date": "2026-05-18T14:00:00.000Z"
+      }
+    ]
   },
   {
     "id": 15,
     "username": "Svante",
     "password": "IkeaÄrBäst04",
     "email": "svante_möbel@telia.se",
-    "visibility": "KIRSEBERG",
+    "visibility": "kirseberg",
     "role": "user",
     "ecoActions": []
   },
@@ -151,7 +239,7 @@
     "username": "Agneta",
     "password": "dansbandsälskare88",
     "email": "agneta.dans@spray.se",
-    "visibility": "KIRSEBERG",
+    "visibility": "kirseberg",
     "role": "user",
     "ecoActions": []
   },
@@ -160,7 +248,7 @@
     "username": "Conny",
     "password": "connysgarage69",
     "email": "conny_mekan@yahoo.se",
-    "visibility": "KIRSEBERG",
+    "visibility": "kirseberg",
     "role": "user",
     "ecoActions": []
   },
@@ -169,16 +257,22 @@
     "username": "Pirjo",
     "password": "köttbullar4life",
     "email": "pirjo.koket@gmail.com",
-    "visibility": "KIRSEBERG",
+    "visibility": "kirseberg",
     "role": "user",
-    "ecoActions": []
+    "ecoActions": [
+      {
+        "id": "1778570000000",
+        "key": "PANTA",
+        "date": "2026-05-16T10:30:00.000Z"
+      }
+    ]
   },
   {
     "id": 19,
     "username": "Kentsson",
     "password": "kentochlotta97",
     "email": "kent.kentsson@hotmail.se",
-    "visibility": "KIRSEBERG",
+    "visibility": "kirseberg",
     "role": "user",
     "ecoActions": []
   },
@@ -187,7 +281,7 @@
     "username": "Doris",
     "password": "gosigkatt02",
     "email": "doris_kattmamma@live.se",
-    "visibility": "KIRSEBERG",
+    "visibility": "kirseberg",
     "role": "user",
     "ecoActions": []
   },
@@ -196,16 +290,22 @@
     "username": "Raj",
     "password": "stickning&kaffe55",
     "email": "raj@telia.se",
-    "visibility": "KIRSEBERG",
+    "visibility": "kirseberg",
     "role": "user",
-    "ecoActions": []
+    "ecoActions": [
+      {
+        "id": "1778650000000",
+        "key": "BIKE",
+        "date": "2026-05-20T12:00:00.000Z"
+      }
+    ]
   },
   {
     "id": 22,
     "username": "Bosse",
     "password": "båtliv_sommaren03",
     "email": "bosse_båten@spray.se",
-    "visibility": "KIRSEBERG",
+    "visibility": "kirseberg",
     "role": "user",
     "ecoActions": []
   },
@@ -238,9 +338,9 @@
   },
   {
     "id": 26,
-    "username": "yolo",
+    "username": "yolo2",
     "password": "123",
-    "email": "baggins@max.com",
+    "email": "baggins2@max.com",
     "visibility": "kirseberg",
     "role": "user",
     "ecoActions": []
@@ -252,7 +352,13 @@
     "email": "maggan@lopez.se",
     "visibility": "folkets_park",
     "role": "user",
-    "ecoActions": []
+    "ecoActions": [
+      {
+        "id": "1778660000000",
+        "key": "PANTA",
+        "date": "2026-05-20T15:00:00.000Z"
+      }
+    ]
   },
   {
     "id": 28,
@@ -266,6 +372,11 @@
         "id": "1778409675471",
         "key": "BIKE",
         "date": "2026-05-10T10:41:15.471Z"
+      },
+      {
+        "id": "1778450000000",
+        "key": "TREE",
+        "date": "2026-05-12T09:00:00.000Z"
       }
     ]
   },
@@ -285,6 +396,17 @@
     "email": "ragnhild@gmail.com",
     "visibility": "folkets_park",
     "role": "user",
-    "ecoActions": []
+    "ecoActions": [
+      {
+        "id": "1778700000000",
+        "key": "PANTA",
+        "date": "2026-05-20T11:30:00.000Z"
+      },
+      {
+        "id": "1778710000000",
+        "key": "BIKE",
+        "date": "2026-05-20T13:45:00.000Z"
+      }
+    ]
   }
 ]
