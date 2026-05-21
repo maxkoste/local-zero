@@ -9,7 +9,19 @@
       "id": 2,
       "username": "Maggan"
     },
-    "children": []
+    "children": [
+      {
+        "id": "1779375557433",
+        "sender": {
+          "id": 1,
+          "username": "Admin",
+          "email": "admin@admin.se",
+          "role": "admin"
+        },
+        "body": "hallo",
+        "date": "2026-05-21T14:59:17.433Z"
+      }
+    ]
   },
   {
     "id": "1779110961481",
@@ -70,5 +82,177 @@
     "body": "",
     "date": "2026-05-18T13:29:33.511Z",
     "children": []
+  },
+  {
+    "id": "1779375525534",
+    "sender": {
+      "id": 1,
+      "username": "Admin",
+      "password": "admin",
+      "email": "admin@admin.se",
+      "visibility": "folkets_park",
+      "role": "admin",
+      "ecoActions": [
+        {
+          "id": "1778409829075",
+          "key": "CEO",
+          "date": "2026-05-10T10:43:49.075Z"
+        },
+        {
+          "id": "1778412000000",
+          "key": "BIKE",
+          "date": "2026-05-19T08:15:00.000Z"
+        },
+        {
+          "id": "1778456789012",
+          "key": "TREE",
+          "date": "2026-05-14T09:00:00.000Z"
+        },
+        {
+          "id": "1779281466119",
+          "key": "BIKE",
+          "date": "2026-05-20T12:51:06.119Z"
+        },
+        {
+          "id": "1779281475680",
+          "key": "OIL",
+          "date": "2026-05-20T12:51:15.681Z"
+        },
+        {
+          "id": "1779375566575",
+          "key": "BIKE",
+          "date": "2026-05-21T14:59:26.575Z"
+        }
+      ]
+    },
+    "receiver": {
+      "id": 28,
+      "username": "Ragnar",
+      "password": "123",
+      "email": "ragnar@hotmail.se",
+      "visibility": "sofielund",
+      "role": "admin",
+      "ecoActions": [
+        {
+          "id": "1778409675471",
+          "key": "BIKE",
+          "date": "2026-05-10T10:41:15.471Z"
+        },
+        {
+          "id": "1778450000000",
+          "key": "TREE",
+          "date": "2026-05-12T09:00:00.000Z"
+        }
+      ]
+    },
+    "body": "",
+    "date": "2026-05-21T14:58:45.534Z",
+    "children": [
+      {
+        "id": "1779375528080",
+        "sender": {
+          "id": 1,
+          "username": "Admin",
+          "email": "admin@admin.se",
+          "role": "admin"
+        },
+        "body": "tjena",
+        "date": "2026-05-21T14:58:48.080Z"
+      }
+    ]
+  },
+  {
+    "id": "1779375835920",
+    "sender": {
+      "id": 30,
+      "username": "Ragnhild",
+      "password": "123",
+      "email": "ragnhild@gmail.com",
+      "visibility": "folkets_park",
+      "role": "user",
+      "ecoActions": [
+        {
+          "id": "1778700000000",
+          "key": "PANTA",
+          "date": "2026-05-20T11:30:00.000Z"
+        },
+        {
+          "id": "1778710000000",
+          "key": "BIKE",
+          "date": "2026-05-20T13:45:00.000Z"
+        },
+        {
+          "id": "1779375774535",
+          "key": "FLIGHT",
+          "date": "2026-05-21T15:02:54.535Z"
+        }
+      ]
+    },
+    "receiver": {
+      "id": 1,
+      "username": "Admin",
+      "password": "admin",
+      "email": "admin@admin.se",
+      "visibility": "folkets_park",
+      "role": "admin",
+      "ecoActions": [
+        {
+          "id": "1778409829075",
+          "key": "CEO",
+          "date": "2026-05-10T10:43:49.075Z"
+        },
+        {
+          "id": "1778412000000",
+          "key": "BIKE",
+          "date": "2026-05-19T08:15:00.000Z"
+        },
+        {
+          "id": "1778456789012",
+          "key": "TREE",
+          "date": "2026-05-14T09:00:00.000Z"
+        },
+        {
+          "id": "1779281466119",
+          "key": "BIKE",
+          "date": "2026-05-20T12:51:06.119Z"
+        },
+        {
+          "id": "1779281475680",
+          "key": "OIL",
+          "date": "2026-05-20T12:51:15.681Z"
+        },
+        {
+          "id": "1779375566575",
+          "key": "BIKE",
+          "date": "2026-05-21T14:59:26.575Z"
+        }
+      ]
+    },
+    "body": "",
+    "date": "2026-05-21T15:03:55.920Z",
+    "children": [
+      {
+        "id": "1779375841341",
+        "sender": {
+          "id": 30,
+          "username": "Ragnhild",
+          "email": "ragnhild@gmail.com",
+          "role": "user"
+        },
+        "body": "Du borde få sparken",
+        "date": "2026-05-21T15:04:01.341Z"
+      },
+      {
+        "id": "1779375861680",
+        "sender": {
+          "id": 1,
+          "username": "Admin",
+          "email": "admin@admin.se",
+          "role": "admin"
+        },
+        "body": "Blockad",
+        "date": "2026-05-21T15:04:21.680Z"
+      }
+    ]
   }
 ]

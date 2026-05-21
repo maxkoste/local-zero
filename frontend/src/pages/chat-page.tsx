@@ -6,42 +6,6 @@ import {
 } from "@mui/material";
 import SendIcon from "@mui/icons-material/Send";
 
-// TODO: replace with logged-in user
-const hardcodedSender = {
-    id: 1,
-    username: "Lolita",
-    email: "lolita@email.com",
-};
-
-// ── Mock data ────────────────────────────────────────────────────────────────
-const MOCK_CHAT = {
-    id: "chat-1",
-    sender: hardcodedSender,
-    receiver: { id: 2, username: "Maggan Lopez", email: "maggan@lopez.se" },
-    date: new Date(),
-    children: [
-        {
-            id: "msg-1",
-            sender: { id: 2, username: "Maggan Lopez", email: "maggan@lopez.se" },
-            body: "Hej! Har du sett det nya initiativet i Möllan?",
-            date: new Date(Date.now() - 1000 * 60 * 10),
-        },
-        {
-            id: "msg-2",
-            sender: hardcodedSender,
-            body: "Ja!! Det ser jättebra ut, vi borde engagera oss.",
-            date: new Date(Date.now() - 1000 * 60 * 8),
-        },
-        {
-            id: "msg-3",
-            sender: { id: 2, username: "Maggan Lopez", email: "maggan@lopez.se" },
-            body: "Exakt! Jag tänkte skriva en kommentar nu på eftermiddagen.",
-            date: new Date(Date.now() - 1000 * 60 * 3),
-        },
-    ],
-};
-// ─────────────────────────────────────────────────────────────────────────────
-
 function getInitials(username: string): string {
     return username.split(" ").map((w) => w[0]).join("").toUpperCase().slice(0, 2);
 }
@@ -78,7 +42,6 @@ function MessageBubble({ message, isMine, onDelete }: {
                 }}>
                     <Typography variant="body2">{message.body}</Typography>
                 </Box>
-                {/* Delete button — only shown for own messages */}
                 {isMine && onDelete && (
                     <Typography
                         variant="caption"
@@ -134,11 +97,6 @@ export function ChatPage() {
 
     useEffect(() => {
         fetchChat();
-
-        // ── Polling — re-enable with real API ────────────────────────────────
-        // const poll = setInterval(fetchChat, 3000);
-        // return () => clearInterval(poll);
-        // ────────────────────────────────────────────────────────────────────
     }, [id]);
 
     useEffect(() => {
