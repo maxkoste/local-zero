@@ -1149,9 +1149,35 @@
               27,
               30
             ],
-            "dislikes": [],
+            "dislikes": [
+              "1"
+            ],
             "categories": [],
-            "children": []
+            "children": [
+              {
+                "id": "1779375897117",
+                "type": "comment",
+                "title": "Comment 1779375897117",
+                "author": {
+                  "id": 1,
+                  "username": "Admin",
+                  "email": "admin@admin.se",
+                  "role": "admin"
+                },
+                "body": "Inte på mina skattepengar grabben",
+                "visibility": "folkets_park",
+                "date": "2026-05-21T15:04:57.117Z",
+                "image": null,
+                "location": null,
+                "duration": null,
+                "likes": [
+                  "1"
+                ],
+                "dislikes": [],
+                "categories": [],
+                "children": []
+              }
+            ]
           }
         ]
       }

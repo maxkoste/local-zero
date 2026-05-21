@@ -39,10 +39,16 @@ type User = {
     recentActivity: { id: number; text: string; date: string }[];
 };
 
-// Extra info from /api/users/:id (not in profile)
 type UserRecord = {
     visibility: string;
     role: 'user' | 'admin';
+};
+
+type ChatSummary = {
+    id: string;
+    sender: { id: number; username: string; email: string };
+    receiver: { id: number; username: string; email: string };
+    children: { id: string; body: string; date: string }[];
 };
 
 const Card = styled(Paper)(({ theme }) => ({
@@ -81,9 +87,30 @@ const Label = styled(Typography)(({ theme }) => ({
     marginBottom: theme.spacing(0.5),
 }));
 
+const InboxRow = styled(Box)(({ theme }) => ({
+    display: 'flex',
+    alignItems: 'center',
+    gap: theme.spacing(1.5),
+    padding: theme.spacing(1.25, 1),
+    borderRadius: 10,
+    cursor: 'pointer',
+    transition: 'background 0.15s',
+    '&:hover': {
+        backgroundColor: theme.palette.action.hover,
+    },
+    '&:not(:last-child)': {
+        borderBottom: `1px solid ${theme.palette.divider}`,
+    },
+}));
+
+function getInitials(username: string): string {
+    return username.split(' ').map(w => w[0]).join('').toUpperCase().slice(0, 2);
+}
+
 export function UserPage() {
     const [user, setUser] = useState<User | null>(null);
     const [userRecord, setUserRecord] = useState<UserRecord | null>(null);
+    const [chats, setChats] = useState<ChatSummary[]>([]);
     const [loading, setLoading] = useState(true);
     const [selectedAction, setSelectedAction] = useState<string>('BIKE');
     const [logging, setLogging] = useState(false);
@@ -110,14 +137,12 @@ export function UserPage() {
                     if (!userId) userId = String(meData.user.id);
                 }
 
-                // Fetch profile (bio, stats, etc.)
                 const profileRes = await fetch(`http://localhost:3001/api/users/${userId}/profile`, {
                     headers: { Authorization: `Bearer ${token}` }
                 });
                 if (!profileRes.ok) throw new Error('Profile fetch failed');
                 setUser(await profileRes.json());
 
-                // Fetch user record (visibility/neighborhood + role)
                 const userRes = await fetch(`http://localhost:3001/api/users/${userId}`, {
                     headers: { Authorization: `Bearer ${token}` }
                 });
@@ -133,7 +158,26 @@ export function UserPage() {
         loadUser();
     }, [id]);
 
+    // Fetch chats only for own profile
     const isOwnProfile = !id || (loggedInUserId !== null && Number(id) === loggedInUserId);
+
+    useEffect(() => {
+        if (!isOwnProfile || loggedInUserId === null) return;
+
+        const loadChats = async () => {
+            try {
+                const token = localStorage.getItem('token');
+                const res = await fetch(`http://localhost:3001/api/chats?userId=${loggedInUserId}`, {
+                    headers: { Authorization: `Bearer ${token}` },
+                });
+                if (res.ok) setChats(await res.json());
+            } catch (error) {
+                console.error('Error loading chats:', error);
+            }
+        };
+
+        loadChats();
+    }, [isOwnProfile, loggedInUserId]);
 
     async function handleLogAction() {
         if (!user) return;
@@ -187,12 +231,9 @@ export function UserPage() {
                 }
             );
 
-            if (!res.ok) {
-                throw new Error("Could not open chat.");
-            }
+            if (!res.ok) throw new Error("Could not open chat.");
 
             const chat = await res.json();
-
             navigate(`/chat/${chat.id}`);
         } catch (err) {
             console.error(err);
@@ -225,7 +266,6 @@ export function UserPage() {
                             <Typography variant="h6" sx={{ fontWeight: 600, lineHeight: 1.2 }}>
                                 {user.username}
                             </Typography>
-                            {/* Role + neighborhood badges */}
                             <Box sx={{ display: 'flex', gap: 1, justifyContent: 'center', mt: 1, flexWrap: 'wrap' }}>
                                 {userRecord?.role && (
                                     <Chip
@@ -263,7 +303,6 @@ export function UserPage() {
                             ))}
                         </Grid>
 
-                        {/* Eco-action section – own profile only */}
                         {isOwnProfile && (
                             <>
                                 <Divider sx={{ my: 2 }} />
@@ -346,6 +385,52 @@ export function UserPage() {
                                 ))}
                             </Card>
                         </Grid>
+
+                        {/* Inbox — own profile only */}
+                        {isOwnProfile && (
+                            <Grid size={12}>
+                                <Card>
+                                    <Label>Messages</Label>
+                                    {chats.length === 0 ? (
+                                        <Typography variant="body2" color="text.disabled">
+                                            No conversations yet.
+                                        </Typography>
+                                    ) : (
+                                        chats.map(chat => {
+                                            const otherUser = chat.sender.id === loggedInUserId
+                                                ? chat.receiver
+                                                : chat.sender;
+                                            const lastMessage = chat.children[chat.children.length - 1];
+
+                                            return (
+                                                <InboxRow key={chat.id} onClick={() => navigate(`/chat/${chat.id}`)}>
+                                                    <Avatar sx={{ width: 36, height: 36, fontSize: 13, bgcolor: 'grey.700', flexShrink: 0 }}>
+                                                        {getInitials(otherUser.username)}
+                                                    </Avatar>
+                                                    <Box sx={{ flex: 1, minWidth: 0 }}>
+                                                        <Typography variant="subtitle2" sx={{ fontWeight: 600 }}>
+                                                            {otherUser.username}
+                                                        </Typography>
+                                                        <Typography
+                                                            variant="caption"
+                                                            color="text.secondary"
+                                                            sx={{ display: 'block', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}
+                                                        >
+                                                            {lastMessage ? lastMessage.body : 'No messages yet'}
+                                                        </Typography>
+                                                    </Box>
+                                                    {lastMessage && (
+                                                        <Typography variant="caption" color="text.disabled" sx={{ flexShrink: 0 }}>
+                                                            {new Date(lastMessage.date).toLocaleDateString([], { month: 'short', day: 'numeric' })}
+                                                        </Typography>
+                                                    )}
+                                                </InboxRow>
+                                            );
+                                        })
+                                    )}
+                                </Card>
+                            </Grid>
+                        )}
 
                         <Grid size={12}>
                             <Card>
