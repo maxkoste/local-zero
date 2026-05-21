@@ -2,361 +2,423 @@
   {
     "userId": 1,
     "username": "Admin",
-    "location": "",
-    "bio": "Jag är kungen bruv",
-    "email": "röksignaler. \n 666 - 420 69",
+    "location": "Folkets Park",
+    "bio": "Administratör för lokala initiativ i Malmö. Brinner för hållbarhet, gemenskap och ett grönare Malmö.",
+    "email": "admin@admin.se",
     "stats": {
-      "Initiativ": 666,
-      "CarbonScore": 6970420
+      "Initiativ": 18,
+      "CarbonScore": 11970
     },
-    "recentActivity": []
+    "recentActivity": [
+      {
+        "id": 1,
+        "text": "Logged: Planted a tree",
+        "date": "2026-05-19"
+      },
+      {
+        "id": 2,
+        "text": "Created: Hållbarhetsdag på Kirsebergstorget",
+        "date": "2026-05-20"
+      },
+      {
+        "id": 3,
+        "text": "Logged: Bike to work",
+        "date": "2026-05-18"
+      }
+    ]
   },
   {
     "userId": 2,
     "username": "Bob",
-    "location": "",
-    "bio": "",
-    "email": "",
+    "location": "Sofielund",
+    "bio": "Trädgårdsentusiast och cyklist. Driver flera odlingsprojekt och älskar att fixa saker i området.",
+    "email": "bob@hotmail.se",
     "stats": {
-      "Initiativ": 0,
-      "CarbonScore": 5
+      "Initiativ": 9,
+      "CarbonScore": 1240
     },
-    "recentActivity": []
+    "recentActivity": [
+      {
+        "id": 1,
+        "text": "Created: Gemensam odling i Sofielund",
+        "date": "2026-05-12"
+      },
+      {
+        "id": 2,
+        "text": "Logged: Recycled (Panta)",
+        "date": "2026-05-18"
+      }
+    ]
   },
   {
     "userId": 3,
     "username": "Majken",
-    "location": "",
-    "bio": "",
-    "email": "",
+    "location": "Sorgenfri",
+    "bio": "Lärare med stort miljöengagemang. Vill se mer grönska och gemenskap i stadsdelarna.",
+    "email": "majken00@gmail.com",
     "stats": {
-      "Initiativ": 0,
-      "CarbonScore": 0
+      "Initiativ": 7,
+      "CarbonScore": 1890
     },
-    "recentActivity": []
+    "recentActivity": [
+      {
+        "id": 1,
+        "text": "Created: Plantera fler träd i Norra Sorgenfri",
+        "date": "2026-05-19"
+      }
+    ]
   },
   {
     "userId": 4,
     "username": "Lars",
-    "location": "",
-    "bio": "",
-    "email": "",
+    "location": "Kirseberg",
+    "bio": "Pensionär som vill hålla vårt område rent och trivsamt.",
+    "email": "lars_da_killah04@yahoo.com",
     "stats": {
-      "Initiativ": 0,
-      "CarbonScore": 0
+      "Initiativ": 11,
+      "CarbonScore": 875
     },
-    "recentActivity": []
+    "recentActivity": [
+      {
+        "id": 1,
+        "text": "Created: Gemensam städning av Ryttaregatan",
+        "date": "2026-05-08"
+      },
+      {
+        "id": 2,
+        "text": "Logged: Recycled (Panta)",
+        "date": "2026-05-12"
+      }
+    ]
   },
   {
     "userId": 5,
     "username": "Fredrik",
-    "location": "",
-    "bio": "",
-    "email": "",
+    "location": "Folkets Park",
+    "bio": "Intresserad av delningsekonomi och hållbara transporter.",
+    "email": "fredde@proton.se",
     "stats": {
-      "Initiativ": 0,
-      "CarbonScore": 0
+      "Initiativ": 5,
+      "CarbonScore": 980
     },
     "recentActivity": []
   },
   {
     "userId": 6,
     "username": "Lina",
-    "location": "",
-    "bio": "",
-    "email": "",
+    "location": "Kirseberg",
+    "bio": "Cyklist och stadsplaneringsintresserad.",
+    "email": "lina02@hotmail.se",
     "stats": {
-      "Initiativ": 0,
-      "CarbonScore": 0
+      "Initiativ": 6,
+      "CarbonScore": 1120
     },
     "recentActivity": []
   },
   {
     "userId": 7,
     "username": "Lukas",
-    "location": "",
-    "bio": "",
-    "email": "",
+    "location": "Sofielund",
+    "bio": "Student som gillar second hand och hållbar konsumtion.",
+    "email": "lukas@hotmail.se",
     "stats": {
-      "Initiativ": 0,
-      "CarbonScore": 0
+      "Initiativ": 4,
+      "CarbonScore": 650
     },
     "recentActivity": []
   },
   {
     "userId": 8,
     "username": "Emma",
-    "location": "",
-    "bio": "",
-    "email": "",
+    "location": "Kirseberg",
+    "bio": "Student med passion för zero waste och plastfria livsstilar.",
+    "email": "emma@gmail.com",
     "stats": {
-      "Initiativ": 0,
-      "CarbonScore": 0
+      "Initiativ": 8,
+      "CarbonScore": 1340
     },
-    "recentActivity": []
+    "recentActivity": [
+      {
+        "id": 1,
+        "text": "Created: Minska plastanvändning i kvarteret",
+        "date": "2026-05-13"
+      }
+    ]
   },
   {
     "userId": 9,
     "username": "Gunnar",
-    "location": "",
-    "bio": "",
-    "email": "",
+    "location": "Kirseberg",
+    "bio": "Pensionär och före detta tekniker.",
+    "email": "gunnar_volvo@telia.se",
     "stats": {
-      "Initiativ": 0,
-      "CarbonScore": 0
+      "Initiativ": 3,
+      "CarbonScore": 420
     },
     "recentActivity": []
   },
   {
     "userId": 10,
     "username": "Britta",
-    "location": "",
-    "bio": "",
-    "email": "",
+    "location": "Kirseberg",
+    "bio": "Älskar bakning och kompostering.",
+    "email": "britta.karlsson@spray.se",
     "stats": {
-      "Initiativ": 0,
-      "CarbonScore": 0
+      "Initiativ": 5,
+      "CarbonScore": 910
     },
     "recentActivity": []
   },
   {
     "userId": 11,
     "username": "Göran",
-    "location": "",
-    "bio": "",
-    "email": "",
+    "location": "Kirseberg",
+    "bio": "Naturälskare som ofta är ute i skog och mark.",
+    "email": "goran_gott@live.se",
     "stats": {
-      "Initiativ": 0,
-      "CarbonScore": 0
+      "Initiativ": 2,
+      "CarbonScore": 380
     },
     "recentActivity": []
   },
   {
     "userId": 12,
     "username": "Sigrid",
-    "location": "",
-    "bio": "",
-    "email": "",
+    "location": "Kirseberg",
+    "bio": "Biblioteksvakt och bokälskare.",
+    "email": "sigrid_abba@gmail.com",
     "stats": {
-      "Initiativ": 0,
-      "CarbonScore": 0
+      "Initiativ": 4,
+      "CarbonScore": 720
     },
     "recentActivity": []
   },
   {
     "userId": 13,
     "username": "Rickard",
-    "location": "",
-    "bio": "",
-    "email": "",
+    "location": "Kirseberg",
+    "bio": "Cykelentusiast som vill förbättra infrastrukturen.",
+    "email": "rickard_ric@hotmail.se",
     "stats": {
-      "Initiativ": 0,
-      "CarbonScore": 0
+      "Initiativ": 6,
+      "CarbonScore": 1050
     },
     "recentActivity": []
   },
   {
     "userId": 14,
     "username": "Monika",
-    "location": "",
-    "bio": "",
-    "email": "",
+    "location": "Kirseberg",
+    "bio": "Trädgårdsmästare i hjärtat.",
+    "email": "monika.trädgård@live.se",
     "stats": {
-      "Initiativ": 0,
-      "CarbonScore": 0
+      "Initiativ": 7,
+      "CarbonScore": 1380
     },
     "recentActivity": []
   },
   {
     "userId": 15,
     "username": "Svante",
-    "location": "",
-    "bio": "",
-    "email": "",
+    "location": "Kirseberg",
+    "bio": "Möbelintresserad och gillar att renovera.",
+    "email": "svante_möbel@telia.se",
     "stats": {
-      "Initiativ": 0,
-      "CarbonScore": 0
+      "Initiativ": 3,
+      "CarbonScore": 540
     },
     "recentActivity": []
   },
   {
     "userId": 16,
     "username": "Agneta",
-    "location": "",
-    "bio": "",
-    "email": "",
+    "location": "Kirseberg",
+    "bio": "Dans och gemenskap är livet.",
+    "email": "agneta.dans@spray.se",
     "stats": {
-      "Initiativ": 0,
-      "CarbonScore": 0
+      "Initiativ": 4,
+      "CarbonScore": 680
     },
     "recentActivity": []
   },
   {
     "userId": 17,
     "username": "Conny",
-    "location": "",
-    "bio": "",
-    "email": "",
+    "location": "Kirseberg",
+    "bio": "Mekaniker med stort intresse för cyklar.",
+    "email": "conny_mekan@yahoo.se",
     "stats": {
-      "Initiativ": 0,
-      "CarbonScore": 0
+      "Initiativ": 5,
+      "CarbonScore": 890
     },
     "recentActivity": []
   },
   {
     "userId": 18,
     "username": "Pirjo",
-    "location": "",
-    "bio": "",
-    "email": "",
+    "location": "Kirseberg",
+    "bio": "Matglad pensionär som älskar att laga mat till många.",
+    "email": "pirjo.koket@gmail.com",
     "stats": {
-      "Initiativ": 0,
-      "CarbonScore": 0
+      "Initiativ": 6,
+      "CarbonScore": 760
     },
     "recentActivity": []
   },
   {
     "userId": 19,
     "username": "Kentsson",
-    "location": "",
-    "bio": "",
-    "email": "",
+    "location": "Kirseberg",
+    "bio": "Praktisk problemlösare.",
+    "email": "kent.kentsson@hotmail.se",
     "stats": {
-      "Initiativ": 0,
-      "CarbonScore": 0
+      "Initiativ": 2,
+      "CarbonScore": 310
     },
     "recentActivity": []
   },
   {
     "userId": 20,
     "username": "Doris",
-    "location": "",
-    "bio": "",
-    "email": "",
+    "location": "Kirseberg",
+    "bio": "Kattmamma och naturvän.",
+    "email": "doris_kattmamma@live.se",
     "stats": {
-      "Initiativ": 0,
-      "CarbonScore": 0
+      "Initiativ": 3,
+      "CarbonScore": 450
     },
     "recentActivity": []
   },
   {
     "userId": 21,
     "username": "Raj",
-    "location": "",
-    "bio": "",
-    "email": "",
+    "location": "Kirseberg",
+    "bio": "Stickning, kaffe och cykelturer.",
+    "email": "raj@telia.se",
     "stats": {
-      "Initiativ": 0,
-      "CarbonScore": 0
+      "Initiativ": 4,
+      "CarbonScore": 830
     },
     "recentActivity": []
   },
   {
     "userId": 22,
     "username": "Bosse",
-    "location": "",
-    "bio": "",
-    "email": "",
+    "location": "Kirseberg",
+    "bio": "Båtentusiast.",
+    "email": "bosse_båten@spray.se",
     "stats": {
-      "Initiativ": 0,
-      "CarbonScore": 0
+      "Initiativ": 2,
+      "CarbonScore": 290
     },
     "recentActivity": []
   },
   {
     "userId": 23,
     "username": "NyyTestNamn",
-    "location": "",
-    "bio": "",
-    "email": "",
+    "location": "Kirseberg",
+    "bio": "Ny i området och vill engagera mig mer.",
+    "email": "Test@Testsson.test",
     "stats": {
-      "Initiativ": 0,
-      "CarbonScore": 0
+      "Initiativ": 1,
+      "CarbonScore": 120
     },
     "recentActivity": []
   },
   {
     "userId": 24,
     "username": "Test2",
-    "location": "",
-    "bio": "",
-    "email": "",
+    "location": "Sofielund",
+    "bio": "Testar appen och bidrar med feedback.",
+    "email": "Test2@test2.test",
     "stats": {
-      "Initiativ": 0,
-      "CarbonScore": 0
+      "Initiativ": 2,
+      "CarbonScore": 180
     },
     "recentActivity": []
   },
   {
     "userId": 25,
     "username": "yolo",
-    "location": "",
+    "location": "Kirseberg",
     "bio": "",
-    "email": "",
+    "email": "baggins@max.com",
     "stats": {
       "Initiativ": 0,
-      "CarbonScore": 0
+      "CarbonScore": 50
     },
     "recentActivity": []
   },
   {
     "userId": 26,
-    "username": "yolo",
-    "location": "",
+    "username": "yolo2",
+    "location": "Kirseberg",
     "bio": "",
-    "email": "",
+    "email": "baggins2@max.com",
     "stats": {
-      "Initiativ": 0,
-      "CarbonScore": 0
+      "Initiativ": 1,
+      "CarbonScore": 85
     },
     "recentActivity": []
   },
   {
     "userId": 27,
     "username": "maggan",
-    "location": "",
-    "bio": "",
-    "email": "",
+    "location": "Folkets Park",
+    "bio": "Älskar bin, blommor och allt som kryper och går.",
+    "email": "maggan@lopez.se",
     "stats": {
-      "Initiativ": 0,
-      "CarbonScore": 0
+      "Initiativ": 5,
+      "CarbonScore": 940
     },
     "recentActivity": []
   },
   {
     "userId": 28,
     "username": "Ragnar",
-    "location": "",
-    "bio": "",
-    "email": "",
+    "location": "Sofielund",
+    "bio": "Administratör och starkt engagerad i cykling och lokal odling.",
+    "email": "ragnar@hotmail.se",
     "stats": {
-      "Initiativ": 0,
-      "CarbonScore": 10
+      "Initiativ": 8,
+      "CarbonScore": 2150
     },
-    "recentActivity": []
+    "recentActivity": [
+      {
+        "id": 1,
+        "text": "Created: Solceller på Folkets Hus tak",
+        "date": "2026-05-19"
+      }
+    ]
   },
   {
     "userId": 29,
     "username": "Per",
-    "location": "",
-    "bio": "",
-    "email": "",
+    "location": "Sorgenfri",
+    "bio": "Admin och engagerad i lokala miljöfrågor.",
+    "email": "per@gmail.com",
     "stats": {
-      "Initiativ": 0,
-      "CarbonScore": 0
+      "Initiativ": 6,
+      "CarbonScore": 1320
     },
     "recentActivity": []
   },
   {
     "userId": 30,
     "username": "Ragnhild",
-    "location": "",
-    "bio": "",
-    "email": "",
+    "location": "Folkets Park",
+    "bio": "Pensionär som älskar gemenskap och att hålla parken fin.",
+    "email": "ragnhild@gmail.com",
     "stats": {
-      "Initiativ": 0,
-      "CarbonScore": 0
+      "Initiativ": 7,
+      "CarbonScore": 1030
     },
-    "recentActivity": []
+    "recentActivity": [
+      {
+        "id": 1,
+        "text": "Created: Panta & Städa Folkets Park",
+        "date": "2026-05-17"
+      }
+    ]
   }
 ]

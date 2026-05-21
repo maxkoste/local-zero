@@ -1,157 +1,156 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
-	Box,
-	Button,
-	MenuItem,
-	Stack,
-	TextField,
-	Typography,
+    Box, Button, MenuItem, Stack, TextField, Typography,
 } from "@mui/material";
-import { Visibility } from "shared";
+import { Visibility, CATEGORIES } from "shared";
+import { CategoryChip } from "../components/category-chip";
 
 export function CreateInitiativePage() {
-	const navigate = useNavigate();
+    const navigate = useNavigate();
+    const [title, setTitle]           = useState("");
+    const [body, setBody]             = useState("");
+    const [visibility, setVisibility] = useState<Visibility>(Visibility.PUBLIC);
+    const [location, setLocation]     = useState("");
+    const [duration, setDuration]     = useState("");
+    const [categories, setCategories] = useState<string[]>([]);
+	const [imageUrl, setImageUrl]     = useState("");
+    const [imageAlt, setImageAlt]     = useState("");
+    const [error, setError]           = useState<string | null>(null);
+    const [loading, setLoading]       = useState(false);
 
-	const [title, setTitle] = useState("");
-	const [body, setBody] = useState("");
-	const [visibility, setVisibility] = useState<Visibility>(Visibility.PUBLIC);
-	const [location, setLocation] = useState("");
-	const [duration, setDuration] = useState("");
-	const [error, setError] = useState<string | null>(null);
-	const [loading, setLoading] = useState(false);
-
-	const [author, setAuthor] = useState<any>(null);
-
-	useEffect(() => {
-		async function fetchCurrentUser() {
-			try {
-				const token = localStorage.getItem('token');
-
-				const res = await fetch('http://localhost:3001/api/me', {
-					headers: {
-						Authorization: `Bearer ${token}`
-					}
-				});
-
-				if (!res.ok) throw new Error();
-				const data = await res.json();
-				setAuthor(data.user);
-
-			} catch {
-				setAuthor(null);
-			}
-		}
-		fetchCurrentUser();
-	}, []);
-
-	async function handleSubmit() {
-
-
-		if (!title.trim() || !body.trim()) {
-			setError("Title and description are required.");
-			return;
-		}
-
-		setLoading(true);
-		setError(null);
-
-		try {
-			const token = localStorage.getItem('token');
-			const response = await fetch("http://localhost:3001/api/initiatives", {
-				method: "POST",
-				headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
-				body: JSON.stringify({
-					title: title.trim(),
-					author: author,
-					body: body.trim(),
-					visibility,
-					location: location.trim() || null,
-					duration: duration.trim() || null,
-				}),
-			});
-
-			if (!response.ok) {
-				const data = await response.json();
-				throw new Error(data.error ?? "Something went wrong.");
-			}
-
-			navigate("/front");
-		} catch (err: any) {
-			setError(err.message);
-		} finally {
-			setLoading(false);
-		}
+	function toggleCategory(cat: string) {
+	setCategories(prev =>
+		prev.includes(cat) ? prev.filter(existing => existing !== cat) : [...prev, cat]
+	);
 	}
 
-	return (
-		<Box sx={{ maxWidth: 600, margin: "0 auto", padding: 2 }}>
-			<Typography variant="h5" sx={{ mb: 3 }}>
-				Create initiative
-			</Typography>
+    async function handleSubmit() {
+        if (!title.trim() || !body.trim()) {
+            setError("Title and description are required.");
+            return;
+        }
 
-			<Stack spacing={2}>
-				<TextField
-					label="Title"
-					value={title}
-					onChange={(e) => setTitle(e.target.value)}
-					required
-					fullWidth
-				/>
+        setLoading(true);
+        setError(null);
 
-				<TextField
-					label="Description"
-					value={body}
-					onChange={(e) => setBody(e.target.value)}
-					required
-					fullWidth
-					multiline
-					minRows={4}
-				/>
+        const image = imageUrl.trim()
+            ? { id: String(Date.now()), url: imageUrl.trim(), alt: imageAlt.trim() || undefined }
+            : null;
 
-				<TextField
-					label="Visibility"
-					value={visibility}
-					onChange={(e) => setVisibility(e.target.value as Visibility)}
-					select
-					fullWidth
-				>
-					{(Object.values(Visibility) as string[]).map((v) => (
-						<MenuItem key={v} value={v}>
-							{v}
-						</MenuItem>
-					))}
-				</TextField>
+        try {
+            const token = localStorage.getItem('token');
+            const response = await fetch("http://localhost:3001/api/initiatives", {
+                method: "POST",
+                headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
+                body: JSON.stringify({
+                    title:    title.trim(),
+                    body:     body.trim(),
+                    visibility,
+                    image,
+                    location: location.trim() || null,
+                    duration: duration.trim() || null,
+					categories
+                }),
+            });
 
-				<TextField
-					label="Location (optional)"
-					value={location}
-					onChange={(e) => setLocation(e.target.value)}
-					fullWidth
-				/>
+            if (!response.ok) {
+                const data = await response.json();
+                throw new Error(data.error ?? "Something went wrong.");
+            }
 
-				<TextField
-					label="Duration (optional)"
-					value={duration}
-					onChange={(e) => setDuration(e.target.value)}
-					placeholder="e.g. 2 weeks, ongoing"
-					fullWidth
-				/>
+            navigate("/front");
+        } catch (err: any) {
+            setError(err.message);
+        } finally {
+            setLoading(false);
+        }
+    }
 
-				{error && (
-					<Typography variant="body2" color="error">
-						{error}
+    return (
+        <Box sx={{ maxWidth: 600, margin: "0 auto", padding: 2 }}>
+            <Typography variant="h5" sx={{ mb: 3 }}>
+                Create initiative
+            </Typography>
+            <Stack spacing={2}>
+                <TextField
+                    label="Title"
+                    value={title}
+                    onChange={e => setTitle(e.target.value)}
+                    required
+                    fullWidth
+                />
+                <TextField
+                    label="Description"
+                    value={body}
+                    onChange={e => setBody(e.target.value)}
+                    required
+                    fullWidth
+                    multiline
+                    minRows={4}
+                />
+                <TextField
+                    label="Visibility"
+                    value={visibility}
+                    onChange={e => setVisibility(e.target.value as Visibility)}
+                    select
+                    fullWidth
+                >
+                    {(Object.values(Visibility) as string[]).map(v => (
+                        <MenuItem key={v} value={v}>{v}</MenuItem>
+                    ))}
+                </TextField>
+                <TextField
+                    label="Image URL (optional)"
+                    value={imageUrl}
+                    onChange={e => setImageUrl(e.target.value)}
+                    fullWidth
+                    placeholder="https://example.com/image.jpg"
+                />
+                {imageUrl.trim() && (
+                    <TextField
+                        label="Image description (optional)"
+                        value={imageAlt}
+                        onChange={e => setImageAlt(e.target.value)}
+                        fullWidth
+                        placeholder="A brief description of the image"
+                    />
+                )}
+                <TextField
+                    label="Location (optional)"
+                    value={location}
+                    onChange={e => setLocation(e.target.value)}
+                    fullWidth
+                />
+                <TextField
+                    label="Duration (optional)"
+                    value={duration}
+                    onChange={e => setDuration(e.target.value)}
+                    placeholder="e.g. 2 weeks, ongoing"
+                    fullWidth
+                />
+				<Box>
+					<Typography variant="caption" color="text.secondary" sx={{ display: 'block', mb: 1 }}>
+						Categories (optional)
 					</Typography>
-				)}
-
-				<Button
-					variant="contained"
-					onClick={handleSubmit}
-					disabled={loading}
-				>
-					{loading ? "Creating..." : "Create initiative"}
-				</Button>
-			</Stack>
-		</Box>
-	);
+					<Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1 }}>
+						{CATEGORIES.map(cat => (
+						<CategoryChip
+							key={cat}
+							label={cat}
+							selected={categories.includes(cat)}
+							onClick={() => toggleCategory(cat)}
+						/>
+						))}
+					</Box>
+				</Box>
+                {error && (
+                    <Typography variant="body2" color="error">{error}</Typography>
+                )}
+                <Button variant="contained" onClick={handleSubmit} disabled={loading}>
+                    {loading ? "Creating..." : "Create initiative"}
+                </Button>
+            </Stack>
+        </Box>
+    );
 }

@@ -15,15 +15,7 @@ import Alert from '@mui/material/Alert';
 import Chip from '@mui/material/Chip';
 import { styled } from '@mui/material/styles';
 import { useNavigate, useParams } from 'react-router-dom';
-
-const ECO_ACTIONS: Record<string, { label: string; points: number }> = {
-    BIKE:   { label: 'Bike to work',          points: 10   },
-    TREE:   { label: 'Plant a tree',           points: 20   },
-    PANTA:  { label: 'Recycle',                points: 5    },
-    CEO:    { label: 'Shoot a CEO',            points: 1000 },
-    OIL:    { label: 'Oil spill',              points: -500 },
-    FLIGHT: { label: 'Take a flight to work',  points: -50  },
-};
+import { Action, ActionKey } from 'shared';
 
 type User = {
     userId: number;
@@ -36,13 +28,19 @@ type User = {
         Initiativ: number;
         CarbonScore: number;
     };
-    recentActivity: { id: number; text: string; date: string }[];
+    recentActivity: { id: string; text: string; date: string }[];
 };
 
-// Extra info from /api/users/:id (not in profile)
 type UserRecord = {
     visibility: string;
     role: 'user' | 'admin';
+};
+
+type ChatSummary = {
+    id: string;
+    sender: { id: number; username: string; email: string };
+    receiver: { id: number; username: string; email: string };
+    children: { id: string; body: string; date: string }[];
 };
 
 const Card = styled(Paper)(({ theme }) => ({
@@ -81,11 +79,32 @@ const Label = styled(Typography)(({ theme }) => ({
     marginBottom: theme.spacing(0.5),
 }));
 
+const InboxRow = styled(Box)(({ theme }) => ({
+    display: 'flex',
+    alignItems: 'center',
+    gap: theme.spacing(1.5),
+    padding: theme.spacing(1.25, 1),
+    borderRadius: 10,
+    cursor: 'pointer',
+    transition: 'background 0.15s',
+    '&:hover': {
+        backgroundColor: theme.palette.action.hover,
+    },
+    '&:not(:last-child)': {
+        borderBottom: `1px solid ${theme.palette.divider}`,
+    },
+}));
+
+function getInitials(username: string): string {
+    return username.split(' ').map(w => w[0]).join('').toUpperCase().slice(0, 2);
+}
+
 export function UserPage() {
     const [user, setUser] = useState<User | null>(null);
     const [userRecord, setUserRecord] = useState<UserRecord | null>(null);
+    const [chats, setChats] = useState<ChatSummary[]>([]);
     const [loading, setLoading] = useState(true);
-    const [selectedAction, setSelectedAction] = useState<string>('BIKE');
+    const [selectedAction, setSelectedAction] = useState<ActionKey>('BIKE');
     const [logging, setLogging] = useState(false);
     const [snackbar, setSnackbar] = useState<{ open: boolean; message: string; severity: 'success' | 'error' }>({
         open: false, message: '', severity: 'success',
@@ -110,14 +129,12 @@ export function UserPage() {
                     if (!userId) userId = String(meData.user.id);
                 }
 
-                // Fetch profile (bio, stats, etc.)
                 const profileRes = await fetch(`http://localhost:3001/api/users/${userId}/profile`, {
                     headers: { Authorization: `Bearer ${token}` }
                 });
                 if (!profileRes.ok) throw new Error('Profile fetch failed');
                 setUser(await profileRes.json());
 
-                // Fetch user record (visibility/neighborhood + role)
                 const userRes = await fetch(`http://localhost:3001/api/users/${userId}`, {
                     headers: { Authorization: `Bearer ${token}` }
                 });
@@ -134,6 +151,24 @@ export function UserPage() {
     }, [id]);
 
     const isOwnProfile = !id || (loggedInUserId !== null && Number(id) === loggedInUserId);
+
+    useEffect(() => {
+        if (!isOwnProfile || loggedInUserId === null) return;
+
+        const loadChats = async () => {
+            try {
+                const token = localStorage.getItem('token');
+                const res = await fetch(`http://localhost:3001/api/chats?userId=${loggedInUserId}`, {
+                    headers: { Authorization: `Bearer ${token}` },
+                });
+                if (res.ok) setChats(await res.json());
+            } catch (error) {
+                console.error('Error loading chats:', error);
+            }
+        };
+
+        loadChats();
+    }, [isOwnProfile, loggedInUserId]);
 
     async function handleLogAction() {
         if (!user) return;
@@ -153,8 +188,8 @@ export function UserPage() {
 
             if (!res.ok) throw new Error();
 
-            const action = ECO_ACTIONS[selectedAction];
-            const pointDelta = action.points;
+            const actionDef = Action[selectedAction];
+            const pointDelta = actionDef.points;
 
             setUser(prev => prev ? {
                 ...prev,
@@ -163,7 +198,7 @@ export function UserPage() {
 
             setSnackbar({
                 open: true,
-                message: `"${action.label}" logged! ${pointDelta >= 0 ? '+' : ''}${pointDelta} points`,
+                message: `"${actionDef.label}" logged! ${pointDelta >= 0 ? '+' : ''}${pointDelta} points`,
                 severity: 'success',
             });
         } catch {
@@ -187,12 +222,9 @@ export function UserPage() {
                 }
             );
 
-            if (!res.ok) {
-                throw new Error("Could not open chat.");
-            }
+            if (!res.ok) throw new Error("Could not open chat.");
 
             const chat = await res.json();
-
             navigate(`/chat/${chat.id}`);
         } catch (err) {
             console.error(err);
@@ -202,7 +234,7 @@ export function UserPage() {
     if (loading) return <Box sx={{ p: 4 }}>Loading profile...</Box>;
     if (!user) return <Box sx={{ p: 4 }}>Could not load user.</Box>;
 
-    const action = ECO_ACTIONS[selectedAction];
+    const actionDef = Action[selectedAction];
 
     return (
         <Box sx={{ maxWidth: 900, mx: 'auto', px: 2, py: 4 }}>
@@ -225,7 +257,6 @@ export function UserPage() {
                             <Typography variant="h6" sx={{ fontWeight: 600, lineHeight: 1.2 }}>
                                 {user.username}
                             </Typography>
-                            {/* Role + neighborhood badges */}
                             <Box sx={{ display: 'flex', gap: 1, justifyContent: 'center', mt: 1, flexWrap: 'wrap' }}>
                                 {userRecord?.role && (
                                     <Chip
@@ -263,7 +294,6 @@ export function UserPage() {
                             ))}
                         </Grid>
 
-                        {/* Eco-action section – own profile only */}
                         {isOwnProfile && (
                             <>
                                 <Divider sx={{ my: 2 }} />
@@ -274,9 +304,9 @@ export function UserPage() {
                                     <Select
                                         value={selectedAction}
                                         label="What did you do?"
-                                        onChange={e => setSelectedAction(e.target.value)}
+                                        onChange={e => setSelectedAction(e.target.value as ActionKey)}
                                     >
-                                        {Object.entries(ECO_ACTIONS).map(([key, a]) => (
+                                        {(Object.entries(Action) as [ActionKey, typeof Action[ActionKey]][]).map(([key, a]) => (
                                             <MenuItem key={key} value={key}>
                                                 <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, width: '100%', justifyContent: 'space-between' }}>
                                                     <span>{a.label}</span>
@@ -299,7 +329,7 @@ export function UserPage() {
                                     disabled={logging}
                                     sx={{ borderRadius: 2 }}
                                 >
-                                    {logging ? 'Logging...' : `Log (${action.points >= 0 ? '+' : ''}${action.points}p)`}
+                                    {logging ? 'Logging...' : `Log (${actionDef.points >= 0 ? '+' : ''}${actionDef.points}p)`}
                                 </Button>
                             </>
                         )}
@@ -347,6 +377,52 @@ export function UserPage() {
                             </Card>
                         </Grid>
 
+                        {/* Inbox — own profile only */}
+                        {isOwnProfile && (
+                            <Grid size={12}>
+                                <Card>
+                                    <Label>Messages</Label>
+                                    {chats.length === 0 ? (
+                                        <Typography variant="body2" color="text.disabled">
+                                            No conversations yet.
+                                        </Typography>
+                                    ) : (
+                                        chats.map(chat => {
+                                            const otherUser = chat.sender.id === loggedInUserId
+                                                ? chat.receiver
+                                                : chat.sender;
+                                            const lastMessage = chat.children[chat.children.length - 1];
+
+                                            return (
+                                                <InboxRow key={chat.id} onClick={() => navigate(`/chat/${chat.id}`)}>
+                                                    <Avatar sx={{ width: 36, height: 36, fontSize: 13, bgcolor: 'grey.700', flexShrink: 0 }}>
+                                                        {getInitials(otherUser.username)}
+                                                    </Avatar>
+                                                    <Box sx={{ flex: 1, minWidth: 0 }}>
+                                                        <Typography variant="subtitle2" sx={{ fontWeight: 600 }}>
+                                                            {otherUser.username}
+                                                        </Typography>
+                                                        <Typography
+                                                            variant="caption"
+                                                            color="text.secondary"
+                                                            sx={{ display: 'block', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}
+                                                        >
+                                                            {lastMessage ? lastMessage.body : 'No messages yet'}
+                                                        </Typography>
+                                                    </Box>
+                                                    {lastMessage && (
+                                                        <Typography variant="caption" color="text.disabled" sx={{ flexShrink: 0 }}>
+                                                            {new Date(lastMessage.date).toLocaleDateString([], { month: 'short', day: 'numeric' })}
+                                                        </Typography>
+                                                    )}
+                                                </InboxRow>
+                                            );
+                                        })
+                                    )}
+                                </Card>
+                            </Grid>
+                        )}
+
                         <Grid size={12}>
                             <Card>
                                 <Label>Recent activity</Label>
@@ -359,7 +435,7 @@ export function UserPage() {
                                                 {item.text}
                                             </Typography>
                                             <Typography variant="caption" color="text.disabled" sx={{ whiteSpace: 'nowrap' }}>
-                                                {item.date}
+                                                {new Date(item.date).toLocaleDateString([], { month: 'short', day: 'numeric' })}
                                             </Typography>
                                         </ActivityRow>
                                     ))

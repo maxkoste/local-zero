@@ -1,21 +1,10 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
-
-export interface AppNotification {
-    id: string;
-    type: 'reply' | 'neighborhood';
-    initiativeId: string;
-    initiativeTitle: string;
-    actorUsername: string;
-    contentType: string;
-    body: string;
-    date: string;
-    read: boolean;
-}
+import { Notification } from 'shared';
 
 const POLL_INTERVAL_MS = 30_000;
 
 export function useNotifications(userId: number | null) {
-    const [notifications, setNotifications] = useState<AppNotification[]>([]);
+    const [notifications, setNotifications] = useState<Notification[]>([]);
 
     const sinceRef = useRef<string>(
         new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString()
@@ -34,18 +23,15 @@ export function useNotifications(userId: number | null) {
                 `http://localhost:3001/api/notifications?userId=${userId}&since=${sinceRef.current}`,
                 { headers: { Authorization: `Bearer ${token}` } }
             );
+
             if (!res.ok) return;
 
-            const data: AppNotification[] = await res.json();
+            const data: Notification[] = await res.json();
 
-            const withReadState = data.map(n => ({
-                ...n,
-                read: readIdsRef.current.has(n.id),
-            }));
-
-            setNotifications(withReadState);
+            setNotifications(
+                data.map(n => ({ ...n, read: readIdsRef.current.has(n.id) }))
+            );
         } catch {
-            //???
         }
     }, [userId]);
 
@@ -57,9 +43,8 @@ export function useNotifications(userId: number | null) {
 
     const markAllRead = useCallback(() => {
         setNotifications(prev => {
-            const updated = prev.map(n => ({ ...n, read: true }));
-            updated.forEach(n => readIdsRef.current.add(n.id));
-            return updated;
+            prev.forEach(n => readIdsRef.current.add(n.id));
+            return prev.map(n => ({ ...n, read: true }));
         });
     }, []);
 

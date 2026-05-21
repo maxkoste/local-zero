@@ -2,96 +2,1222 @@
   {
     "id": "1775993689571",
     "type": "initiative",
-    "title": "Stop pissing in the stairwell",
+    "title": "Gemensam städning av Ryttaregatan och innergårdar",
     "author": {
-      "id": 1,
-      "username": "Lolita",
-      "email": "lolita@email.com",
-      "visibility": "public"
+      "id": 4,
+      "username": "Lars"
     },
-    "body": "Hello. I think we should make a collective effort to keep the stairwell clean so we don’t have to step in urine. Anyone interested in joining?",
+    "body": "Vi har problem med skräp, fimpar och glas runt portarna. Låt oss samlas lördag 23 maj kl 11:00 för en gemensam städinsats. Alla som bor i Kirseberg är välkomna! Ta med handskar om du har.",
     "visibility": "kirseberg",
-    "date": "2026-04-12T11:34:49.571Z",
-    "image": null,
-    "location": "The stairwell at Ryttaregatan 5b",
-    "duration": "2 weeks",
-    "likes": [],
-    "dislikes": [],
-    "children": []
-  },
-  {
-    "id": "1776327565058",
-    "type": "initiative",
-    "title": "Rensa kirseberg från alla med efternamnet Skön",
-    "author": {
-      "id": 1,
-      "username": "Lolita",
-      "email": "lolita@email.com",
-      "visibility": "public"
+    "date": "2026-05-08T09:15:00.000Z",
+    "image": {
+      "id": "img1",
+      "url": "https://picsum.photos/id/1015/800/600"
     },
-    "body": "En djävel bara iallafall. Det är han som fucking kissar i trappan asså",
-    "visibility": "kirseberg",
-    "date": "2026-04-16T08:19:25.058Z",
-    "image": null,
-    "location": "Ryttaregatan 5b",
-    "duration": "Så länge det är nödvändigt",
-    "likes": [],
+    "location": "Ryttaregatan 5",
+    "duration": "En förmiddag",
+    "likes": [
+      2,
+      6,
+      8,
+      13,
+      21
+    ],
     "dislikes": [],
+    "categories": [
+      "Environment",
+      "Community Events"
+    ],
     "children": [
       {
         "id": "1776600328272",
         "type": "update",
+        "title": "Uppdatering - Vi är klara med material",
         "author": {
-          "id": 1,
-          "username": "Lolita",
-          "email": "lolita@email.com",
-          "visibility": "public"
+          "id": 4,
+          "username": "Lars"
         },
-        "body": "Längst upp i trapphuset. Hjälp mig att få ut honom ikväll?",
+        "body": "Jag har fixat soppåsar, tänger och handskar till alla. Vi ses vid lekplatsen kl 11:00. Det blir fika efteråt!",
         "visibility": "kirseberg",
-        "date": "2026-04-19T12:05:28.272Z",
-        "title": "Har hittat var han bor",
-        "image": null,
+        "date": "2026-05-20T10:30:00.000Z",
+        "image": {
+          "id": "img1b",
+          "url": "https://picsum.photos/id/453/800/600"
+        },
         "location": null,
         "duration": null,
-        "likes": [],
+        "likes": [
+          6,
+          8,
+          21
+        ],
         "dislikes": [],
+        "categories": [],
         "children": [
           {
-            "id": "1776600346134",
+            "id": "1776600400001",
             "type": "comment",
+            "title": "Comment 1776600400001",
             "author": {
-              "id": 1,
-              "username": "Lolita",
-              "email": "lolita@email.com",
-              "visibility": "public"
+              "id": 6,
+              "username": "Lina"
             },
-            "body": "Vi kör. Kl 18?",
+            "body": "Tack Lars! Jag tar med extra påsar.",
             "visibility": "kirseberg",
-            "date": "2026-04-19T12:05:46.134Z",
+            "date": "2026-05-20T11:00:00.000Z",
             "image": null,
             "location": null,
             "duration": null,
-            "likes": [],
+            "likes": [
+              4
+            ],
             "dislikes": [],
+            "categories": [],
+            "children": []
+          },
+          {
+            "id": "1776600400002",
+            "type": "comment",
+            "title": "Comment 1776600400002",
+            "author": {
+              "id": 8,
+              "username": "Emma"
+            },
+            "body": "Blir där! Kan vi även fixa grinden vid nummer 7 som är trasig?",
+            "visibility": "kirseberg",
+            "date": "2026-05-20T11:45:00.000Z",
+            "image": null,
+            "location": null,
+            "duration": null,
+            "likes": [
+              4,
+              6
+            ],
+            "dislikes": [],
+            "categories": [],
+            "children": []
+          }
+        ]
+      },
+      {
+        "id": "1776700000001",
+        "type": "update",
+        "title": "Städningen är klar - imponerande resultat!",
+        "author": {
+          "id": 4,
+          "username": "Lars"
+        },
+        "body": "Vi fyllde 14 soppåsar och hittade till och med en övergiven cykel. Tack till alla 23 grannar som dök upp!",
+        "visibility": "kirseberg",
+        "date": "2026-05-23T13:15:00.000Z",
+        "image": {
+          "id": "img1c",
+          "url": "https://picsum.photos/id/1043/800/600"
+        },
+        "location": null,
+        "duration": null,
+        "likes": [
+          2,
+          6,
+          8,
+          13,
+          21
+        ],
+        "dislikes": [],
+        "categories": [],
+        "children": [
+          {
+            "id": "1776700400001",
+            "type": "comment",
+            "title": "Comment 1776700400001",
+            "author": {
+              "id": 21,
+              "username": "Raj"
+            },
+            "body": "Fantastiskt! Samma tid nästa månad?",
+            "visibility": "kirseberg",
+            "date": "2026-05-23T14:00:00.000Z",
+            "image": null,
+            "location": null,
+            "duration": null,
+            "likes": [
+              4,
+              6,
+              8
+            ],
+            "dislikes": [],
+            "categories": [],
+            "children": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "1777991234567",
+    "type": "initiative",
+    "title": "Gemensam odling i Sofielund",
+    "author": {
+      "id": 2,
+      "username": "Bob"
+    },
+    "body": "Det finns en fin yta bakom Folkets Hus som skulle passa perfekt för en kolonilott. Vi kan odla grönsaker, bär och blommor tillsammans. Kommunen har i princip sagt ja — nu behöver vi bara organisera oss och dela upp lotternas skötsel.",
+    "visibility": "sofielund",
+    "date": "2026-05-12T14:20:00.000Z",
+    "image": {
+      "id": "img2",
+      "url": "https://picsum.photos/id/1077/800/600"
+    },
+    "location": "Sofielundsparken",
+    "duration": "Långsiktigt projekt",
+    "likes": [
+      3,
+      7,
+      24,
+      28
+    ],
+    "dislikes": [],
+    "categories": [
+      "Food & Gardening",
+      "Environment",
+      "Community Events"
+    ],
+    "children": [
+      {
+        "id": "1778100000001",
+        "type": "update",
+        "title": "Möte inbokat",
+        "author": {
+          "id": 2,
+          "username": "Bob"
+        },
+        "body": "Vi ses onsdag 20 maj kl 18:00 vid pergolan för att planera odlingen. Ta med idéer om vad ni vill odla!",
+        "visibility": "sofielund",
+        "date": "2026-05-18T08:45:00.000Z",
+        "image": {
+          "id": "img2b",
+          "url": "https://picsum.photos/id/145/800/600"
+        },
+        "location": null,
+        "duration": null,
+        "likes": [
+          7,
+          28,
+          3
+        ],
+        "dislikes": [],
+        "categories": [],
+        "children": [
+          {
+            "id": "1778100400001",
+            "type": "comment",
+            "title": "Comment 1778100400001",
+            "author": {
+              "id": 7,
+              "username": "Lukas"
+            },
+            "body": "Jag vill odla tomater och zucchini. Kan vi ha ett litet växthus?",
+            "visibility": "sofielund",
+            "date": "2026-05-18T10:00:00.000Z",
+            "image": null,
+            "location": null,
+            "duration": null,
+            "likes": [
+              2,
+              3
+            ],
+            "dislikes": [],
+            "categories": [],
+            "children": []
+          },
+          {
+            "id": "1778100400002",
+            "type": "comment",
+            "title": "Comment 1778100400002",
+            "author": {
+              "id": 24,
+              "username": "Test2"
+            },
+            "body": "Blomsterlök! Tulpaner och narcisser till våren.",
+            "visibility": "sofielund",
+            "date": "2026-05-18T10:30:00.000Z",
+            "image": null,
+            "location": null,
+            "duration": null,
+            "likes": [
+              2
+            ],
+            "dislikes": [],
+            "categories": [],
+            "children": []
+          }
+        ]
+      },
+      {
+        "id": "1778112345678",
+        "type": "update",
+        "title": "Jord och fröer är beställda",
+        "author": {
+          "id": 28,
+          "username": "Ragnar"
+        },
+        "body": "Tack till alla som bidragit! Vi har nu 300 kg jord och fröer på väg. Leverans fredag förmiddag.",
+        "visibility": "sofielund",
+        "date": "2026-05-19T14:10:00.000Z",
+        "image": {
+          "id": "img2c",
+          "url": "https://picsum.photos/id/292/800/600"
+        },
+        "location": null,
+        "duration": null,
+        "likes": [
+          2,
+          3,
+          7
+        ],
+        "dislikes": [],
+        "categories": [],
+        "children": [
+          {
+            "id": "1778112400001",
+            "type": "comment",
+            "title": "Comment 1778112400001",
+            "author": {
+              "id": 3,
+              "username": "Majken"
+            },
+            "body": "Superbra Ragnar! Jag kan ta emot leveransen om du inte kan vara där.",
+            "visibility": "sofielund",
+            "date": "2026-05-19T15:00:00.000Z",
+            "image": null,
+            "location": null,
+            "duration": null,
+            "likes": [
+              28,
+              2
+            ],
+            "dislikes": [],
+            "categories": [],
+            "children": []
+          }
+        ]
+      },
+      {
+        "id": "1778112345999",
+        "type": "update",
+        "title": "Första skörden!",
+        "author": {
+          "id": 2,
+          "username": "Bob"
+        },
+        "body": "Sex veckor in och vi har redan sallad, rädisor och örter. Kom och plocka lite om du vill — det finns för alla!",
+        "visibility": "sofielund",
+        "date": "2026-05-21T09:00:00.000Z",
+        "image": {
+          "id": "img2d",
+          "url": "https://picsum.photos/id/429/800/600"
+        },
+        "location": null,
+        "duration": null,
+        "likes": [
+          3,
+          7,
+          24,
+          28
+        ],
+        "dislikes": [],
+        "categories": [],
+        "children": []
+      }
+    ]
+  },
+  {
+    "id": "1778123456789",
+    "type": "initiative",
+    "title": "Fler säkra cykelparkeringar vid Kirseberg station",
+    "author": {
+      "id": 6,
+      "username": "Lina"
+    },
+    "body": "Det är ofta fullt och många cyklar blir stulna. Vi behöver lobba för fler cykelplatser med tak och lås. Jag har redan skrivit ett utkast till tekniska förvaltningen — vill du skriva under?",
+    "visibility": "kirseberg",
+    "date": "2026-05-15T11:10:00.000Z",
+    "image": {
+      "id": "img3",
+      "url": "https://picsum.photos/id/201/800/600"
+    },
+    "location": "Kirseberg station",
+    "duration": "Pågående",
+    "likes": [
+      1,
+      4,
+      8,
+      13,
+      21
+    ],
+    "dislikes": [],
+    "categories": [
+      "Transport",
+      "Infrastructure",
+      "Safety"
+    ],
+    "children": [
+      {
+        "id": "1778123500001",
+        "type": "update",
+        "title": "52 underskrifter insamlade!",
+        "author": {
+          "id": 6,
+          "username": "Lina"
+        },
+        "body": "Vi har nu 52 underskrifter. Målet är 100 innan vi skickar in. Sprid vidare!",
+        "visibility": "kirseberg",
+        "date": "2026-05-18T16:00:00.000Z",
+        "image": null,
+        "location": null,
+        "duration": null,
+        "likes": [
+          1,
+          4,
+          8,
+          13
+        ],
+        "dislikes": [],
+        "categories": [],
+        "children": [
+          {
+            "id": "1778123500101",
+            "type": "comment",
+            "title": "Comment 1778123500101",
+            "author": {
+              "id": 21,
+              "username": "Raj"
+            },
+            "body": "Jag har delat på granngruppen, borde ge fler namn snart.",
+            "visibility": "kirseberg",
+            "date": "2026-05-18T17:30:00.000Z",
+            "image": null,
+            "location": null,
+            "duration": null,
+            "likes": [
+              6
+            ],
+            "dislikes": [],
+            "categories": [],
+            "children": []
+          },
+          {
+            "id": "1778123500102",
+            "type": "comment",
+            "title": "Comment 1778123500102",
+            "author": {
+              "id": 13,
+              "username": "Rickard"
+            },
+            "body": "Kan vi även ta upp gatubelysningen vid stationen i samma skrivelse?",
+            "visibility": "kirseberg",
+            "date": "2026-05-18T18:00:00.000Z",
+            "image": null,
+            "location": null,
+            "duration": null,
+            "likes": [
+              6,
+              4
+            ],
+            "dislikes": [],
+            "categories": [],
+            "children": []
+          }
+        ]
+      },
+      {
+        "id": "1778123500002",
+        "type": "update",
+        "title": "Svar från kommunen",
+        "author": {
+          "id": 6,
+          "username": "Lina"
+        },
+        "body": "Tekniska förvaltningen har svarat! De kan inte lova något i år men vi är med i nästa budgetprocess. Det är ett steg framåt.",
+        "visibility": "kirseberg",
+        "date": "2026-05-21T10:00:00.000Z",
+        "image": {
+          "id": "img3b",
+          "url": "https://picsum.photos/id/175/800/600"
+        },
+        "location": null,
+        "duration": null,
+        "likes": [
+          4,
+          8
+        ],
+        "dislikes": [
+          1
+        ],
+        "categories": [],
+        "children": [
+          {
+            "id": "1778123500201",
+            "type": "comment",
+            "title": "Comment 1778123500201",
+            "author": {
+              "id": 4,
+              "username": "Lars"
+            },
+            "body": "Typiskt kommunsvar men ändå — vi finns på deras radar nu.",
+            "visibility": "kirseberg",
+            "date": "2026-05-21T11:00:00.000Z",
+            "image": null,
+            "location": null,
+            "duration": null,
+            "likes": [
+              6,
+              8
+            ],
+            "dislikes": [],
+            "categories": [],
+            "children": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "1778234567890",
+    "type": "initiative",
+    "title": "Panta & Städa Folkets Park - månadskampanj",
+    "author": {
+      "id": 30,
+      "username": "Ragnhild"
+    },
+    "body": "Varje helg i maj samlas vi för att panta och plocka skräp i Folkets Park. Bra motion, gemenskap och vi gör parken finare för alla. Pantpengarna går till en gemensam kassa för nästa aktivitet.",
+    "visibility": "folkets_park",
+    "date": "2026-05-17T16:40:00.000Z",
+    "image": {
+      "id": "img4",
+      "url": "https://picsum.photos/id/133/800/600"
+    },
+    "location": "Folkets Park",
+    "duration": "Hela maj",
+    "likes": [
+      1,
+      5,
+      27,
+      8
+    ],
+    "dislikes": [],
+    "categories": [
+      "Environment",
+      "Community Events",
+      "Health"
+    ],
+    "children": [
+      {
+        "id": "1778240000001",
+        "type": "update",
+        "title": "Nästa träff - söndag 24 maj",
+        "author": {
+          "id": 30,
+          "username": "Ragnhild"
+        },
+        "body": "Nästa städning blir söndag 24 maj kl 10:00 vid stora scenen. Vi brukar vara klara på två timmar.",
+        "visibility": "folkets_park",
+        "date": "2026-05-20T09:15:00.000Z",
+        "image": {
+          "id": "img4b",
+          "url": "https://picsum.photos/id/106/800/600"
+        },
+        "location": null,
+        "duration": null,
+        "likes": [
+          1,
+          27,
+          5
+        ],
+        "dislikes": [],
+        "categories": [],
+        "children": [
+          {
+            "id": "1779281529513",
+            "type": "comment",
+            "title": "Comment 1779281529513",
+            "author": {
+              "id": 1,
+              "username": "Admin",
+              "email": "admin@admin.se",
+              "role": "admin"
+            },
+            "body": "Jag kommer! Tar med barnen också.",
+            "visibility": "folkets_park",
+            "date": "2026-05-20T12:52:09.513Z",
+            "image": null,
+            "location": null,
+            "duration": null,
+            "likes": [
+              30,
+              27
+            ],
+            "dislikes": [],
+            "categories": [],
+            "children": []
+          },
+          {
+            "id": "1779281529600",
+            "type": "comment",
+            "title": "Comment 1779281529600",
+            "author": {
+              "id": 5,
+              "username": "Fredrik"
+            },
+            "body": "Kan vi ta den norra änden den här gången? Den är alltid värst.",
+            "visibility": "folkets_park",
+            "date": "2026-05-20T13:10:00.000Z",
+            "image": null,
+            "location": null,
+            "duration": null,
+            "likes": [
+              30
+            ],
+            "dislikes": [],
+            "categories": [],
+            "children": []
+          }
+        ]
+      },
+      {
+        "id": "1778240000002",
+        "type": "update",
+        "title": "Resultat - 340 kr i pantpengar!",
+        "author": {
+          "id": 30,
+          "username": "Ragnhild"
+        },
+        "body": "Fantastiskt! 11 deltagare, 9 fulla soppåsar och 340 kr i pantpengar. Kassan används till grillkväll i juni.",
+        "visibility": "folkets_park",
+        "date": "2026-05-24T13:00:00.000Z",
+        "image": {
+          "id": "img4c",
+          "url": "https://picsum.photos/id/1060/800/600"
+        },
+        "location": null,
+        "duration": null,
+        "likes": [
+          1,
+          5,
+          8,
+          27
+        ],
+        "dislikes": [],
+        "categories": [],
+        "children": []
+      }
+    ]
+  },
+  {
+    "id": "1778345678901",
+    "type": "initiative",
+    "title": "Plantera fler träd i Norra Sorgenfri",
+    "author": {
+      "id": 3,
+      "username": "Majken"
+    },
+    "body": "Området behöver mer grönska och skugga under sommaren. Jag har dialog med Malmö Stad som kan leverera träd om vi organiserar plantering och löpande skötsel. Vi letar efter frivilliga med lite trädgårdsintresse.",
+    "visibility": "sorgenfri",
+    "date": "2026-05-19T09:25:00.000Z",
+    "image": {
+      "id": "img5",
+      "url": "https://picsum.photos/id/1018/800/600"
+    },
+    "location": "Norra Sorgenfri",
+    "duration": "En heldag",
+    "likes": [
+      29,
+      7,
+      14
+    ],
+    "dislikes": [],
+    "categories": [
+      "Environment",
+      "Infrastructure"
+    ],
+    "children": [
+      {
+        "id": "1778345700001",
+        "type": "update",
+        "title": "Malmö Stad bekräftar 8 träd",
+        "author": {
+          "id": 3,
+          "username": "Majken"
+        },
+        "body": "Kommunen ger oss 8 lindar och 2 rönnbärsträd. Plantering blir lördagen den 6 juni. Alla hjälpare välkomna!",
+        "visibility": "sorgenfri",
+        "date": "2026-05-21T08:00:00.000Z",
+        "image": {
+          "id": "img5b",
+          "url": "https://picsum.photos/id/1047/800/600"
+        },
+        "location": null,
+        "duration": null,
+        "likes": [
+          29,
+          14,
+          7
+        ],
+        "dislikes": [],
+        "categories": [],
+        "children": [
+          {
+            "id": "1778345700101",
+            "type": "comment",
+            "title": "Comment 1778345700101",
+            "author": {
+              "id": 29,
+              "username": "Per"
+            },
+            "body": "Jag har spade och skottkärra. Räkna med mig!",
+            "visibility": "sorgenfri",
+            "date": "2026-05-21T09:00:00.000Z",
+            "image": null,
+            "location": null,
+            "duration": null,
+            "likes": [
+              3
+            ],
+            "dislikes": [],
+            "categories": [],
+            "children": []
+          },
+          {
+            "id": "1778345700102",
+            "type": "comment",
+            "title": "Comment 1778345700102",
+            "author": {
+              "id": 14,
+              "username": "Monika"
+            },
+            "body": "Kan vi plantera något nära lekplatsen? Barnen behöver skugga på sommaren.",
+            "visibility": "sorgenfri",
+            "date": "2026-05-21T09:30:00.000Z",
+            "image": null,
+            "location": null,
+            "duration": null,
+            "likes": [
+              3,
+              29
+            ],
+            "dislikes": [],
+            "categories": [],
+            "children": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "1779262067733",
+    "type": "initiative",
+    "title": "Hållbarhetsdag på Kirsebergstorget",
+    "author": {
+      "id": 1,
+      "username": "Admin"
+    },
+    "body": "Söndag 7 juni arrangerar vi en heldag med workshops: återvinning, elcykeltest, lokal mat och föreläsning om klimatsmart liv. Fri entré, ta med familjen!",
+    "visibility": "public",
+    "date": "2026-05-20T07:27:47.000Z",
+    "image": {
+      "id": "img6",
+      "url": "https://picsum.photos/id/870/800/600"
+    },
+    "location": "Kirsebergstorget",
+    "duration": "Heldag 10:00-16:00",
+    "likes": [
+      2,
+      4,
+      6,
+      8,
+      13,
+      21
+    ],
+    "dislikes": [],
+    "categories": [
+      "Community Events",
+      "Education",
+      "Transport",
+      "Environment"
+    ],
+    "children": [
+      {
+        "id": "1779262105858",
+        "type": "update",
+        "title": "Program uppdaterat",
+        "author": {
+          "id": 30,
+          "username": "Ragnhild"
+        },
+        "body": "Två lokala odlare har bekräftat att de kommer och visar hur man startar en balkongodling. Vi har nu 6 workshops bekräftade.",
+        "visibility": "public",
+        "date": "2026-05-20T07:28:25.000Z",
+        "image": {
+          "id": "img6b",
+          "url": "https://picsum.photos/id/116/800/600"
+        },
+        "location": null,
+        "duration": null,
+        "likes": [
+          1,
+          4,
+          6,
+          8
+        ],
+        "dislikes": [],
+        "categories": [],
+        "children": [
+          {
+            "id": "1779262105901",
+            "type": "comment",
+            "title": "Comment 1779262105901",
+            "author": {
+              "id": 8,
+              "username": "Emma"
+            },
+            "body": "Finns det möjlighet att anmäla sig i förväg till workshopsen?",
+            "visibility": "public",
+            "date": "2026-05-20T08:00:00.000Z",
+            "image": null,
+            "location": null,
+            "duration": null,
+            "likes": [
+              1,
+              30
+            ],
+            "dislikes": [],
+            "categories": [],
             "children": [
               {
-                "id": "1776600362915",
+                "id": "1779384196591",
                 "type": "comment",
+                "title": "Comment 1779384196591",
                 "author": {
                   "id": 1,
-                  "username": "Lolita",
-                  "email": "lolita@email.com",
-                  "visibility": "public"
+                  "username": "Admin",
+                  "email": "admin@admin.se",
+                  "role": "admin"
                 },
-                "body": "18.30 funkar bättre för mig. Ses utanför.",
-                "visibility": "kirseberg",
-                "date": "2026-04-19T12:06:02.915Z",
+                "body": "Du är inte välkommen ändå",
+                "visibility": "public",
+                "date": "2026-05-21T17:23:16.591Z",
                 "image": null,
                 "location": null,
                 "duration": null,
                 "likes": [],
                 "dislikes": [],
+                "categories": [],
+                "children": []
+              }
+            ]
+          },
+          {
+            "id": "1779262105902",
+            "type": "comment",
+            "title": "Comment 1779262105902",
+            "author": {
+              "id": 1,
+              "username": "Admin",
+              "email": "admin@admin.se",
+              "role": "admin"
+            },
+            "body": "Nej, drop-in gäller! Men kom gärna tidigt till de populära passen.",
+            "visibility": "public",
+            "date": "2026-05-20T08:15:00.000Z",
+            "image": null,
+            "location": null,
+            "duration": null,
+            "likes": [
+              8,
+              4,
+              6
+            ],
+            "dislikes": [],
+            "categories": [],
+            "children": []
+          }
+        ]
+      },
+      {
+        "id": "1779281258534",
+        "type": "update",
+        "title": "Sponsorer välkomnar oss",
+        "author": {
+          "id": 1,
+          "username": "Admin",
+          "email": "admin@admin.se",
+          "role": "admin"
+        },
+        "body": "Två lokala företag sponsrar fika och trycksaker. Det här blir riktigt bra!",
+        "visibility": "public",
+        "date": "2026-05-20T12:47:38.534Z",
+        "image": {
+          "id": "1779281258504",
+          "url": "https://picsum.photos/seed/picsum/200/300",
+          "alt": "Sponsorbild"
+        },
+        "location": null,
+        "duration": null,
+        "likes": [
+          2,
+          4,
+          6,
+          30
+        ],
+        "dislikes": [],
+        "categories": [],
+        "children": [
+          {
+            "id": "1779281274296",
+            "type": "comment",
+            "title": "Comment 1779281274296",
+            "author": {
+              "id": 1,
+              "username": "Admin",
+              "email": "admin@admin.se",
+              "role": "admin"
+            },
+            "body": "Vilka företag? Kul att höra!",
+            "visibility": "public",
+            "date": "2026-05-20T12:47:54.296Z",
+            "image": null,
+            "location": null,
+            "duration": null,
+            "likes": [
+              1
+            ],
+            "dislikes": [],
+            "categories": [],
+            "children": []
+          },
+          {
+            "id": "1779281274400",
+            "type": "comment",
+            "title": "Comment 1779281274400",
+            "author": {
+              "id": 21,
+              "username": "Raj"
+            },
+            "body": "Kommer dit med hela familjen. Ser fram emot elcykeltestet!",
+            "visibility": "public",
+            "date": "2026-05-20T13:00:00.000Z",
+            "image": null,
+            "location": null,
+            "duration": null,
+            "likes": [
+              1,
+              30
+            ],
+            "dislikes": [],
+            "categories": [],
+            "children": []
+          }
+        ]
+      },
+      {
+        "id": "1779384276495",
+        "type": "update",
+        "title": "Plastkäk",
+        "author": {
+          "id": 1,
+          "username": "Admin",
+          "email": "admin@admin.se",
+          "role": "admin"
+        },
+        "body": "Jag kommer stå och käka plast för att förstöra allt ni står för",
+        "visibility": "public",
+        "date": "2026-05-21T17:24:36.495Z",
+        "image": null,
+        "location": null,
+        "duration": null,
+        "likes": [],
+        "dislikes": [],
+        "categories": [],
+        "children": []
+      }
+    ]
+  },
+  {
+    "id": "1778456789012",
+    "type": "initiative",
+    "title": "Byt ut gatubelysning till LED i Kirseberg",
+    "author": {
+      "id": 13,
+      "username": "Rickard"
+    },
+    "body": "Många lampor är gamla och drar onödig el. Låt oss samla namn och skicka förslag till tekniska förvaltningen. LED-belysning sparar upp till 60% energi och ger bättre ljus.",
+    "visibility": "kirseberg",
+    "date": "2026-05-10T13:40:00.000Z",
+    "image": {
+      "id": "img7a",
+      "url": "https://picsum.photos/id/119/800/600"
+    },
+    "location": "Kirseberg",
+    "duration": "Pågående",
+    "likes": [
+      4,
+      6,
+      9,
+      14
+    ],
+    "dislikes": [],
+    "categories": [
+      "Infrastructure",
+      "Environment",
+      "Safety"
+    ],
+    "children": [
+      {
+        "id": "1778456800001",
+        "type": "update",
+        "title": "Kartläggning klar",
+        "author": {
+          "id": 13,
+          "username": "Rickard"
+        },
+        "body": "Jag har gått runt och räknat. Det finns 34 gamla kvicksilverlampor i området. Bifogar karta i nästa uppdatering.",
+        "visibility": "kirseberg",
+        "date": "2026-05-17T14:00:00.000Z",
+        "image": {
+          "id": "img7b",
+          "url": "https://picsum.photos/id/366/800/600"
+        },
+        "location": null,
+        "duration": null,
+        "likes": [
+          4,
+          6,
+          9
+        ],
+        "dislikes": [],
+        "categories": [],
+        "children": [
+          {
+            "id": "1778456800101",
+            "type": "comment",
+            "title": "Comment 1778456800101",
+            "author": {
+              "id": 9,
+              "username": "Gunnar"
+            },
+            "body": "Imponerande jobb! Jag kan hjälpa till att skriva brevet till förvaltningen.",
+            "visibility": "kirseberg",
+            "date": "2026-05-17T15:00:00.000Z",
+            "image": null,
+            "location": null,
+            "duration": null,
+            "likes": [
+              13
+            ],
+            "dislikes": [],
+            "categories": [],
+            "children": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "1778567890123",
+    "type": "initiative",
+    "title": "Second Hand bytardag i Sofielund",
+    "author": {
+      "id": 7,
+      "username": "Lukas"
+    },
+    "body": "Kom och byt kläder, leksaker och prylar istället för att köpa nytt. Söndag 25 maj kl 13-16 på Sofielundsgården. Ingen köper, ingen säljer — bara byter!",
+    "visibility": "sofielund",
+    "date": "2026-05-18T10:05:00.000Z",
+    "image": {
+      "id": "img8",
+      "url": "https://picsum.photos/id/201/800/600"
+    },
+    "location": "Sofielundsgården",
+    "duration": "En eftermiddag",
+    "likes": [
+      2,
+      24,
+      28,
+      3
+    ],
+    "dislikes": [],
+    "categories": [
+      "Community Events",
+      "Environment"
+    ],
+    "children": [
+      {
+        "id": "1778567900001",
+        "type": "update",
+        "title": "60 personer har sagt att de kommer!",
+        "author": {
+          "id": 7,
+          "username": "Lukas"
+        },
+        "body": "Det här blir stort. Vi sätter upp bord utomhus om vädret håller. Kolla prognosen på lördag.",
+        "visibility": "sofielund",
+        "date": "2026-05-22T09:00:00.000Z",
+        "image": {
+          "id": "img8b",
+          "url": "https://picsum.photos/id/335/800/600"
+        },
+        "location": null,
+        "duration": null,
+        "likes": [
+          2,
+          24,
+          3
+        ],
+        "dislikes": [],
+        "categories": [],
+        "children": [
+          {
+            "id": "1778567900101",
+            "type": "comment",
+            "title": "Comment 1778567900101",
+            "author": {
+              "id": 24,
+              "username": "Test2"
+            },
+            "body": "Kan jag ta med möbler? Har en gammal stol som är i fint skick.",
+            "visibility": "sofielund",
+            "date": "2026-05-22T10:00:00.000Z",
+            "image": null,
+            "location": null,
+            "duration": null,
+            "likes": [
+              7
+            ],
+            "dislikes": [],
+            "categories": [],
+            "children": []
+          },
+          {
+            "id": "1778567900102",
+            "type": "comment",
+            "title": "Comment 1778567900102",
+            "author": {
+              "id": 7,
+              "username": "Lukas"
+            },
+            "body": "Absolut! Ju mer desto bättre.",
+            "visibility": "sofielund",
+            "date": "2026-05-22T10:15:00.000Z",
+            "image": null,
+            "location": null,
+            "duration": null,
+            "likes": [
+              24
+            ],
+            "dislikes": [],
+            "categories": [],
+            "children": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "1778678901234",
+    "type": "initiative",
+    "title": "Skapa en insektshotell-rutt i Folkets Park",
+    "author": {
+      "id": 27,
+      "username": "maggan"
+    },
+    "body": "Vi vill öka biologisk mångfald genom att sätta upp insektshotell på flera platser i parken. Varje hotell får en skylt med info om vilka insekter som bor där. Bra pedagogik för barn och vuxna!",
+    "visibility": "folkets_park",
+    "date": "2026-05-19T11:30:00.000Z",
+    "image": {
+      "id": "img9",
+      "url": "https://picsum.photos/id/251/800/600"
+    },
+    "location": "Folkets Park",
+    "duration": "Projekt",
+    "likes": [
+      5,
+      30,
+      1
+    ],
+    "dislikes": [],
+    "categories": [
+      "Environment",
+      "Education"
+    ],
+    "children": [
+      {
+        "id": "1778678910001",
+        "type": "update",
+        "title": "Tre hotell är byggda!",
+        "author": {
+          "id": 27,
+          "username": "maggan"
+        },
+        "body": "Workshop förra helgen var en succé. Vi byggde tre insektshotell av återvunnet trä. Resten sätts upp nästa lördag.",
+        "visibility": "folkets_park",
+        "date": "2026-05-21T11:00:00.000Z",
+        "image": {
+          "id": "img9b",
+          "url": "https://picsum.photos/id/488/800/600"
+        },
+        "location": null,
+        "duration": null,
+        "likes": [
+          5,
+          30
+        ],
+        "dislikes": [],
+        "categories": [],
+        "children": [
+          {
+            "id": "1778678910101",
+            "type": "comment",
+            "title": "Comment 1778678910101",
+            "author": {
+              "id": 5,
+              "username": "Fredrik"
+            },
+            "body": "Fantastiskt! Mina barn älskade workshopen. Kan vi göra en till?",
+            "visibility": "folkets_park",
+            "date": "2026-05-21T12:00:00.000Z",
+            "image": null,
+            "location": null,
+            "duration": null,
+            "likes": [
+              27,
+              30
+            ],
+            "dislikes": [
+              "1"
+            ],
+            "categories": [],
+            "children": [
+              {
+                "id": "1779375897117",
+                "type": "comment",
+                "title": "Comment 1779375897117",
+                "author": {
+                  "id": 1,
+                  "username": "Admin",
+                  "email": "admin@admin.se",
+                  "role": "admin"
+                },
+                "body": "Inte på mina skattepengar grabben",
+                "visibility": "folkets_park",
+                "date": "2026-05-21T15:04:57.117Z",
+                "image": null,
+                "location": null,
+                "duration": null,
+                "likes": [
+                  "1"
+                ],
+                "dislikes": [],
+                "categories": [],
                 "children": []
               }
             ]
@@ -101,353 +1227,1223 @@
     ]
   },
   {
-    "id": "1777901454878",
+    "id": "1778789012345",
     "type": "initiative",
-    "title": "Hejsan Admin här",
+    "title": "Regnvatteninsamlingssystem för innergårdar",
     "author": {
-      "id": 1,
-      "username": "Admin",
-      "password": "admin",
-      "email": "admin@admin.se",
-      "visibility": "PUBLIC"
+      "id": 14,
+      "username": "Monika"
     },
-    "body": "tjo tjo tjo",
-    "visibility": "public",
-    "date": "2026-05-04T13:30:54.878Z",
-    "image": null,
-    "location": null,
-    "duration": null,
-    "likes": [],
+    "body": "Vi kan samla regnvatten till gemensam bevattning av rabatter och odlingar. En enkel cistern per innergård räcker och det minskar vattenförbrukningen rejält under sommaren.",
+    "visibility": "kirseberg",
+    "date": "2026-05-16T15:20:00.000Z",
+    "image": {
+      "id": "img10",
+      "url": "https://picsum.photos/id/377/800/600"
+    },
+    "location": "Kirseberg innergårdar",
+    "duration": "Långsiktigt",
+    "likes": [
+      8,
+      21,
+      4
+    ],
     "dislikes": [],
+    "categories": [
+      "Environment",
+      "Infrastructure",
+      "Food & Gardening"
+    ],
     "children": [
       {
-        "id": "1777983221563",
+        "id": "1778789020001",
         "type": "update",
+        "title": "Kostnadsförslag inkommet",
         "author": {
-          "id": 2,
-          "username": "Bob",
-          "email": "bob@hotmail.se"
+          "id": 14,
+          "username": "Monika"
         },
-        "body": "..",
-        "visibility": "public",
-        "date": "2026-05-05T12:13:41.563Z",
-        "title": "comment",
+        "body": "En 500-liters cistern kostar ca 1800 kr. Delas på portens hushåll blir det runt 150 kr per familj. Vad tycker ni?",
+        "visibility": "kirseberg",
+        "date": "2026-05-19T10:00:00.000Z",
         "image": null,
         "location": null,
         "duration": null,
-        "likes": [],
+        "likes": [
+          8,
+          21
+        ],
         "dislikes": [],
-        "children": []
+        "categories": [],
+        "children": [
+          {
+            "id": "1778789020101",
+            "type": "comment",
+            "title": "Comment 1778789020101",
+            "author": {
+              "id": 8,
+              "username": "Emma"
+            },
+            "body": "150 kr är rimligt. Jag är med!",
+            "visibility": "kirseberg",
+            "date": "2026-05-19T11:00:00.000Z",
+            "image": null,
+            "location": null,
+            "duration": null,
+            "likes": [
+              14
+            ],
+            "dislikes": [],
+            "categories": [],
+            "children": []
+          },
+          {
+            "id": "1778789020102",
+            "type": "comment",
+            "title": "Comment 1778789020102",
+            "author": {
+              "id": 21,
+              "username": "Raj"
+            },
+            "body": "Kolla om BRF:en kan bidra med hälften — det borde ligga i deras intresse.",
+            "visibility": "kirseberg",
+            "date": "2026-05-19T11:30:00.000Z",
+            "image": null,
+            "location": null,
+            "duration": null,
+            "likes": [
+              14,
+              8
+            ],
+            "dislikes": [],
+            "categories": [],
+            "children": []
+          }
+        ]
       }
     ]
   },
   {
-    "id": "1777974815478",
+    "id": "1778890123456",
     "type": "initiative",
-    "title": "awdawd",
+    "title": "Matbytarlunch i Sorgenfri",
     "author": {
-      "id": 1,
-      "username": "Admin",
-      "email": "admin@admin.se"
+      "id": 29,
+      "username": "Per"
     },
-    "body": "awdawdawd",
-    "visibility": "public",
-    "date": "2026-05-05T09:53:35.478Z",
-    "image": null,
-    "location": null,
-    "duration": null,
-    "likes": [],
+    "body": "Ta med mat du har hemma och byt med andra. Minska matsvinn och träffa grannar. Vi träffas vid Sorgenfritorget första söndagen varje månad. Ingen anmälan krävs.",
+    "visibility": "sorgenfri",
+    "date": "2026-05-14T12:00:00.000Z",
+    "image": {
+      "id": "img11",
+      "url": "https://picsum.photos/id/292/800/600"
+    },
+    "location": "Sorgenfritorget",
+    "duration": "En gång i månaden",
+    "likes": [
+      3,
+      14,
+      7
+    ],
     "dislikes": [],
-    "children": []
+    "categories": [
+      "Food & Gardening",
+      "Community Events"
+    ],
+    "children": [
+      {
+        "id": "1778890200001",
+        "type": "update",
+        "title": "Första lunchen - ett minne för livet",
+        "author": {
+          "id": 29,
+          "username": "Per"
+        },
+        "body": "25 grannar dök upp! Vi bytte allt från hemlagad marmelad till färsk basilika och hembakat bröd. Nästa gång är 7 juni.",
+        "visibility": "sorgenfri",
+        "date": "2026-05-18T14:00:00.000Z",
+        "image": {
+          "id": "img11b",
+          "url": "https://picsum.photos/id/493/800/600"
+        },
+        "location": null,
+        "duration": null,
+        "likes": [
+          3,
+          14
+        ],
+        "dislikes": [],
+        "categories": [],
+        "children": [
+          {
+            "id": "1778890200101",
+            "type": "comment",
+            "title": "Comment 1778890200101",
+            "author": {
+              "id": 3,
+              "username": "Majken"
+            },
+            "body": "Det var verkligen trevligt! Jag fick med mig tre sorters sylt hem.",
+            "visibility": "sorgenfri",
+            "date": "2026-05-18T15:00:00.000Z",
+            "image": null,
+            "location": null,
+            "duration": null,
+            "likes": [
+              29
+            ],
+            "dislikes": [],
+            "categories": [],
+            "children": []
+          }
+        ]
+      }
+    ]
   },
   {
-    "id": "1777974960492",
+    "id": "1779001234567",
     "type": "initiative",
-    "title": "HEjsan",
+    "title": "Cykelverkstad för alla - Kirseberg",
+    "author": {
+      "id": 17,
+      "username": "Conny"
+    },
+    "body": "Gratis cykelverkstad varje onsdag kväll kl 18-20. Ta med din cykel så fixar vi den tillsammans. Har du en cykel som inte används? Donera den så renoverar vi och ger till någon som behöver.",
+    "visibility": "kirseberg",
+    "date": "2026-05-17T18:00:00.000Z",
+    "image": {
+      "id": "img12",
+      "url": "https://picsum.photos/id/176/800/600"
+    },
+    "location": "Conny's Garage, Ryttaregatan 12",
+    "duration": "Pågående, varje onsdag",
+    "likes": [
+      4,
+      6,
+      13,
+      21
+    ],
+    "dislikes": [],
+    "categories": [
+      "Transport",
+      "Community Events",
+      "Education"
+    ],
+    "children": [
+      {
+        "id": "1779001300001",
+        "type": "update",
+        "title": "Vi saknar däck - donation välkommen",
+        "author": {
+          "id": 17,
+          "username": "Conny"
+        },
+        "body": "Verkstaden går bra men vi har slut på 26-tums däck. Har du gamla cykeldäck hemma? Lämna dem vid garaget.",
+        "visibility": "kirseberg",
+        "date": "2026-05-20T18:00:00.000Z",
+        "image": null,
+        "location": null,
+        "duration": null,
+        "likes": [
+          4,
+          13
+        ],
+        "dislikes": [],
+        "categories": [],
+        "children": [
+          {
+            "id": "1779001300101",
+            "type": "comment",
+            "title": "Comment 1779001300101",
+            "author": {
+              "id": 6,
+              "username": "Lina"
+            },
+            "body": "Jag har ett par gamla däck i källaren! Kommer förbi imorgon.",
+            "visibility": "kirseberg",
+            "date": "2026-05-20T19:00:00.000Z",
+            "image": null,
+            "location": null,
+            "duration": null,
+            "likes": [
+              17
+            ],
+            "dislikes": [],
+            "categories": [],
+            "children": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "1779112345678",
+    "type": "initiative",
+    "title": "Minska plastanvändning i kvarteret",
     "author": {
       "id": 8,
-      "username": "Emma",
-      "email": "emma@gmail.com"
+      "username": "Emma"
     },
-    "body": "Jag är emma",
-    "visibility": "public",
-    "date": "2026-05-05T09:56:00.492Z",
-    "image": null,
-    "location": null,
-    "duration": null,
-    "likes": [],
-    "dislikes": [],
-    "children": []
-  },
-  {
-    "id": "1777975338452",
-    "type": "initiative",
-    "title": "Hejsan jag är Majken",
-    "author": {
-      "id": 3,
-      "username": "Majken",
-      "email": "majken00@gmail.com"
-    },
-    "body": "hihihihihih",
-    "visibility": "public",
-    "date": "2026-05-05T10:02:18.452Z",
-    "image": null,
-    "location": null,
-    "duration": null,
-    "likes": [],
-    "dislikes": [],
-    "children": []
-  },
-  {
-    "id": "1777975361470",
-    "type": "initiative",
-    "title": "hejsan vem e jag???",
-    "author": {
-      "id": 5,
-      "username": "Fredrik",
-      "email": "fredde@proton.se"
-    },
-    "body": "awdawdawd",
-    "visibility": "public",
-    "date": "2026-05-05T10:02:41.470Z",
-    "image": null,
-    "location": null,
-    "duration": null,
-    "likes": [],
-    "dislikes": [],
-    "children": []
-  },
-  {
-    "id": "1777975385821",
-    "type": "initiative",
-    "title": "Hejsan vem",
-    "author": {
-      "id": 6,
-      "username": "Lina",
-      "email": "lina02@hotmail.se"
-    },
-    "body": "Veeem e jag",
-    "visibility": "public",
-    "date": "2026-05-05T10:03:05.821Z",
-    "image": null,
-    "location": null,
-    "duration": null,
-    "likes": [],
-    "dislikes": [],
-    "children": []
-  },
-  {
-    "id": "1777978667378",
-    "type": "initiative",
-    "title": "bök",
-    "author": {
-      "id": 2,
-      "username": "Bob",
-      "email": "bob@hotmail.se"
-    },
-    "body": "bruv",
-    "visibility": "public",
-    "date": "2026-05-05T10:57:47.378Z",
-    "image": null,
-    "location": null,
-    "duration": null,
-    "likes": [],
-    "dislikes": [],
-    "children": []
-  },
-  {
-    "id": "1777978705779",
-    "type": "initiative",
-    "title": "bruv",
-    "author": {
-      "id": 2,
-      "username": "Bob",
-      "email": "bob@hotmail.se"
-    },
-    "body": "bruv",
-    "visibility": "sofielund",
-    "date": "2026-05-05T10:58:25.779Z",
-    "image": null,
-    "location": null,
-    "duration": null,
-    "likes": [],
-    "dislikes": [],
-    "children": []
-  },
-  {
-    "id": "1777980707379",
-    "type": "initiative",
-    "title": "kirse",
-    "author": {
-      "id": 23,
-      "username": "NyyTestNamn",
-      "email": "Test@Testsson.test"
-    },
-    "body": "berg",
+    "body": "Vi använder alldeles för mycket engångsplast. Låt oss starta en 30-dagarsutmaning och dela tips på plastfria alternativ. Varje vecka fokuserar vi på en ny kategori: kök, badrum, matvaror, på språng.",
     "visibility": "kirseberg",
-    "date": "2026-05-05T11:31:47.379Z",
-    "image": null,
-    "location": null,
-    "duration": null,
-    "likes": [],
-    "dislikes": [],
-    "children": []
-  },
-  {
-    "id": "1777981510025",
-    "type": "initiative",
-    "title": "soff",
-    "author": {
-      "id": 2,
-      "username": "Bob",
-      "email": "bob@hotmail.se"
+    "date": "2026-05-13T17:45:00.000Z",
+    "image": {
+      "id": "img13",
+      "url": "https://picsum.photos/id/312/800/600"
     },
-    "body": "sfoie",
-    "visibility": "sofielund",
-    "date": "2026-05-05T11:45:10.025Z",
-    "image": null,
-    "location": null,
-    "duration": null,
-    "likes": [],
-    "dislikes": [],
+    "location": "Kirseberg",
+    "duration": "30 dagar",
+    "likes": [
+      6,
+      10,
+      14,
+      21
+    ],
+    "dislikes": [
+      4
+    ],
+    "categories": [
+      "Environment",
+      "Education",
+      "Health"
+    ],
     "children": [
       {
-        "id": "1777983207330",
+        "id": "1779112400001",
         "type": "update",
+        "title": "Vecka 1: Köket",
         "author": {
-          "id": 2,
-          "username": "Bob",
-          "email": "bob@hotmail.se"
+          "id": 8,
+          "username": "Emma"
         },
-        "body": "comment",
-        "visibility": "sofielund",
-        "date": "2026-05-05T12:13:27.330Z",
-        "title": "bruv",
-        "image": null,
+        "body": "Byt plastpåsar mot bivaxduk, plastfolie mot återanvändbar silikonfilm och plastflaskor mot glasflaska. Dela era erfarenheter!",
+        "visibility": "kirseberg",
+        "date": "2026-05-17T09:00:00.000Z",
+        "image": {
+          "id": "img13b",
+          "url": "https://picsum.photos/id/431/800/600"
+        },
         "location": null,
         "duration": null,
-        "likes": [],
+        "likes": [
+          6,
+          10,
+          14
+        ],
         "dislikes": [],
-        "children": []
-      },
-      {
-        "id": "1779105522624",
-        "type": "update",
-        "author": {
-          "id": 2,
-          "username": "Bob",
-          "email": "bob@hotmail.se"
-        },
-        "body": "gkjfh",
-        "visibility": "sofielund",
-        "date": "2026-05-18T11:58:42.624Z",
-        "title": "sdhf",
-        "image": null,
-        "location": null,
-        "duration": null,
-        "likes": [],
-        "dislikes": [],
-        "children": []
-      },
-      {
-        "id": "1779105666610",
-        "type": "update",
-        "author": {
-          "id": 2,
-          "username": "Bob",
-          "email": "bob@hotmail.se",
-          "role": "user"
-        },
-        "body": "what",
-        "visibility": "sofielund",
-        "date": "2026-05-18T12:01:06.610Z",
-        "title": "wow",
-        "image": null,
-        "location": null,
-        "duration": null,
-        "likes": [],
-        "dislikes": [],
-        "children": []
+        "categories": [],
+        "children": [
+          {
+            "id": "1779112400101",
+            "type": "comment",
+            "title": "Comment 1779112400101",
+            "author": {
+              "id": 10,
+              "username": "Britta"
+            },
+            "body": "Bivaxduk är fantastisk! Har använt det i två år och det håller fortfarande.",
+            "visibility": "kirseberg",
+            "date": "2026-05-17T10:00:00.000Z",
+            "image": null,
+            "location": null,
+            "duration": null,
+            "likes": [
+              8,
+              14
+            ],
+            "dislikes": [],
+            "categories": [],
+            "children": []
+          },
+          {
+            "id": "1779112400102",
+            "type": "comment",
+            "title": "Comment 1779112400102",
+            "author": {
+              "id": 4,
+              "username": "Lars"
+            },
+            "body": "Jag är skeptisk — kostar det inte mycket mer?",
+            "visibility": "kirseberg",
+            "date": "2026-05-17T11:00:00.000Z",
+            "image": null,
+            "location": null,
+            "duration": null,
+            "likes": [],
+            "dislikes": [
+              8,
+              10
+            ],
+            "categories": [],
+            "children": []
+          },
+          {
+            "id": "1779112400103",
+            "type": "comment",
+            "title": "Comment 1779112400103",
+            "author": {
+              "id": 8,
+              "username": "Emma"
+            },
+            "body": "Initialt ja, men du sparar pengar på sikt. En glasflaska håller i 10 år!",
+            "visibility": "kirseberg",
+            "date": "2026-05-17T11:30:00.000Z",
+            "image": null,
+            "location": null,
+            "duration": null,
+            "likes": [
+              6,
+              10,
+              14
+            ],
+            "dislikes": [],
+            "categories": [],
+            "children": []
+          }
+        ]
       }
     ]
   },
   {
-    "id": "1777982392370",
+    "id": "1779223456789",
     "type": "initiative",
-    "title": "KIRSE",
+    "title": "Gemensam elbilspool i Folkets Park",
     "author": {
-      "id": 2,
-      "username": "Bob",
-      "email": "bob@hotmail.se"
+      "id": 5,
+      "username": "Fredrik"
     },
-    "body": "bruv",
-    "visibility": "kirseberg",
-    "date": "2026-05-05T11:59:52.370Z",
-    "image": null,
-    "location": null,
-    "duration": null,
-    "likes": [],
-    "dislikes": [],
-    "children": []
-  },
-  {
-    "id": "1779108819195",
-    "type": "initiative",
-    "title": "Hello",
-    "author": {
-      "id": 1,
-      "username": "Admin",
-      "email": "admin@admin.se",
-      "role": "admin"
-    },
-    "body": "goodbye",
+    "body": "Det blir allt dyrare att äga bil. Vad tror ni om en gemensam elbilspool för de boende? Vi delar kostnad, försäkring och laddning. En app sköter bokning.",
     "visibility": "folkets_park",
-    "date": "2026-05-18T12:53:39.195Z",
-    "image": null,
-    "location": null,
-    "duration": null,
-    "likes": [],
-    "dislikes": [],
+    "date": "2026-05-18T11:20:00.000Z",
+    "image": {
+      "id": "img14",
+      "url": "https://picsum.photos/id/111/800/600"
+    },
+    "location": "Folkets Park",
+    "duration": "Utforska idé",
+    "likes": [
+      1,
+      27,
+      30
+    ],
+    "dislikes": [
+      2
+    ],
+    "categories": [
+      "Transport",
+      "Environment"
+    ],
     "children": [
       {
-        "id": "1779108910762",
+        "id": "1779230000001",
         "type": "update",
+        "title": "Kostnadsuppskattning",
         "author": {
-          "id": 30,
-          "username": "Ragnhild",
-          "email": "ragnhild@gmail.com",
-          "role": "user"
+          "id": 5,
+          "username": "Fredrik"
         },
-        "body": "najs",
+        "body": "Enklare modell skulle kosta ca 4500 kr/månad delat på 8 personer, alltså 562 kr/person. Inkluderar laddning och försäkring.",
         "visibility": "folkets_park",
-        "date": "2026-05-18T12:55:10.762Z",
-        "title": "Siick brev",
+        "date": "2026-05-19T09:30:00.000Z",
         "image": null,
         "location": null,
         "duration": null,
-        "likes": [],
-        "dislikes": [],
-        "children": []
-      },
+        "likes": [
+          30,
+          1
+        ],
+        "dislikes": [
+          27
+        ],
+        "categories": [],
+        "children": [
+          {
+            "id": "1779230000101",
+            "type": "comment",
+            "title": "Comment 1779230000101",
+            "author": {
+              "id": 27,
+              "username": "maggan"
+            },
+            "body": "562 kr/månad är för dyrt för mig. Kan vi hitta fler deltagare för att sänka kostnaden?",
+            "visibility": "folkets_park",
+            "date": "2026-05-19T10:00:00.000Z",
+            "image": null,
+            "location": null,
+            "duration": null,
+            "likes": [
+              2
+            ],
+            "dislikes": [],
+            "categories": [],
+            "children": []
+          },
+          {
+            "id": "1779230000102",
+            "type": "comment",
+            "title": "Comment 1779230000102",
+            "author": {
+              "id": 30,
+              "username": "Ragnhild"
+            },
+            "body": "Om vi är 16 personer är det under 300 kr. Jag tror det finns intresse i grannskapet.",
+            "visibility": "folkets_park",
+            "date": "2026-05-19T10:30:00.000Z",
+            "image": null,
+            "location": null,
+            "duration": null,
+            "likes": [
+              5,
+              1
+            ],
+            "dislikes": [],
+            "categories": [],
+            "children": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "1779334567890",
+    "type": "initiative",
+    "title": "Mer lekplatser med naturliga material",
+    "author": {
+      "id": 14,
+      "username": "Monika"
+    },
+    "body": "De flesta lekplatser har bara plastredskap. Vi vill ha fler trä- och stenlekredskap som är bättre för både barn och miljö. Naturliga material stimulerar även fantasin mer.",
+    "visibility": "sorgenfri",
+    "date": "2026-05-11T14:50:00.000Z",
+    "image": {
+      "id": "img15",
+      "url": "https://picsum.photos/id/1016/800/600"
+    },
+    "location": "Sorgenfri",
+    "duration": "Långsiktigt",
+    "likes": [
+      3,
+      29
+    ],
+    "dislikes": [
+      11
+    ],
+    "categories": [
+      "Housing",
+      "Education",
+      "Community Events"
+    ],
+    "children": [
       {
-        "id": "1779109014659",
+        "id": "1779334600001",
         "type": "update",
+        "title": "Möte med stadsplanerare inbokat",
         "author": {
-          "id": 30,
-          "username": "Ragnhild",
-          "email": "ragnhild@gmail.com",
-          "role": "user"
+          "id": 14,
+          "username": "Monika"
         },
-        "body": "den suger faktiskt",
-        "visibility": "folkets_park",
-        "date": "2026-05-18T12:56:54.659Z",
-        "title": "Nvm",
+        "body": "En representant från stadsbyggnadskontoret träffar oss 28 maj kl 17. Ta med era idéer och bilder!",
+        "visibility": "sorgenfri",
+        "date": "2026-05-20T09:00:00.000Z",
         "image": null,
         "location": null,
         "duration": null,
-        "likes": [],
+        "likes": [
+          3,
+          29
+        ],
         "dislikes": [],
-        "children": []
+        "categories": [],
+        "children": [
+          {
+            "id": "1779334600101",
+            "type": "comment",
+            "title": "Comment 1779334600101",
+            "author": {
+              "id": 29,
+              "username": "Per"
+            },
+            "body": "Bra! Jag tar med foton från lekplatsen i Köpenhamn som inspiration.",
+            "visibility": "sorgenfri",
+            "date": "2026-05-20T10:00:00.000Z",
+            "image": null,
+            "location": null,
+            "duration": null,
+            "likes": [
+              14
+            ],
+            "dislikes": [],
+            "categories": [],
+            "children": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "1779445678901",
+    "type": "initiative",
+    "title": "Gratis frukostklubb för pensionärer",
+    "author": {
+      "id": 18,
+      "username": "Pirjo"
+    },
+    "body": "Varje torsdag morgon kl 9 bjuder vi på kaffe och smörgås vid Kirseberg Folkets Hus. Kom och umgås, prata och känn gemenskap. Alla är välkomna oavsett bakgrund.",
+    "visibility": "kirseberg",
+    "date": "2026-05-15T08:00:00.000Z",
+    "image": {
+      "id": "img16",
+      "url": "https://picsum.photos/id/431/800/600"
+    },
+    "location": "Kirseberg Folkets Hus",
+    "duration": "Varje torsdag",
+    "likes": [
+      4,
+      10,
+      16,
+      20
+    ],
+    "dislikes": [],
+    "categories": [
+      "Health",
+      "Community Events"
+    ],
+    "children": [
+      {
+        "id": "1779445700001",
+        "type": "update",
+        "title": "35 besökare förra torsdagen!",
+        "author": {
+          "id": 18,
+          "username": "Pirjo"
+        },
+        "body": "Rekord! 35 grannar dök upp. Vi fick låna ett extra rum. Tack till alla frivilliga som hjälpte till.",
+        "visibility": "kirseberg",
+        "date": "2026-05-16T11:00:00.000Z",
+        "image": {
+          "id": "img16b",
+          "url": "https://picsum.photos/id/450/800/600"
+        },
+        "location": null,
+        "duration": null,
+        "likes": [
+          4,
+          10,
+          20
+        ],
+        "dislikes": [],
+        "categories": [],
+        "children": [
+          {
+            "id": "1779445700101",
+            "type": "comment",
+            "title": "Comment 1779445700101",
+            "author": {
+              "id": 4,
+              "username": "Lars"
+            },
+            "body": "Min mamma var där och tyckte det var underbart. Tack Pirjo!",
+            "visibility": "kirseberg",
+            "date": "2026-05-16T12:00:00.000Z",
+            "image": null,
+            "location": null,
+            "duration": null,
+            "likes": [
+              18
+            ],
+            "dislikes": [],
+            "categories": [],
+            "children": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "1779556789012",
+    "type": "initiative",
+    "title": "Sorteringsskyltar i alla trapphus",
+    "author": {
+      "id": 9,
+      "username": "Gunnar"
+    },
+    "body": "Många vet inte hur man sorterar rätt. Låt oss sätta upp tydliga flerspråkiga skyltar i alla portar med bild och text. Svenska, engelska och arabiska täcker de flesta i området.",
+    "visibility": "kirseberg",
+    "date": "2026-05-16T10:15:00.000Z",
+    "image": {
+      "id": "img17",
+      "url": "https://picsum.photos/id/326/800/600"
+    },
+    "location": "Kirseberg",
+    "duration": "En månad",
+    "likes": [
+      4,
+      13,
+      8
+    ],
+    "dislikes": [
+      17
+    ],
+    "categories": [
+      "Environment",
+      "Education",
+      "Housing"
+    ],
+    "children": [
+      {
+        "id": "1779556800001",
+        "type": "update",
+        "title": "Design klar - 3 språk",
+        "author": {
+          "id": 9,
+          "username": "Gunnar"
+        },
+        "body": "En granne med grafisk kompetens har gjort en snygg design. Svenska, engelska och arabiska. Nu behöver vi trycka upp 40 exemplar.",
+        "visibility": "kirseberg",
+        "date": "2026-05-20T09:00:00.000Z",
+        "image": null,
+        "location": null,
+        "duration": null,
+        "likes": [
+          4,
+          13
+        ],
+        "dislikes": [],
+        "categories": [],
+        "children": [
+          {
+            "id": "1779556800101",
+            "type": "comment",
+            "title": "Comment 1779556800101",
+            "author": {
+              "id": 13,
+              "username": "Rickard"
+            },
+            "body": "Tryck kostar ca 800 kr på Printers Online. Kan vi dela på kostnaden?",
+            "visibility": "kirseberg",
+            "date": "2026-05-20T10:00:00.000Z",
+            "image": null,
+            "location": null,
+            "duration": null,
+            "likes": [
+              9,
+              4
+            ],
+            "dislikes": [],
+            "categories": [],
+            "children": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "1779667890123",
+    "type": "initiative",
+    "title": "Cykelutflykt till Limhamn varje söndag",
+    "author": {
+      "id": 21,
+      "username": "Raj"
+    },
+    "body": "Vi ses kl 10 vid Kirseberg station och cyklar tillsammans till havet i Limhamn — ca 12 km enkel resa. Alla hastigheter välkomna. Med vid kaféet i Limhamn hamn efteråt!",
+    "visibility": "kirseberg",
+    "date": "2026-05-19T12:40:00.000Z",
+    "image": {
+      "id": "img18",
+      "url": "https://picsum.photos/id/101/800/600"
+    },
+    "location": "Kirseberg station",
+    "duration": "Varje söndag",
+    "likes": [
+      6,
+      7,
+      13,
+      4
+    ],
+    "dislikes": [],
+    "categories": [
+      "Transport",
+      "Health",
+      "Community Events"
+    ],
+    "children": [
+      {
+        "id": "1779667900001",
+        "type": "update",
+        "title": "18 cyklister förra söndagen!",
+        "author": {
+          "id": 21,
+          "username": "Raj"
+        },
+        "body": "Vi var 18 personer! Vädret höll och vi fikat vid hamnen i solskenet. Nästa söndag kl 10 igen.",
+        "visibility": "kirseberg",
+        "date": "2026-05-20T14:00:00.000Z",
+        "image": {
+          "id": "img18b",
+          "url": "https://picsum.photos/id/243/800/600"
+        },
+        "location": null,
+        "duration": null,
+        "likes": [
+          6,
+          7,
+          13
+        ],
+        "dislikes": [],
+        "categories": [],
+        "children": [
+          {
+            "id": "1779667900101",
+            "type": "comment",
+            "title": "Comment 1779667900101",
+            "author": {
+              "id": 6,
+              "username": "Lina"
+            },
+            "body": "Bästa söndagen på länge! Ser fram emot nästa gång.",
+            "visibility": "kirseberg",
+            "date": "2026-05-20T15:00:00.000Z",
+            "image": null,
+            "location": null,
+            "duration": null,
+            "likes": [
+              21
+            ],
+            "dislikes": [],
+            "categories": [],
+            "children": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "1779778901234",
+    "type": "initiative",
+    "title": "Kompostering för flerfamiljshus",
+    "author": {
+      "id": 10,
+      "username": "Britta"
+    },
+    "body": "Vi kan minska matavfallet rejält om vi installerar gemensam kompost i varje innergård. Kommunen erbjuder subventionerade tunnor. Jag har redan kontaktat dem.",
+    "visibility": "kirseberg",
+    "date": "2026-05-14T13:55:00.000Z",
+    "image": {
+      "id": "img19",
+      "url": "https://picsum.photos/id/155/800/600"
+    },
+    "location": "Kirseberg",
+    "duration": "Projekt",
+    "likes": [
+      14,
+      18,
+      8
+    ],
+    "dislikes": [
+      15
+    ],
+    "categories": [
+      "Environment",
+      "Food & Gardening",
+      "Housing"
+    ],
+    "children": [
+      {
+        "id": "1779778910001",
+        "type": "update",
+        "title": "Kommunen subventionerar 50%",
+        "author": {
+          "id": 10,
+          "username": "Britta"
+        },
+        "body": "Fantastiska nyheter! Malmö Stad subventionerar 50% av kostnaden för godkända komposttunnor. En tunna kostar alltså ca 300 kr istället för 600 kr.",
+        "visibility": "kirseberg",
+        "date": "2026-05-19T13:00:00.000Z",
+        "image": null,
+        "location": null,
+        "duration": null,
+        "likes": [
+          14,
+          18,
+          8
+        ],
+        "dislikes": [],
+        "categories": [],
+        "children": [
+          {
+            "id": "1779778910101",
+            "type": "comment",
+            "title": "Comment 1779778910101",
+            "author": {
+              "id": 14,
+              "username": "Monika"
+            },
+            "body": "300 kr är mer än rimligt. Jag pratar med styrelsen i min BRF imorgon.",
+            "visibility": "kirseberg",
+            "date": "2026-05-19T14:00:00.000Z",
+            "image": null,
+            "location": null,
+            "duration": null,
+            "likes": [
+              10
+            ],
+            "dislikes": [],
+            "categories": [],
+            "children": []
+          },
+          {
+            "id": "1779778910102",
+            "type": "comment",
+            "title": "Comment 1779778910102",
+            "author": {
+              "id": 8,
+              "username": "Emma"
+            },
+            "body": "Kan vi ha en liten instruktionskväll om vad som får och inte får komposteras?",
+            "visibility": "kirseberg",
+            "date": "2026-05-19T14:30:00.000Z",
+            "image": null,
+            "location": null,
+            "duration": null,
+            "likes": [
+              10,
+              14
+            ],
+            "dislikes": [],
+            "categories": [],
+            "children": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "1779889012345",
+    "type": "initiative",
+    "title": "Tystare kvällar i Sofielund",
+    "author": {
+      "id": 24,
+      "username": "Test2"
+    },
+    "body": "Många klagar på högljudda fester och motorer sent på kvällen. Kan vi komma överens om en gemensam tidsgräns kl 22 söckendag och kl 23 på helger, och skapa en dialog istället för lappar under dörren?",
+    "visibility": "sofielund",
+    "date": "2026-05-17T22:10:00.000Z",
+    "image": null,
+    "location": "Sofielund",
+    "duration": "Pågående",
+    "likes": [
+      2,
+      7
+    ],
+    "dislikes": [
+      28
+    ],
+    "categories": [
+      "Housing",
+      "Safety"
+    ],
+    "children": [
+      {
+        "id": "1779889100001",
+        "type": "update",
+        "title": "Dialogmöte planerat",
+        "author": {
+          "id": 24,
+          "username": "Test2"
+        },
+        "body": "Vi träffas i tvättstugan (stor!) fredag 29 maj kl 18. Alla grannar i porten är välkomna. Fika finns.",
+        "visibility": "sofielund",
+        "date": "2026-05-20T10:00:00.000Z",
+        "image": null,
+        "location": null,
+        "duration": null,
+        "likes": [
+          2,
+          7
+        ],
+        "dislikes": [],
+        "categories": [],
+        "children": [
+          {
+            "id": "1779889100101",
+            "type": "comment",
+            "title": "Comment 1779889100101",
+            "author": {
+              "id": 7,
+              "username": "Lukas"
+            },
+            "body": "Bra idé! Det är alltid bättre att prata ansikte mot ansikte.",
+            "visibility": "sofielund",
+            "date": "2026-05-20T11:00:00.000Z",
+            "image": null,
+            "location": null,
+            "duration": null,
+            "likes": [
+              24
+            ],
+            "dislikes": [],
+            "categories": [],
+            "children": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "1779990123456",
+    "type": "initiative",
+    "title": "Lokalt bytesbibliotek",
+    "author": {
+      "id": 12,
+      "username": "Sigrid"
+    },
+    "body": "Byt böcker, tidningar, brädspel och barnkläder på ett ställe i området. Tanken är ett litet skåp eller hörna i biblioteket där man lämnar och tar fritt. Tar du en bok lämnar du en.",
+    "visibility": "kirseberg",
+    "date": "2026-05-20T09:00:00.000Z",
+    "image": {
+      "id": "img20",
+      "url": "https://picsum.photos/id/24/800/600"
+    },
+    "location": "Kirseberg bibliotek",
+    "duration": "Permanent",
+    "likes": [
+      8,
+      16,
+      18,
+      10
+    ],
+    "dislikes": [],
+    "categories": [
+      "Education",
+      "Community Events",
+      "Arts & Culture"
+    ],
+    "children": [
+      {
+        "id": "1779990200001",
+        "type": "update",
+        "title": "Biblioteket är positivt!",
+        "author": {
+          "id": 12,
+          "username": "Sigrid"
+        },
+        "body": "Hade möte med bibliotekchefen idag. De har redan ett skåp vi kan använda och hjälper gärna till med skyltning.",
+        "visibility": "kirseberg",
+        "date": "2026-05-21T10:00:00.000Z",
+        "image": null,
+        "location": null,
+        "duration": null,
+        "likes": [
+          8,
+          16,
+          18
+        ],
+        "dislikes": [],
+        "categories": [],
+        "children": [
+          {
+            "id": "1779990200101",
+            "type": "comment",
+            "title": "Comment 1779990200101",
+            "author": {
+              "id": 8,
+              "username": "Emma"
+            },
+            "body": "Jag har en hel låda böcker jag vill donera. Kan jag lämna dem nu?",
+            "visibility": "kirseberg",
+            "date": "2026-05-21T11:00:00.000Z",
+            "image": null,
+            "location": null,
+            "duration": null,
+            "likes": [
+              12
+            ],
+            "dislikes": [],
+            "categories": [],
+            "children": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "1780101234567",
+    "type": "initiative",
+    "title": "Solceller på Folkets Hus tak",
+    "author": {
+      "id": 28,
+      "username": "Ragnar"
+    },
+    "body": "Taket är perfekt orienterat för solceller och har tillräcklig yta för en 30 kW-anläggning. Kan vi samla stöd och ansöka om Klimatklivet-bidrag? Det kan täcka 50% av kostnaden.",
+    "visibility": "public",
+    "date": "2026-05-19T15:30:00.000Z",
+    "image": {
+      "id": "img21",
+      "url": "https://picsum.photos/id/1071/800/600"
+    },
+    "location": "Folkets Hus",
+    "duration": "Långsiktigt",
+    "likes": [
+      1,
+      2,
+      5,
+      30
+    ],
+    "dislikes": [],
+    "categories": [
+      "Environment",
+      "Infrastructure",
+      "Housing"
+    ],
+    "children": [
+      {
+        "id": "1780101300001",
+        "type": "update",
+        "title": "Offerter inkomna",
+        "author": {
+          "id": 28,
+          "username": "Ragnar"
+        },
+        "body": "Tre leverantörer har lämnat offert. Spannet är 280 000 - 340 000 kr. Med Klimatklivet ned till ca 150 000 kr.",
+        "visibility": "public",
+        "date": "2026-05-21T09:00:00.000Z",
+        "image": null,
+        "location": null,
+        "duration": null,
+        "likes": [
+          1,
+          2,
+          5
+        ],
+        "dislikes": [],
+        "categories": [],
+        "children": [
+          {
+            "id": "1780101300101",
+            "type": "comment",
+            "title": "Comment 1780101300101",
+            "author": {
+              "id": 5,
+              "username": "Fredrik"
+            },
+            "body": "150 000 kr är hanterbart. Kan vi söka ytterligare EU-bidrag parallellt?",
+            "visibility": "public",
+            "date": "2026-05-21T10:00:00.000Z",
+            "image": null,
+            "location": null,
+            "duration": null,
+            "likes": [
+              28,
+              2
+            ],
+            "dislikes": [],
+            "categories": [],
+            "children": []
+          },
+          {
+            "id": "1780101300102",
+            "type": "comment",
+            "title": "Comment 1780101300102",
+            "author": {
+              "id": 1,
+              "username": "Admin",
+              "email": "admin@admin.se",
+              "role": "admin"
+            },
+            "body": "Jag kan kolla med kommunens näringsliv- och hållbarhetsenhet. De brukar veta om sådant.",
+            "visibility": "public",
+            "date": "2026-05-21T10:30:00.000Z",
+            "image": null,
+            "location": null,
+            "duration": null,
+            "likes": [
+              28,
+              5,
+              2
+            ],
+            "dislikes": [],
+            "categories": [],
+            "children": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "1780212345678",
+    "type": "initiative",
+    "title": "Vildblomma-äng vid Sorgenfri",
+    "author": {
+      "id": 3,
+      "username": "Majken"
+    },
+    "body": "Låt oss skapa en liten äng med vilda blommor istället för en meningslös gräsmatta. Bra för pollinatörer, vackrare för ögat och kräver mycket mindre skötsel. Malmö Stad säljer fröblandning till självkostnadspris.",
+    "visibility": "sorgenfri",
+    "date": "2026-05-20T08:45:00.000Z",
+    "image": {
+      "id": "img22",
+      "url": "https://picsum.photos/id/251/800/600"
+    },
+    "location": "Sorgenfri",
+    "duration": "Ett projekt",
+    "likes": [
+      29,
+      14,
+      7
+    ],
+    "dislikes": [],
+    "categories": [
+      "Environment",
+      "Food & Gardening"
+    ],
+    "children": [
+      {
+        "id": "1780212400001",
+        "type": "update",
+        "title": "Yta godkänd av fastighetsägaren",
+        "author": {
+          "id": 3,
+          "username": "Majken"
+        },
+        "body": "Fastighetsägaren säger ja till ytan vid cykelparkeringen! Vi sår i juni när frost inte längre är en risk.",
+        "visibility": "sorgenfri",
+        "date": "2026-05-21T09:00:00.000Z",
+        "image": {
+          "id": "img22b",
+          "url": "https://picsum.photos/id/145/800/600"
+        },
+        "location": null,
+        "duration": null,
+        "likes": [
+          29,
+          14
+        ],
+        "dislikes": [],
+        "categories": [],
+        "children": [
+          {
+            "id": "1780212400101",
+            "type": "comment",
+            "title": "Comment 1780212400101",
+            "author": {
+              "id": 14,
+              "username": "Monika"
+            },
+            "body": "Kan vi ta med barnen och låta dem så? Bra naturpedagogik!",
+            "visibility": "sorgenfri",
+            "date": "2026-05-21T10:00:00.000Z",
+            "image": null,
+            "location": null,
+            "duration": null,
+            "likes": [
+              3,
+              29
+            ],
+            "dislikes": [],
+            "categories": [],
+            "children": []
+          }
+        ]
       }
     ]
   }

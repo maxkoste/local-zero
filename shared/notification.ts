@@ -1,6 +1,6 @@
 export interface Notification {
     id: string;
-    type: 'reply' | 'neighborhood';
+    type: 'reply' | 'thread-reply' | 'neighborhood';
     initiativeId: string;
     initiativeTitle: string;
     actorUsername: string;

@@ -1,50 +1,65 @@
-import { User } from 'shared';
-import { Visibility } from 'shared';
-import { IContent, Content, ContentType, Image } from 'shared';
+import { IContent, Content, ContentType, Image, Author, Visibility } from 'shared';
 
 export class ContentFactory {
 
-    static create(
+    private static create(
         id: string,
         title: string,
         type: ContentType,
-        author: User,
+        author: Author,
         body: string,
-        date: Date = new Date(),
+        date: Date,
         visibility: Visibility,
-
         image?: Image,
         location?: string,
         duration?: string,
-        parent?: IContent
-
+        categories: string[] = [],
     ): IContent {
-        if (type === 'initiative' && parent !== undefined) {
-            throw new Error('An initiative cannot have a parent');
-        }
-        if (type !== 'initiative' && parent === undefined) {
-            throw new Error(
-                `A ${type} must be created with a parent (initiative or update)`
-            );
-        }
+        const c = new Content(id, title, type, author, body, date, visibility, image, location, duration);
+        c.categories = categories;
+        return c;    
+    }
 
-        const content = new Content(
-            id,
-            title,
-            type,
-            author,
-            body,
-            date,
-            visibility,
-            image,
-            location,
-            duration,
+    static createInitiative(
+        id: string,
+        title: string,
+        author: Author,
+        body: string,
+        visibility: Visibility,
+        image?: Image,
+        location?: string,
+        duration?: string,
+        categories: string[] = [],
+    ): IContent {
+        return ContentFactory.create(
+            id, title, 'initiative', author, body, new Date(), visibility, image, location, duration, categories,
         );
+    }
 
-        if (parent) {
-            parent.addChild(content);
-        }
+    static createUpdate(
+        id: string,
+        title: string,
+        author: Author,
+        body: string,
+        visibility: Visibility,
+        image?: Image,
+        location?: string,
+        duration?: string,
+    ): IContent {
+        return ContentFactory.create(
+            id, title, 'update', author, body, new Date(), visibility, image, location, duration,
+        );
+    }
 
-        return content;
+    static createComment(
+        id: string,
+        title: string,
+        author: Author,
+        body: string,
+        visibility: Visibility,
+    ): IContent {
+        return ContentFactory.create(
+            id, title, 'comment', author, body, new Date(), visibility,
+        );
     }
 }
