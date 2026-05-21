@@ -15,15 +15,7 @@ import Alert from '@mui/material/Alert';
 import Chip from '@mui/material/Chip';
 import { styled } from '@mui/material/styles';
 import { useNavigate, useParams } from 'react-router-dom';
-
-const ECO_ACTIONS: Record<string, { label: string; points: number }> = {
-    BIKE:   { label: 'Bike to work',          points: 10   },
-    TREE:   { label: 'Plant a tree',           points: 20   },
-    PANTA:  { label: 'Recycle',                points: 5    },
-    CEO:    { label: 'Shoot a CEO',            points: 1000 },
-    OIL:    { label: 'Oil spill',              points: -500 },
-    FLIGHT: { label: 'Take a flight to work',  points: -50  },
-};
+import { Action, ActionKey } from 'shared';
 
 type User = {
     userId: number;
@@ -36,7 +28,7 @@ type User = {
         Initiativ: number;
         CarbonScore: number;
     };
-    recentActivity: { id: number; text: string; date: string }[];
+    recentActivity: { id: string; text: string; date: string }[];
 };
 
 type UserRecord = {
@@ -112,7 +104,7 @@ export function UserPage() {
     const [userRecord, setUserRecord] = useState<UserRecord | null>(null);
     const [chats, setChats] = useState<ChatSummary[]>([]);
     const [loading, setLoading] = useState(true);
-    const [selectedAction, setSelectedAction] = useState<string>('BIKE');
+    const [selectedAction, setSelectedAction] = useState<ActionKey>('BIKE');
     const [logging, setLogging] = useState(false);
     const [snackbar, setSnackbar] = useState<{ open: boolean; message: string; severity: 'success' | 'error' }>({
         open: false, message: '', severity: 'success',
@@ -158,7 +150,6 @@ export function UserPage() {
         loadUser();
     }, [id]);
 
-    // Fetch chats only for own profile
     const isOwnProfile = !id || (loggedInUserId !== null && Number(id) === loggedInUserId);
 
     useEffect(() => {
@@ -197,8 +188,8 @@ export function UserPage() {
 
             if (!res.ok) throw new Error();
 
-            const action = ECO_ACTIONS[selectedAction];
-            const pointDelta = action.points;
+            const actionDef = Action[selectedAction];
+            const pointDelta = actionDef.points;
 
             setUser(prev => prev ? {
                 ...prev,
@@ -207,7 +198,7 @@ export function UserPage() {
 
             setSnackbar({
                 open: true,
-                message: `"${action.label}" logged! ${pointDelta >= 0 ? '+' : ''}${pointDelta} points`,
+                message: `"${actionDef.label}" logged! ${pointDelta >= 0 ? '+' : ''}${pointDelta} points`,
                 severity: 'success',
             });
         } catch {
@@ -243,7 +234,7 @@ export function UserPage() {
     if (loading) return <Box sx={{ p: 4 }}>Loading profile...</Box>;
     if (!user) return <Box sx={{ p: 4 }}>Could not load user.</Box>;
 
-    const action = ECO_ACTIONS[selectedAction];
+    const actionDef = Action[selectedAction];
 
     return (
         <Box sx={{ maxWidth: 900, mx: 'auto', px: 2, py: 4 }}>
@@ -313,9 +304,9 @@ export function UserPage() {
                                     <Select
                                         value={selectedAction}
                                         label="What did you do?"
-                                        onChange={e => setSelectedAction(e.target.value)}
+                                        onChange={e => setSelectedAction(e.target.value as ActionKey)}
                                     >
-                                        {Object.entries(ECO_ACTIONS).map(([key, a]) => (
+                                        {(Object.entries(Action) as [ActionKey, typeof Action[ActionKey]][]).map(([key, a]) => (
                                             <MenuItem key={key} value={key}>
                                                 <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, width: '100%', justifyContent: 'space-between' }}>
                                                     <span>{a.label}</span>
@@ -338,7 +329,7 @@ export function UserPage() {
                                     disabled={logging}
                                     sx={{ borderRadius: 2 }}
                                 >
-                                    {logging ? 'Logging...' : `Log (${action.points >= 0 ? '+' : ''}${action.points}p)`}
+                                    {logging ? 'Logging...' : `Log (${actionDef.points >= 0 ? '+' : ''}${actionDef.points}p)`}
                                 </Button>
                             </>
                         )}
@@ -444,7 +435,7 @@ export function UserPage() {
                                                 {item.text}
                                             </Typography>
                                             <Typography variant="caption" color="text.disabled" sx={{ whiteSpace: 'nowrap' }}>
-                                                {item.date}
+                                                {new Date(item.date).toLocaleDateString([], { month: 'short', day: 'numeric' })}
                                             </Typography>
                                         </ActivityRow>
                                     ))

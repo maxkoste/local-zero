@@ -5,7 +5,7 @@ import dotenv from 'dotenv';
 import jwt from 'jsonwebtoken';
 import cookieParser from 'cookie-parser';
 import { ContentFactory } from './content/content-factory';
-import { Notification, Content, IContent, Visibility, Author } from 'shared';
+import { Notification, Content, IContent, Visibility, Author, Action } from 'shared';
 
 dotenv.config();
 
@@ -68,9 +68,9 @@ function collectReplyNotifications(
         const notifId = `reply-${node.id}`;
 
         if (
-            node.author.id !== userId &&   
-            node.date > since &&          
-            !seen.has(notifId)             
+            node.author.id !== userId &&
+            node.date > since &&
+            !seen.has(notifId)
         ) {
             if (parent.author.id === userId) {
                 seen.add(notifId);
@@ -161,9 +161,51 @@ app.get('/api/users/:id/profile', (req, res) => {
     const payload = requireAuth(req, res);
     if (!payload) return;
 
-    const profile = storage.getProfileByUserId(Number(req.params.id));
+    const userId = Number(req.params.id);
+    const profile = storage.getProfileByUserId(userId);
     if (!profile) return res.status(404).json({ error: 'Profile not found' });
-    res.json(profile);
+
+    const user = storage.getUserById(userId);
+    const activityItems: { id: string; text: string; date: string }[] = [];
+
+    for (const action of user?.ecoActions ?? []) {
+        const def = Action[action.key as keyof typeof Action];
+        const label = def ? def.label : action.key;
+        activityItems.push({
+            id:   action.id,
+            text: `Logged: ${label}`,
+            date: action.date,
+        });
+    }
+
+    function collectAuthoredContent(nodes: IContent[]) {
+        for (const node of nodes) {
+            if (node.author.id === userId) {
+                if (node.type === 'comment') {
+                    collectAuthoredContent(node.getChildren());
+                    continue;
+                }
+
+                const typeLabel = node.type === 'initiative' 
+                    ? 'Created initiative' 
+                    : 'Posted update';
+
+                activityItems.push({
+                    id: node.id,
+                    text: `${typeLabel}: ${node.title ?? node.body?.slice(0, 60) ?? ''}`,
+                    date: (node.date instanceof Date ? node.date : new Date(node.date)).toISOString(),
+                });
+            }
+
+            collectAuthoredContent(node.getChildren());
+        }
+    }
+
+    collectAuthoredContent(storage.getInitiatives());
+
+    activityItems.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+
+    res.json({ ...profile, recentActivity: activityItems.slice(0, 3) });
 });
 
 app.patch('/api/users/:id/profile', (req, res) => {
@@ -206,15 +248,15 @@ app.post('/api/users/:id/eco-actions', (req, res) => {
     const updated = storage.addEcoAction(userId, action);
     if (!updated) return res.status(404).json({ error: 'User not found' });
 
-    const actionPoints: Record<string, number> = {
-        BIKE: 10, TREE: 20, PANTA: 5, CEO: 1000, OIL: -500, FLIGHT: -50,
-    };
+    const def = Action[key as keyof typeof Action];
+    const points = def ? def.points : 0;
+
     const profile = storage.getProfileByUserId(userId);
     if (profile) {
         storage.updateProfile(userId, {
             stats: {
                 Initiativ: profile.stats.Initiativ,
-                CarbonScore: profile.stats.CarbonScore + (actionPoints[key] ?? 0),
+                CarbonScore: profile.stats.CarbonScore + points,
             },
         });
     }
@@ -308,7 +350,7 @@ app.post('/api/initiatives', (req, res) => {
     const initiative = ContentFactory.createInitiative(
         String(Date.now()), title, author, body,
         visibility as Visibility, image, location, duration,
-		Array.isArray(categories) ? categories : [],
+        Array.isArray(categories) ? categories : [],
     );
 
     storage.addInitiative(initiative);
@@ -330,7 +372,7 @@ app.patch('/api/initiatives/:id', (req, res) => {
         ...(duration   !== undefined && { duration }),
         ...(likes      !== undefined && { likes }),
         ...(dislikes   !== undefined && { dislikes }),
-		...(categories !== undefined && { categories }),
+        ...(categories !== undefined && { categories }),
     });
 
     if (!updated) return res.status(404).json({ error: 'Initiative not found' });

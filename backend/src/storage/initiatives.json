@@ -792,7 +792,29 @@
             ],
             "dislikes": [],
             "categories": [],
-            "children": []
+            "children": [
+              {
+                "id": "1779384196591",
+                "type": "comment",
+                "title": "Comment 1779384196591",
+                "author": {
+                  "id": 1,
+                  "username": "Admin",
+                  "email": "admin@admin.se",
+                  "role": "admin"
+                },
+                "body": "Du är inte välkommen ändå",
+                "visibility": "public",
+                "date": "2026-05-21T17:23:16.591Z",
+                "image": null,
+                "location": null,
+                "duration": null,
+                "likes": [],
+                "dislikes": [],
+                "categories": [],
+                "children": []
+              }
+            ]
           },
           {
             "id": "1779262105902",
@@ -896,6 +918,27 @@
             "children": []
           }
         ]
+      },
+      {
+        "id": "1779384276495",
+        "type": "update",
+        "title": "Plastkäk",
+        "author": {
+          "id": 1,
+          "username": "Admin",
+          "email": "admin@admin.se",
+          "role": "admin"
+        },
+        "body": "Jag kommer stå och käka plast för att förstöra allt ni står för",
+        "visibility": "public",
+        "date": "2026-05-21T17:24:36.495Z",
+        "image": null,
+        "location": null,
+        "duration": null,
+        "likes": [],
+        "dislikes": [],
+        "categories": [],
+        "children": []
       }
     ]
   },
