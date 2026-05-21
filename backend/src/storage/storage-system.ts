@@ -4,7 +4,7 @@ import { IContent, Content, Author, ContentRecord } from 'shared';
 
 export type ContentUpdate = Partial<Pick<
     ContentRecord,
-    'title' | 'body' | 'visibility' | 'image' | 'location' | 'duration' | 'likes' | 'dislikes'
+    'title' | 'body' | 'visibility' | 'image' | 'location' | 'duration' | 'likes' | 'dislikes' | 'categories'
 >>;
 
 export interface ProfileRecord {
@@ -130,6 +130,7 @@ class StorageSystem {
         if (update.duration   !== undefined) node.duration = update.duration ?? undefined;
         if (update.likes      !== undefined) node.likes    = new Set(update.likes);
         if (update.dislikes   !== undefined) node.dislikes = new Set(update.dislikes);
+        if (update.categories !== undefined) node.categories = update.categories;
 
         this.flushInitiatives();
         return node;

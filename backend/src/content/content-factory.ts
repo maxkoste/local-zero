@@ -13,8 +13,11 @@ export class ContentFactory {
         image?: Image,
         location?: string,
         duration?: string,
+        categories: string[] = [],
     ): IContent {
-        return new Content(id, title, type, author, body, date, visibility, image, location, duration);
+        const c = new Content(id, title, type, author, body, date, visibility, image, location, duration);
+        c.categories = categories;
+        return c;    
     }
 
     static createInitiative(
@@ -26,9 +29,10 @@ export class ContentFactory {
         image?: Image,
         location?: string,
         duration?: string,
+        categories: string[] = [],
     ): IContent {
         return ContentFactory.create(
-            id, title, 'initiative', author, body, new Date(), visibility, image, location, duration,
+            id, title, 'initiative', author, body, new Date(), visibility, image, location, duration, categories,
         );
     }
 

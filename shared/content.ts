@@ -28,6 +28,7 @@ export interface ContentRecord {
     duration: string | null;
     likes: string[];
     dislikes: string[];
+    categories: string[];
     children: ContentRecord[];
 }
 
@@ -44,6 +45,7 @@ export interface IContent {
     duration?: string;
     likes: Set<string>;
     dislikes: Set<string>;
+    categories: string[];
     children: IContent[];
 
     addChild(child: IContent): void;
@@ -72,6 +74,7 @@ export class Content implements IContent {
     duration?: string;
     likes: Set<string> = new Set();
     dislikes: Set<string> = new Set();
+    categories: string[] = [];
     children: IContent[] = [];
 
     constructor(
@@ -85,6 +88,7 @@ export class Content implements IContent {
         image?: Image,
         location?: string,
         duration?: string,
+        categories: string[] = [],
     ) {
         this.id = id;
         this.title = title;
@@ -96,6 +100,7 @@ export class Content implements IContent {
         this.image = image;
         this.location = location;
         this.duration = duration;
+        this.categories = categories;
     }
 
     addChild(child: IContent): void {
@@ -144,6 +149,7 @@ export class Content implements IContent {
             duration: this.duration ?? null,
             likes: Array.from(this.likes),
             dislikes: Array.from(this.dislikes),
+            categories: this.categories,
             children: this.children.map(c => (c as Content).toJSON()),
         };
     }
@@ -164,6 +170,8 @@ export class Content implements IContent {
 
         content.likes = new Set(data.likes);
         content.dislikes = new Set(data.dislikes);
+
+        content.categories = data.categories ?? [];
 
         content.children = data.children.map(child => Content.fromJSON(child));
 

@@ -24,7 +24,7 @@ if (!JWT_SECRET) {
 }
 
 function generateToken(user: UserRecord) {
-    return jwt.sign({ userId: user.id }, JWT_SECRET, { expiresIn: '1h' });
+    return jwt.sign({ userId: user.id, role: user.role ?? 'user' }, JWT_SECRET, { expiresIn: '1h' });
 }
 
 function verifyToken(token: string): JwtPayload {
@@ -300,7 +300,7 @@ app.post('/api/initiatives', (req, res) => {
     const author = resolveAuthor(payload, res);
     if (!author) return;
 
-    const { title, body, visibility, image, location, duration } = req.body;
+    const { title, body, visibility, image, location, duration, categories } = req.body;
     if (!title || !body || !visibility) {
         return res.status(400).json({ error: 'title, body, and visibility are required' });
     }
@@ -308,6 +308,7 @@ app.post('/api/initiatives', (req, res) => {
     const initiative = ContentFactory.createInitiative(
         String(Date.now()), title, author, body,
         visibility as Visibility, image, location, duration,
+		Array.isArray(categories) ? categories : [],
     );
 
     storage.addInitiative(initiative);
@@ -318,7 +319,7 @@ app.patch('/api/initiatives/:id', (req, res) => {
     const payload = requireAuth(req, res);
     if (!payload) return;
 
-    const { title, body, visibility, image, location, duration, likes, dislikes } = req.body;
+    const { title, body, visibility, image, location, duration, likes, dislikes, categories } = req.body;
 
     const updated = storage.updateInitiative(req.params.id, {
         ...(title      !== undefined && { title }),
@@ -329,6 +330,7 @@ app.patch('/api/initiatives/:id', (req, res) => {
         ...(duration   !== undefined && { duration }),
         ...(likes      !== undefined && { likes }),
         ...(dislikes   !== undefined && { dislikes }),
+		...(categories !== undefined && { categories }),
     });
 
     if (!updated) return res.status(404).json({ error: 'Initiative not found' });

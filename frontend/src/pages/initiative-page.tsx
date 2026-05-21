@@ -2,7 +2,7 @@ import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { Box, Stack, Typography, TextField, Button, Divider } from "@mui/material";
 import { ContentRecord, Visibility } from "shared";
-import { InitiativeCard } from "../components/content-card";
+import { InitiativeCard } from "../components/initiative-card";
 import { UpdateCard } from "../components/update-card";
 
 export function InitiativePage() {

@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
 import { Stack, Box, Button, Typography, Tabs, Tab, Paper, Chip } from "@mui/material";
-import { ContentRecord } from "shared";
-import { ContentCard } from "../components/content-card";
+import { ContentRecord, CATEGORIES } from "shared";
+import { InitiativeCard } from "../components/initiative-card";
 import { useNavigate } from "react-router-dom";
+import { CategoryChip } from "../components/category-chip";
 
 const ALL_NEIGHBORHOODS = ['public', 'kirseberg', 'sofielund', 'sorgenfri', 'folkets_park'] as const;
 type Neighborhood = typeof ALL_NEIGHBORHOODS[number];
@@ -32,8 +33,15 @@ export function FrontPage() {
     const [activeTab, setActiveTab]             = useState(0);
     const [loggedInUser, setLoggedInUser]       = useState<LoggedInUser | null>(null);
     const [userVisibility, setUserVisibility]   = useState<string>('kirseberg');
+    const [activeCategories, setActiveCategories] = useState<string[]>([]);
 
     const token = localStorage.getItem("token");
+
+    function toggleCategoryFilter(cat: string) {
+    setActiveCategories(prev =>
+        prev.includes(cat) ? prev.filter(existing => existing !== cat) : [...prev, cat]
+    );
+    }
 
     useEffect(() => {
         async function loadCurrentUser() {
@@ -100,18 +108,24 @@ export function FrontPage() {
 
     const filteredInitiatives = [...apiInitiatives]
         .filter(i => {
-            if (activeNeighborhood === 'public') return true;
-            return (
-                i.visibility.toLowerCase() === activeNeighborhood ||
-                i.visibility.toLowerCase() === 'public'
-            );
+            if (activeNeighborhood !== 'public') {
+                if (
+                    i.visibility.toLowerCase() !== activeNeighborhood &&
+                    i.visibility.toLowerCase() !== 'public'
+                ) return false;
+            }
+            if (activeCategories.length > 0) {
+                const cats = i.categories ?? [];
+                if (!activeCategories.every(c => cats.includes(c))) return false;
+            }
+            return true;
         })
         .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
-
+    
     const communityScore = communityScores[activeNeighborhood] ?? 0;
 
     return (
-        <Box sx={{ maxWidth: 700, margin: "0 auto", padding: 2 }}>
+        <Box sx={{ maxWidth: 600, margin: "0 auto", padding: 2 }}>
             <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", mb: 2 }}>
                 <Typography variant="h6">Initiatives</Typography>
                 <Button variant="contained" onClick={() => navigate("/create-initiative")}>
@@ -151,6 +165,17 @@ export function FrontPage() {
                 )}
             </Paper>
 
+            <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.75, mb: 2 }}>
+                {CATEGORIES.map(cat => (
+                    <CategoryChip
+                        key={cat}
+                        label={cat}
+                        selected={activeCategories.includes(cat)}
+                        onClick={() => toggleCategoryFilter(cat)}
+                    />
+                ))}
+            </Box>
+
             {error && (
                 <Typography variant="body2" color="error" sx={{ mb: 2 }}>
                     {error}
@@ -164,7 +189,7 @@ export function FrontPage() {
                     </Typography>
                 ) : (
                     filteredInitiatives.map(initiative => (
-                        <ContentCard
+                        <InitiativeCard
                             key={initiative.id}
                             content={initiative}
                             onDelete={apiInitiatives.some(i => i.id === initiative.id)
