@@ -3,7 +3,8 @@ import { useNavigate } from "react-router-dom";
 import {
     Box, Button, MenuItem, Stack, TextField, Typography,
 } from "@mui/material";
-import { Visibility } from "shared";
+import { Visibility, CATEGORIES } from "shared";
+import { CategoryChip } from "../components/category-chip";
 
 export function CreateInitiativePage() {
     const navigate = useNavigate();
@@ -12,10 +13,17 @@ export function CreateInitiativePage() {
     const [visibility, setVisibility] = useState<Visibility>(Visibility.PUBLIC);
     const [location, setLocation]     = useState("");
     const [duration, setDuration]     = useState("");
-    const [imageUrl, setImageUrl]     = useState("");
+    const [categories, setCategories] = useState<string[]>([]);
+	const [imageUrl, setImageUrl]     = useState("");
     const [imageAlt, setImageAlt]     = useState("");
     const [error, setError]           = useState<string | null>(null);
     const [loading, setLoading]       = useState(false);
+
+	function toggleCategory(cat: string) {
+	setCategories(prev =>
+		prev.includes(cat) ? prev.filter(existing => existing !== cat) : [...prev, cat]
+	);
+	}
 
     async function handleSubmit() {
         if (!title.trim() || !body.trim()) {
@@ -42,6 +50,7 @@ export function CreateInitiativePage() {
                     image,
                     location: location.trim() || null,
                     duration: duration.trim() || null,
+					categories
                 }),
             });
 
@@ -120,6 +129,21 @@ export function CreateInitiativePage() {
                     placeholder="e.g. 2 weeks, ongoing"
                     fullWidth
                 />
+				<Box>
+					<Typography variant="caption" color="text.secondary" sx={{ display: 'block', mb: 1 }}>
+						Categories (optional)
+					</Typography>
+					<Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1 }}>
+						{CATEGORIES.map(cat => (
+						<CategoryChip
+							key={cat}
+							label={cat}
+							selected={categories.includes(cat)}
+							onClick={() => toggleCategory(cat)}
+						/>
+						))}
+					</Box>
+				</Box>
                 {error && (
                     <Typography variant="body2" color="error">{error}</Typography>
                 )}
