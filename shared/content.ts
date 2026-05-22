@@ -28,6 +28,7 @@ export interface IContent {
     duration: string | null;
     likes: string[];
     dislikes: string[];
+    members: string[];
     categories: string[];
     children: IContent[];
 }
@@ -51,6 +52,7 @@ export class Content {
     duration: string | null;
     likes: Set<string>    = new Set();
     dislikes: Set<string> = new Set();
+    members: Set<string> = new Set();
     categories: string[]  = [];
     children: Content[]   = [];
 
@@ -82,7 +84,7 @@ export class Content {
 
     addChild(child: Content): void {
         const allowed = VALID_CHILDREN[this.type];
-        if (!allowed.indexOf(child.type)) {
+        if (!allowed.includes(child.type)) {
             throw new Error(
                 `A ${this.type} cannot have a ${child.type} as a child. ` +
                 `Allowed: ${allowed.join(', ')}.`
@@ -126,6 +128,7 @@ export class Content {
             duration:   this.duration,
             likes:      Array.from(this.likes),
             dislikes:   Array.from(this.dislikes),
+            members:    Array.from(this.members),
             categories: this.categories,
             children:   this.children.map(c => c.toJSON()),
         };
@@ -148,6 +151,7 @@ export class Content {
 
         content.likes    = new Set(data.likes);
         content.dislikes = new Set(data.dislikes);
+        content.members  = new Set(data.members ?? []);
         content.children = data.children.map(child => Content.fromJSON(child));
 
         return content;
