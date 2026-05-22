@@ -1,9 +1,21 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { Box, Stack, Typography, TextField, Button, Divider } from "@mui/material";
+import PeopleOutlinedIcon from '@mui/icons-material/PeopleOutlined';
 import { IContent, Visibility } from "shared";
 import { InitiativeCard } from "../components/initiative-card";
 import { UpdateCard } from "../components/update-card";
+
+function getCurrentUserInfo(): { id: string; role: string } | null {
+    try {
+        const token = localStorage.getItem('token');
+        if (!token) return null;
+        const payload = JSON.parse(atob(token.split('.')[1]));
+        return { id: String(payload.userId), role: payload.role ?? 'user' };
+    } catch {
+        return null;
+    }
+}
 
 export function InitiativePage() {
     const { id } = useParams();
@@ -13,7 +25,10 @@ export function InitiativePage() {
     const [imageUrl, setImageUrl]       = useState("");
     const [imageAlt, setImageAlt]       = useState("");
     const [posting, setPosting]         = useState(false);
+    const [joining, setJoining]         = useState(false);
     const [error, setError]             = useState<string | null>(null);
+
+    const currentUser = getCurrentUserInfo();
 
     function fetchInitiative() {
         const token = localStorage.getItem('token');
@@ -31,6 +46,45 @@ export function InitiativePage() {
     useEffect(() => {
         fetchInitiative();
     }, [id]);
+
+    const isMember    = currentUser && initiative ? (initiative.members ?? []).includes(currentUser.id) : false;
+    const memberCount = initiative?.members?.length ?? 0;
+
+    async function handleJoin() {
+        console.log('handleJoin called', { currentUser, initiative: initiative?.id });
+        if (!currentUser || !initiative) {
+            console.log('early return – missing user or initiative');
+            return;
+        }
+        setJoining(true);
+
+        const current = initiative.members ?? [];
+        const next = isMember
+            ? current.filter(uid => uid !== currentUser.id)
+            : [...current, currentUser.id];
+
+        console.log('sending members:', next);
+
+        try {
+            const token = localStorage.getItem('token');
+            const res = await fetch(`http://localhost:3001/api/initiatives/${id}`, {
+                method: 'PATCH',
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${token}`,
+                },
+                body: JSON.stringify({ members: next }),
+            });
+            console.log('response status:', res.status);
+            const data = await res.json();
+            console.log('response body:', data);
+            fetchInitiative();
+        } catch (err) {
+            console.error('Failed to update membership', err);
+        } finally {
+            setJoining(false);
+        }
+    }
 
     async function handlePostUpdate() {
         if (!updateTitle.trim() || !updateBody.trim()) {
@@ -101,6 +155,24 @@ export function InitiativePage() {
                     detailed={true}
                     onRefresh={fetchInitiative}
                 />
+
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
+                    <Button
+                        variant={isMember ? "outlined" : "contained"}
+                        color={isMember ? "error" : "primary"}
+                        onClick={handleJoin}
+                        disabled={joining || !currentUser}
+                        size="small"
+                    >
+                        {isMember ? "Leave initiative" : "Join initiative"}
+                    </Button>
+                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
+                        <PeopleOutlinedIcon fontSize="small" sx={{ color: 'text.secondary' }} />
+                        <Typography variant="body2" color="text.secondary">
+                            {memberCount} {memberCount === 1 ? "member" : "members"}
+                        </Typography>
+                    </Box>
+                </Box>
 
                 {updates.length > 0 ? (
                     <>

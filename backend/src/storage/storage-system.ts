@@ -2,7 +2,7 @@ import fs from 'fs/promises';
 import path from 'path';
 import { IContent, Content, Author } from 'shared';
 
-export type ContentUpdate = Partial<Pick<IContent, 'title' | 'body' | 'visibility' | 'image' | 'location' | 'duration' | 'likes' | 'dislikes' | 'categories'>>;
+export type ContentUpdate = Partial<Pick<IContent, 'title' | 'body' | 'visibility' | 'image' | 'location' | 'duration' | 'likes' | 'dislikes' | 'categories' | 'members'>>;
 
 export interface ProfileRecord {
     userId: number;
@@ -123,6 +123,7 @@ class StorageSystem {
         if (update.duration   !== undefined) node.duration   = update.duration;
         if (update.likes      !== undefined) node.likes      = new Set(update.likes);
         if (update.dislikes   !== undefined) node.dislikes   = new Set(update.dislikes);
+        if (update.members    !== undefined) node.members = new Set(update.members);
         if (update.categories !== undefined) node.categories = update.categories;
 
         this.flushInitiatives();

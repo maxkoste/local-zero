@@ -24,6 +24,7 @@
       21
     ],
     "dislikes": [],
+    "members": [],
     "categories": [
       "Environment",
       "Community Events"
@@ -52,6 +53,7 @@
           21
         ],
         "dislikes": [],
+        "members": [],
         "categories": [],
         "children": [
           {
@@ -72,6 +74,7 @@
               4
             ],
             "dislikes": [],
+            "members": [],
             "categories": [],
             "children": []
           },
@@ -94,6 +97,7 @@
               6
             ],
             "dislikes": [],
+            "members": [],
             "categories": [],
             "children": []
           }
@@ -124,6 +128,7 @@
           21
         ],
         "dislikes": [],
+        "members": [],
         "categories": [],
         "children": [
           {
@@ -146,6 +151,7 @@
               8
             ],
             "dislikes": [],
+            "members": [],
             "categories": [],
             "children": []
           }
@@ -177,6 +183,7 @@
       28
     ],
     "dislikes": [],
+    "members": [],
     "categories": [
       "Food & Gardening",
       "Environment",
@@ -206,6 +213,7 @@
           3
         ],
         "dislikes": [],
+        "members": [],
         "categories": [],
         "children": [
           {
@@ -227,6 +235,7 @@
               3
             ],
             "dislikes": [],
+            "members": [],
             "categories": [],
             "children": []
           },
@@ -248,6 +257,7 @@
               2
             ],
             "dislikes": [],
+            "members": [],
             "categories": [],
             "children": []
           }
@@ -276,6 +286,7 @@
           7
         ],
         "dislikes": [],
+        "members": [],
         "categories": [],
         "children": [
           {
@@ -297,6 +308,7 @@
               2
             ],
             "dislikes": [],
+            "members": [],
             "categories": [],
             "children": []
           }
@@ -326,6 +338,7 @@
           28
         ],
         "dislikes": [],
+        "members": [],
         "categories": [],
         "children": []
       }
@@ -356,6 +369,7 @@
       21
     ],
     "dislikes": [],
+    "members": [],
     "categories": [
       "Transport",
       "Infrastructure",
@@ -383,6 +397,7 @@
           13
         ],
         "dislikes": [],
+        "members": [],
         "categories": [],
         "children": [
           {
@@ -403,6 +418,7 @@
               6
             ],
             "dislikes": [],
+            "members": [],
             "categories": [],
             "children": []
           },
@@ -425,6 +441,7 @@
               4
             ],
             "dislikes": [],
+            "members": [],
             "categories": [],
             "children": []
           }
@@ -454,6 +471,7 @@
         "dislikes": [
           1
         ],
+        "members": [],
         "categories": [],
         "children": [
           {
@@ -475,6 +493,7 @@
               8
             ],
             "dislikes": [],
+            "members": [],
             "categories": [],
             "children": []
           }
@@ -506,6 +525,9 @@
       8
     ],
     "dislikes": [],
+    "members": [
+      "1"
+    ],
     "categories": [
       "Environment",
       "Community Events",
@@ -535,6 +557,7 @@
           5
         ],
         "dislikes": [],
+        "members": [],
         "categories": [],
         "children": [
           {
@@ -558,6 +581,7 @@
               27
             ],
             "dislikes": [],
+            "members": [],
             "categories": [],
             "children": []
           },
@@ -579,6 +603,7 @@
               30
             ],
             "dislikes": [],
+            "members": [],
             "categories": [],
             "children": []
           }
@@ -608,6 +633,7 @@
           27
         ],
         "dislikes": [],
+        "members": [],
         "categories": [],
         "children": []
       }
@@ -636,6 +662,7 @@
       14
     ],
     "dislikes": [],
+    "members": [],
     "categories": [
       "Environment",
       "Infrastructure"
@@ -664,6 +691,7 @@
           7
         ],
         "dislikes": [],
+        "members": [],
         "categories": [],
         "children": [
           {
@@ -684,6 +712,7 @@
               3
             ],
             "dislikes": [],
+            "members": [],
             "categories": [],
             "children": []
           },
@@ -706,6 +735,7 @@
               29
             ],
             "dislikes": [],
+            "members": [],
             "categories": [],
             "children": []
           }
@@ -739,6 +769,11 @@
       21
     ],
     "dislikes": [],
+    "members": [
+      "30",
+      "1",
+      "2"
+    ],
     "categories": [
       "Community Events",
       "Education",
@@ -770,6 +805,7 @@
           8
         ],
         "dislikes": [],
+        "members": [],
         "categories": [],
         "children": [
           {
@@ -791,6 +827,7 @@
               30
             ],
             "dislikes": [],
+            "members": [],
             "categories": [],
             "children": [
               {
@@ -811,6 +848,7 @@
                 "duration": null,
                 "likes": [],
                 "dislikes": [],
+                "members": [],
                 "categories": [],
                 "children": []
               }
@@ -838,6 +876,7 @@
               6
             ],
             "dislikes": [],
+            "members": [],
             "categories": [],
             "children": []
           }
@@ -870,6 +909,7 @@
           30
         ],
         "dislikes": [],
+        "members": [],
         "categories": [],
         "children": [
           {
@@ -892,6 +932,7 @@
               1
             ],
             "dislikes": [],
+            "members": [],
             "categories": [],
             "children": []
           },
@@ -914,6 +955,7 @@
               30
             ],
             "dislikes": [],
+            "members": [],
             "categories": [],
             "children": []
           }
@@ -935,10 +977,36 @@
         "image": null,
         "location": null,
         "duration": null,
-        "likes": [],
+        "likes": [
+          "30"
+        ],
         "dislikes": [],
+        "members": [],
         "categories": [],
-        "children": []
+        "children": [
+          {
+            "id": "1779451785067",
+            "type": "comment",
+            "title": "Comment 1779451785067",
+            "author": {
+              "id": 2,
+              "username": "Bob",
+              "email": "bob@hotmail.se",
+              "role": "user"
+            },
+            "body": "Onödig kommentar. Trams!",
+            "visibility": "public",
+            "date": "2026-05-22T12:09:45.067Z",
+            "image": null,
+            "location": null,
+            "duration": null,
+            "likes": [],
+            "dislikes": [],
+            "members": [],
+            "categories": [],
+            "children": []
+          }
+        ]
       }
     ]
   },
@@ -966,6 +1034,7 @@
       14
     ],
     "dislikes": [],
+    "members": [],
     "categories": [
       "Infrastructure",
       "Environment",
@@ -995,6 +1064,7 @@
           9
         ],
         "dislikes": [],
+        "members": [],
         "categories": [],
         "children": [
           {
@@ -1015,6 +1085,7 @@
               13
             ],
             "dislikes": [],
+            "members": [],
             "categories": [],
             "children": []
           }
@@ -1046,6 +1117,7 @@
       3
     ],
     "dislikes": [],
+    "members": [],
     "categories": [
       "Community Events",
       "Environment"
@@ -1074,6 +1146,7 @@
           3
         ],
         "dislikes": [],
+        "members": [],
         "categories": [],
         "children": [
           {
@@ -1094,6 +1167,7 @@
               7
             ],
             "dislikes": [],
+            "members": [],
             "categories": [],
             "children": []
           },
@@ -1115,6 +1189,7 @@
               24
             ],
             "dislikes": [],
+            "members": [],
             "categories": [],
             "children": []
           }
@@ -1145,6 +1220,9 @@
       1
     ],
     "dislikes": [],
+    "members": [
+      "1"
+    ],
     "categories": [
       "Environment",
       "Education"
@@ -1172,6 +1250,7 @@
           30
         ],
         "dislikes": [],
+        "members": [],
         "categories": [],
         "children": [
           {
@@ -1195,6 +1274,7 @@
             "dislikes": [
               "1"
             ],
+            "members": [],
             "categories": [],
             "children": [
               {
@@ -1217,6 +1297,7 @@
                   "1"
                 ],
                 "dislikes": [],
+                "members": [],
                 "categories": [],
                 "children": []
               }
@@ -1249,6 +1330,7 @@
       4
     ],
     "dislikes": [],
+    "members": [],
     "categories": [
       "Environment",
       "Infrastructure",
@@ -1274,6 +1356,7 @@
           21
         ],
         "dislikes": [],
+        "members": [],
         "categories": [],
         "children": [
           {
@@ -1294,6 +1377,7 @@
               14
             ],
             "dislikes": [],
+            "members": [],
             "categories": [],
             "children": []
           },
@@ -1316,6 +1400,7 @@
               8
             ],
             "dislikes": [],
+            "members": [],
             "categories": [],
             "children": []
           }
@@ -1346,6 +1431,7 @@
       7
     ],
     "dislikes": [],
+    "members": [],
     "categories": [
       "Food & Gardening",
       "Community Events"
@@ -1373,6 +1459,7 @@
           14
         ],
         "dislikes": [],
+        "members": [],
         "categories": [],
         "children": [
           {
@@ -1393,6 +1480,7 @@
               29
             ],
             "dislikes": [],
+            "members": [],
             "categories": [],
             "children": []
           }
@@ -1424,6 +1512,7 @@
       21
     ],
     "dislikes": [],
+    "members": [],
     "categories": [
       "Transport",
       "Community Events",
@@ -1449,6 +1538,7 @@
           13
         ],
         "dislikes": [],
+        "members": [],
         "categories": [],
         "children": [
           {
@@ -1469,6 +1559,7 @@
               17
             ],
             "dislikes": [],
+            "members": [],
             "categories": [],
             "children": []
           }
@@ -1502,6 +1593,7 @@
     "dislikes": [
       4
     ],
+    "members": [],
     "categories": [
       "Environment",
       "Education",
@@ -1531,6 +1623,7 @@
           14
         ],
         "dislikes": [],
+        "members": [],
         "categories": [],
         "children": [
           {
@@ -1552,6 +1645,7 @@
               14
             ],
             "dislikes": [],
+            "members": [],
             "categories": [],
             "children": []
           },
@@ -1574,6 +1668,7 @@
               8,
               10
             ],
+            "members": [],
             "categories": [],
             "children": []
           },
@@ -1597,6 +1692,7 @@
               14
             ],
             "dislikes": [],
+            "members": [],
             "categories": [],
             "children": []
           }
@@ -1629,6 +1725,7 @@
     "dislikes": [
       2
     ],
+    "members": [],
     "categories": [
       "Transport",
       "Environment"
@@ -1655,6 +1752,7 @@
         "dislikes": [
           27
         ],
+        "members": [],
         "categories": [],
         "children": [
           {
@@ -1675,6 +1773,7 @@
               2
             ],
             "dislikes": [],
+            "members": [],
             "categories": [],
             "children": []
           },
@@ -1697,6 +1796,7 @@
               1
             ],
             "dislikes": [],
+            "members": [],
             "categories": [],
             "children": []
           }
@@ -1728,6 +1828,7 @@
     "dislikes": [
       11
     ],
+    "members": [],
     "categories": [
       "Housing",
       "Education",
@@ -1753,6 +1854,7 @@
           29
         ],
         "dislikes": [],
+        "members": [],
         "categories": [],
         "children": [
           {
@@ -1773,6 +1875,7 @@
               14
             ],
             "dislikes": [],
+            "members": [],
             "categories": [],
             "children": []
           }
@@ -1804,6 +1907,7 @@
       20
     ],
     "dislikes": [],
+    "members": [],
     "categories": [
       "Health",
       "Community Events"
@@ -1832,6 +1936,7 @@
           20
         ],
         "dislikes": [],
+        "members": [],
         "categories": [],
         "children": [
           {
@@ -1852,6 +1957,7 @@
               18
             ],
             "dislikes": [],
+            "members": [],
             "categories": [],
             "children": []
           }
@@ -1884,6 +1990,7 @@
     "dislikes": [
       17
     ],
+    "members": [],
     "categories": [
       "Environment",
       "Education",
@@ -1909,6 +2016,7 @@
           13
         ],
         "dislikes": [],
+        "members": [],
         "categories": [],
         "children": [
           {
@@ -1930,6 +2038,7 @@
               4
             ],
             "dislikes": [],
+            "members": [],
             "categories": [],
             "children": []
           }
@@ -1961,6 +2070,7 @@
       4
     ],
     "dislikes": [],
+    "members": [],
     "categories": [
       "Transport",
       "Health",
@@ -1990,6 +2100,7 @@
           13
         ],
         "dislikes": [],
+        "members": [],
         "categories": [],
         "children": [
           {
@@ -2010,6 +2121,7 @@
               21
             ],
             "dislikes": [],
+            "members": [],
             "categories": [],
             "children": []
           }
@@ -2042,6 +2154,7 @@
     "dislikes": [
       15
     ],
+    "members": [],
     "categories": [
       "Environment",
       "Food & Gardening",
@@ -2068,6 +2181,7 @@
           8
         ],
         "dislikes": [],
+        "members": [],
         "categories": [],
         "children": [
           {
@@ -2088,6 +2202,7 @@
               10
             ],
             "dislikes": [],
+            "members": [],
             "categories": [],
             "children": []
           },
@@ -2110,6 +2225,7 @@
               14
             ],
             "dislikes": [],
+            "members": [],
             "categories": [],
             "children": []
           }
@@ -2138,6 +2254,7 @@
     "dislikes": [
       28
     ],
+    "members": [],
     "categories": [
       "Housing",
       "Safety"
@@ -2162,6 +2279,7 @@
           7
         ],
         "dislikes": [],
+        "members": [],
         "categories": [],
         "children": [
           {
@@ -2182,6 +2300,7 @@
               24
             ],
             "dislikes": [],
+            "members": [],
             "categories": [],
             "children": []
           }
@@ -2213,6 +2332,7 @@
       10
     ],
     "dislikes": [],
+    "members": [],
     "categories": [
       "Education",
       "Community Events",
@@ -2239,6 +2359,7 @@
           18
         ],
         "dislikes": [],
+        "members": [],
         "categories": [],
         "children": [
           {
@@ -2259,6 +2380,7 @@
               12
             ],
             "dislikes": [],
+            "members": [],
             "categories": [],
             "children": []
           }
@@ -2290,6 +2412,9 @@
       30
     ],
     "dislikes": [],
+    "members": [
+      "1"
+    ],
     "categories": [
       "Environment",
       "Infrastructure",
@@ -2316,6 +2441,7 @@
           5
         ],
         "dislikes": [],
+        "members": [],
         "categories": [],
         "children": [
           {
@@ -2337,6 +2463,7 @@
               2
             ],
             "dislikes": [],
+            "members": [],
             "categories": [],
             "children": []
           },
@@ -2362,6 +2489,7 @@
               2
             ],
             "dislikes": [],
+            "members": [],
             "categories": [],
             "children": []
           }
@@ -2392,6 +2520,7 @@
       7
     ],
     "dislikes": [],
+    "members": [],
     "categories": [
       "Environment",
       "Food & Gardening"
@@ -2419,6 +2548,7 @@
           14
         ],
         "dislikes": [],
+        "members": [],
         "categories": [],
         "children": [
           {
@@ -2440,6 +2570,7 @@
               29
             ],
             "dislikes": [],
+            "members": [],
             "categories": [],
             "children": []
           }

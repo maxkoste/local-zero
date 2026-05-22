@@ -307,7 +307,7 @@ app.get('/api/initiatives', (req, res) => {
     const userVisibility = user.visibility?.toLowerCase() ?? 'public';
     const initiatives    = storage.getInitiatives();
 
-    if (userVisibility === 'public') {
+    if (user.role === 'admin' || userVisibility === 'public') {
         return res.json(initiatives.map(i => i.toJSON()));
     }
 
@@ -354,7 +354,7 @@ app.patch('/api/initiatives/:id', (req, res) => {
     const payload = requireAuth(req, res);
     if (!payload) return;
 
-    const { title, body, visibility, image, location, duration, likes, dislikes, categories } = req.body;
+    const { title, body, visibility, image, location, duration, likes, dislikes, categories, members } = req.body;
 
     const updated = storage.updateInitiative(req.params.id, {
         ...(title      !== undefined && { title }),
@@ -366,6 +366,7 @@ app.patch('/api/initiatives/:id', (req, res) => {
         ...(likes      !== undefined && { likes }),
         ...(dislikes   !== undefined && { dislikes }),
         ...(categories !== undefined && { categories }),
+        ...(members    !== undefined && { members }),
     });
 
     if (!updated) return res.status(404).json({ error: 'Initiative not found' });

@@ -109,10 +109,7 @@ export function FrontPage() {
     const filteredInitiatives = [...apiInitiatives]
         .filter(i => {
             if (activeNeighborhood !== 'public') {
-                if (
-                    i.visibility.toLowerCase() !== activeNeighborhood &&
-                    i.visibility.toLowerCase() !== 'public'
-                ) return false;
+                if (i.visibility.toLowerCase() !== activeNeighborhood) return false;
             }
             if (activeCategories.length > 0) {
                 const cats = i.categories ?? [];
