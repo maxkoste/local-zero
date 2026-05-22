@@ -307,7 +307,7 @@ app.get('/api/initiatives', (req, res) => {
     const userVisibility = user.visibility?.toLowerCase() ?? 'public';
     const initiatives    = storage.getInitiatives();
 
-    if (userVisibility === 'public') {
+    if (user.role === 'admin' || userVisibility === 'public') {
         return res.json(initiatives.map(i => i.toJSON()));
     }
 

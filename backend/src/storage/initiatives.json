@@ -2577,49 +2577,5 @@
         ]
       }
     ]
-  },
-  {
-    "id": "1779452230442",
-    "type": "initiative",
-    "title": "Städning av innergårdar!",
-    "author": {
-      "id": 1,
-      "username": "Admin",
-      "email": "admin@admin.se",
-      "role": "admin"
-    },
-    "body": "På söndag kl 13.00 får alla hjälpa till att städa sina innergårdar.",
-    "visibility": "kirseberg",
-    "date": "2026-05-22T12:17:10.442Z",
-    "image": null,
-    "location": "Kirseberg",
-    "duration": "1 week",
-    "likes": [],
-    "dislikes": [],
-    "members": [],
-    "categories": [],
-    "children": []
-  },
-  {
-    "id": "1779452272848",
-    "type": "initiative",
-    "title": "test",
-    "author": {
-      "id": 1,
-      "username": "Admin",
-      "email": "admin@admin.se",
-      "role": "admin"
-    },
-    "body": "test",
-    "visibility": "kirseberg",
-    "date": "2026-05-22T12:17:52.848Z",
-    "image": null,
-    "location": null,
-    "duration": null,
-    "likes": [],
-    "dislikes": [],
-    "members": [],
-    "categories": [],
-    "children": []
   }
 ]
