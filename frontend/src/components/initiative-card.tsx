@@ -8,7 +8,7 @@ import ThumbDownOutlinedIcon from "@mui/icons-material/ThumbDownOutlined";
 import ThumbDownIcon from "@mui/icons-material/ThumbDown";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutlined";
 import { useNavigate } from "react-router-dom";
-import { ContentRecord, CATEGORIES } from "shared";
+import { IContent, CATEGORIES } from "shared";
 import { CategoryChip } from "./category-chip";
 
 function getCurrentUserInfo(): { id: string; role: string } | null {
@@ -22,7 +22,7 @@ function getCurrentUserInfo(): { id: string; role: string } | null {
     }
 }
 
-function useLikeDislike(content: ContentRecord, onRefresh?: () => void) {
+function useLikeDislike(content: IContent, onRefresh?: () => void) {
     const currentUser = getCurrentUserInfo();
 
     const hasLiked    = currentUser ? content.likes.includes(currentUser.id) : false;
@@ -65,7 +65,7 @@ function useLikeDislike(content: ContentRecord, onRefresh?: () => void) {
     return { hasLiked, hasDisliked, likeCount: content.likes.length, dislikeCount: content.dislikes.length, toggle };
 }
 
-function LikeDislikeBar({ content, onRefresh }: { content: ContentRecord; onRefresh?: () => void }) {
+function LikeDislikeBar({ content, onRefresh }: { content: IContent; onRefresh?: () => void }) {
     const { hasLiked, hasDisliked, likeCount, dislikeCount, toggle } = useLikeDislike(content, onRefresh);
 
     return (
@@ -86,7 +86,7 @@ function LikeDislikeBar({ content, onRefresh }: { content: ContentRecord; onRefr
     );
 }
 
-function ContentImage({ image }: { image: ContentRecord['image'] }) {
+function ContentImage({ image }: { image: IContent['image'] }) {
     if (!image) return null;
     return (
         <Box
@@ -113,7 +113,7 @@ export function InitiativeCard({
     showLink = true,
     detailed = false,
 }: {
-    content: ContentRecord;
+    content: IContent;
     onDelete?: () => void;
     onRefresh?: () => void;
     showLink?: boolean;

@@ -15,7 +15,7 @@ export interface Author {
     role?: string;
 }
 
-export interface ContentRecord {
+export interface IContent {
     id: string;
     type: ContentType;
     title: string;
@@ -29,53 +29,30 @@ export interface ContentRecord {
     likes: string[];
     dislikes: string[];
     categories: string[];
-    children: ContentRecord[];
-}
-
-export interface IContent {
-    id: string;
-    title: string;
-    type: ContentType;
-    author: Author;
-    body: string;
-    date: Date;
-    visibility: Visibility;
-    image?: Image;
-    location?: string;
-    duration?: string;
-    likes: Set<string>;
-    dislikes: Set<string>;
-    categories: string[];
     children: IContent[];
-
-    addChild(child: IContent): void;
-    removeChild(childId: string): boolean;
-    getChildren(): IContent[];
-    getAllDescendants(): IContent[];
-    toJSON(): ContentRecord;
 }
 
 const VALID_CHILDREN: Record<ContentType, ContentType[]> = {
     initiative: ['update'],
-    update: ['comment'],
-    comment: ['comment'],
+    update:     ['comment'],
+    comment:    ['comment'],
 };
 
-export class Content implements IContent {
+export class Content {
     id: string;
-    title: string;
     type: ContentType;
+    title: string;
     author: Author;
     body: string;
-    date: Date;
     visibility: Visibility;
-    image?: Image;
-    location?: string;
-    duration?: string;
-    likes: Set<string> = new Set();
+    date: Date;
+    image: Image | null;
+    location: string | null;
+    duration: string | null;
+    likes: Set<string>    = new Set();
     dislikes: Set<string> = new Set();
-    categories: string[] = [];
-    children: IContent[] = [];
+    categories: string[]  = [];
+    children: Content[]   = [];
 
     constructor(
         id: string,
@@ -85,27 +62,27 @@ export class Content implements IContent {
         body: string,
         date: Date = new Date(),
         visibility: Visibility,
-        image?: Image,
-        location?: string,
-        duration?: string,
+        image: Image | null = null,
+        location: string | null = null,
+        duration: string | null = null,
         categories: string[] = [],
     ) {
-        this.id = id;
-        this.title = title;
-        this.type = type;
-        this.author = author;
-        this.body = body;
-        this.date = date;
+        this.id         = id;
+        this.title      = title;
+        this.type       = type;
+        this.author     = author;
+        this.body       = body;
+        this.date       = date;
         this.visibility = visibility;
-        this.image = image;
-        this.location = location;
-        this.duration = duration;
+        this.image      = image;
+        this.location   = location;
+        this.duration   = duration;
         this.categories = categories;
     }
 
-    addChild(child: IContent): void {
+    addChild(child: Content): void {
         const allowed = VALID_CHILDREN[this.type];
-        if (allowed.indexOf(child.type) === -1) {
+        if (!allowed.indexOf(child.type)) {
             throw new Error(
                 `A ${this.type} cannot have a ${child.type} as a child. ` +
                 `Allowed: ${allowed.join(', ')}.`
@@ -116,16 +93,16 @@ export class Content implements IContent {
 
     removeChild(childId: string): boolean {
         const before = this.children.length;
-        this.children = this.children.filter(child => child.id !== childId);
+        this.children = this.children.filter(c => c.id !== childId);
         return this.children.length !== before;
     }
 
-    getChildren(): IContent[] {
+    getChildren(): Content[] {
         return [...this.children];
     }
 
-    getAllDescendants(): IContent[] {
-        const descendants: IContent[] = [];
+    getAllDescendants(): Content[] {
+        const descendants: Content[] = [];
         const stack = [...this.children];
         while (stack.length > 0) {
             const current = stack.pop()!;
@@ -135,26 +112,26 @@ export class Content implements IContent {
         return descendants;
     }
 
-    toJSON(): ContentRecord {
+    toJSON(): IContent {
         return {
-            id: this.id,
-            type: this.type,
-            title: this.title,
-            author: this.author,
-            body: this.body,
-            visibility: this.visibility,
-            date: this.date.toISOString(),
-            image: this.image ?? null,
-            location: this.location ?? null,
-            duration: this.duration ?? null,
-            likes: Array.from(this.likes),
-            dislikes: Array.from(this.dislikes),
+            id:         this.id,
+            type:       this.type,
+            title:      this.title,
+            author:     this.author,
+            body:       this.body,
+            visibility: this.visibility as string,
+            date:       this.date.toISOString(),
+            image:      this.image,
+            location:   this.location,
+            duration:   this.duration,
+            likes:      Array.from(this.likes),
+            dislikes:   Array.from(this.dislikes),
             categories: this.categories,
-            children: this.children.map(c => (c as Content).toJSON()),
+            children:   this.children.map(c => c.toJSON()),
         };
     }
 
-    static fromJSON(data: ContentRecord): Content {
+    static fromJSON(data: IContent): Content {
         const content = new Content(
             data.id,
             data.title,
@@ -163,16 +140,14 @@ export class Content implements IContent {
             data.body,
             new Date(data.date),
             data.visibility as Visibility,
-            data.image ?? undefined,
-            data.location ?? undefined,
-            data.duration ?? undefined,
+            data.image,
+            data.location,
+            data.duration,
+            data.categories ?? [],
         );
 
-        content.likes = new Set(data.likes);
+        content.likes    = new Set(data.likes);
         content.dislikes = new Set(data.dislikes);
-
-        content.categories = data.categories ?? [];
-
         content.children = data.children.map(child => Content.fromJSON(child));
 
         return content;

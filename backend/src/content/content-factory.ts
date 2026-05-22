@@ -1,7 +1,6 @@
-import { IContent, Content, ContentType, Image, Author, Visibility } from 'shared';
+import { ContentType, Image, Author, Visibility, Content } from 'shared';
 
 export class ContentFactory {
-
     private static create(
         id: string,
         title: string,
@@ -10,14 +9,13 @@ export class ContentFactory {
         body: string,
         date: Date,
         visibility: Visibility,
-        image?: Image,
-        location?: string,
-        duration?: string,
+        image: Image | null = null,
+        location: string | null = null,
+        duration: string | null = null,
         categories: string[] = [],
-    ): IContent {
-        const c = new Content(id, title, type, author, body, date, visibility, image, location, duration);
-        c.categories = categories;
-        return c;    
+    ): Content {
+        const c = new Content(id, title, type, author, body, date, visibility, image, location, duration, categories);
+        return c;
     }
 
     static createInitiative(
@@ -26,11 +24,11 @@ export class ContentFactory {
         author: Author,
         body: string,
         visibility: Visibility,
-        image?: Image,
-        location?: string,
-        duration?: string,
+        image: Image | null = null,
+        location: string | null = null,
+        duration: string | null = null,
         categories: string[] = [],
-    ): IContent {
+    ): Content {
         return ContentFactory.create(
             id, title, 'initiative', author, body, new Date(), visibility, image, location, duration, categories,
         );
@@ -42,10 +40,10 @@ export class ContentFactory {
         author: Author,
         body: string,
         visibility: Visibility,
-        image?: Image,
-        location?: string,
-        duration?: string,
-    ): IContent {
+        image: Image | null = null,
+        location: string | null = null,
+        duration: string | null = null,
+    ): Content {
         return ContentFactory.create(
             id, title, 'update', author, body, new Date(), visibility, image, location, duration,
         );
@@ -57,7 +55,7 @@ export class ContentFactory {
         author: Author,
         body: string,
         visibility: Visibility,
-    ): IContent {
+    ): Content {
         return ContentFactory.create(
             id, title, 'comment', author, body, new Date(), visibility,
         );

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Stack, Box, Button, Typography, Tabs, Tab, Paper, Chip } from "@mui/material";
-import { ContentRecord, CATEGORIES } from "shared";
+import { IContent, CATEGORIES } from "shared";
 import { InitiativeCard } from "../components/initiative-card";
 import { useNavigate } from "react-router-dom";
 import { CategoryChip } from "../components/category-chip";
@@ -27,7 +27,7 @@ type LoggedInUser = {
 
 export function FrontPage() {
     const navigate = useNavigate();
-    const [apiInitiatives, setApiInitiatives]   = useState<ContentRecord[]>([]);
+    const [apiInitiatives, setApiInitiatives]   = useState<IContent[]>([]);
     const [communityScores, setCommunityScores] = useState<CommunityScores>({});
     const [error, setError]                     = useState<string | null>(null);
     const [activeTab, setActiveTab]             = useState(0);
@@ -71,7 +71,7 @@ export function FrontPage() {
             headers: { Authorization: `Bearer ${token}` },
         })
             .then(res => res.json())
-            .then((data: ContentRecord[]) => setApiInitiatives(data))
+            .then((data: IContent[]) => setApiInitiatives(data))
             .catch(() => setError("Could not load initiatives from server."));
     }
 

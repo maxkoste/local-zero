@@ -1,13 +1,13 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { Box, Stack, Typography, TextField, Button, Divider } from "@mui/material";
-import { ContentRecord, Visibility } from "shared";
+import { IContent, Visibility } from "shared";
 import { InitiativeCard } from "../components/initiative-card";
 import { UpdateCard } from "../components/update-card";
 
 export function InitiativePage() {
     const { id } = useParams();
-    const [initiative, setInitiative] = useState<ContentRecord | null>(null);
+    const [initiative, setInitiative] = useState<IContent | null>(null);
     const [updateTitle, setUpdateTitle] = useState("");
     const [updateBody, setUpdateBody]   = useState("");
     const [imageUrl, setImageUrl]       = useState("");
@@ -24,7 +24,7 @@ export function InitiativePage() {
                 if (!res.ok) throw new Error('Failed to fetch initiative');
                 return res.json();
             })
-            .then((data: ContentRecord) => setInitiative(data))
+            .then((data: IContent) => setInitiative(data))
             .catch(() => setInitiative(null));
     }
 

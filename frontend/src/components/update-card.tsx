@@ -9,7 +9,8 @@ import ThumbUpOutlinedIcon from "@mui/icons-material/ThumbUpOutlined";
 import ThumbUpIcon from "@mui/icons-material/ThumbUp";
 import ThumbDownOutlinedIcon from "@mui/icons-material/ThumbDownOutlined";
 import ThumbDownIcon from "@mui/icons-material/ThumbDown";
-import { ContentRecord } from "shared";
+import { IContent } from "shared";
+import { useNavigate } from "react-router-dom";
 
 function getCurrentUserId(): string | null {
     try {
@@ -22,11 +23,7 @@ function getCurrentUserId(): string | null {
     }
 }
 
-async function patchLikes(
-    nodeId: string,
-    likes: string[],
-    dislikes: string[],
-): Promise<void> {
+async function patchLikes(nodeId: string, likes: string[], dislikes: string[]): Promise<void> {
     const token = localStorage.getItem('token');
     await fetch(`http://localhost:3001/api/initiatives/${nodeId}`, {
         method: 'PATCH',
@@ -38,13 +35,7 @@ async function patchLikes(
     });
 }
 
-function LikeDislikeBar({
-    content,
-    onRefresh,
-}: {
-    content: ContentRecord;
-    onRefresh: () => void;
-}) {
+function LikeDislikeBar({ content, onRefresh }: { content: IContent; onRefresh: () => void }) {
     const userId      = getCurrentUserId();
     const hasLiked    = userId ? content.likes.indexOf(userId) !== -1 : false;
     const hasDisliked = userId ? content.dislikes.indexOf(userId) !== -1 : false;
@@ -56,22 +47,17 @@ function LikeDislikeBar({
         let dislikes = [...content.dislikes];
 
         if (action === 'like') {
-            likes    = hasLiked
-                ? likes.filter(id => id !== userId)
-                : [...likes, userId];
+            likes    = hasLiked ? likes.filter(id => id !== userId) : [...likes, userId];
             dislikes = dislikes.filter(id => id !== userId);
         } else {
-            dislikes = hasDisliked
-                ? dislikes.filter(id => id !== userId)
-                : [...dislikes, userId];
-            likes = likes.filter(id => id !== userId);
+            dislikes = hasDisliked ? dislikes.filter(id => id !== userId) : [...dislikes, userId];
+            likes    = likes.filter(id => id !== userId);
         }
 
         try {
             await patchLikes(content.id, likes, dislikes);
             onRefresh();
         } catch {
-            // fail silently
         }
     }
 
@@ -83,7 +69,6 @@ function LikeDislikeBar({
             <Typography variant="caption" color="text.secondary" sx={{ minWidth: 16 }}>
                 {content.likes.length}
             </Typography>
-
             <IconButton size="small" onClick={() => toggle('dislike')} color={hasDisliked ? 'error' : 'default'}>
                 {hasDisliked ? <ThumbDownIcon fontSize="small" /> : <ThumbDownOutlinedIcon fontSize="small" />}
             </IconButton>
@@ -95,12 +80,13 @@ function LikeDislikeBar({
 }
 
 type Props = {
-    content: ContentRecord;
+    content: IContent;
     initiativeId: string;
     onRefresh: () => void;
 };
 
 export function UpdateCard({ content, initiativeId, onRefresh }: Props) {
+    const navigate = useNavigate();
     const [expanded, setExpanded]       = useState(false);
     const [commentBody, setCommentBody] = useState("");
     const [posting, setPosting]         = useState(false);
@@ -108,10 +94,9 @@ export function UpdateCard({ content, initiativeId, onRefresh }: Props) {
 
     const comments = content.children.filter(c => c.type === "comment");
 
-    function countAllComments(items: ContentRecord[]): number {
+    function countAllComments(items: IContent[]): number {
         return items.reduce(
-            (acc, item) =>
-                acc + 1 + countAllComments(item.children.filter(c => c.type === "comment")),
+            (acc, item) => acc + 1 + countAllComments(item.children.filter(c => c.type === "comment")),
             0,
         );
     }
@@ -161,7 +146,24 @@ export function UpdateCard({ content, initiativeId, onRefresh }: Props) {
         <Card sx={{ maxWidth: 600, margin: "0 auto" }}>
             <CardHeader
                 title={content.title}
-                subheader={`Posted by ${content.author.username} · ${new Date(content.date).toLocaleDateString()}`}
+                subheader={
+                    <>
+                        Posted by{" "}
+                        <Typography
+                            component="span"
+                            onClick={() => navigate(`/profile/${content.author.id}`)}
+                            sx={{
+                                cursor: "pointer",
+                                color: "primary.main",
+                                fontWeight: 500,
+                                "&:hover": { textDecoration: "underline" },
+                            }}
+                        >
+                            {content.author.username}
+                        </Typography>
+                        {" · " + new Date(content.date).toLocaleDateString()}
+                    </>
+                }
             />
 
             <CardContent>
@@ -272,13 +274,14 @@ export function UpdateCard({ content, initiativeId, onRefresh }: Props) {
 }
 
 type CommentProps = {
-    comment: ContentRecord;
+    comment: IContent;
     depth: number;
     initiativeId: string;
     onRefresh: () => void;
 };
 
 function CommentItem({ comment, depth, initiativeId, onRefresh }: CommentProps) {
+    const navigate = useNavigate();
     const replies = comment.children.filter(c => c.type === "comment");
     const [replying, setReplying]   = useState(false);
     const [replyBody, setReplyBody] = useState("");
@@ -335,7 +338,19 @@ function CommentItem({ comment, depth, initiativeId, onRefresh }: CommentProps) 
                 }}
             >
                 <Typography variant="caption" color="text.secondary" sx={{ fontWeight: 500 }}>
-                    {comment.author.username}
+                    <Typography
+                        component="span"
+                        variant="caption"
+                        onClick={() => navigate(`/profile/${comment.author.id}`)}
+                        sx={{
+                            cursor: "pointer",
+                            color: "primary.main",
+                            fontWeight: 500,
+                            "&:hover": { textDecoration: "underline" },
+                        }}
+                    >
+                        {comment.author.username}
+                    </Typography>
                     {" · "}
                     {new Date(comment.date).toLocaleDateString()}
                 </Typography>
