@@ -1,4 +1,5 @@
-import { ContentType, Image, Author, Visibility, Content } from 'shared';
+import { ContentType, Image, Author, Visibility } from 'shared';
+import Content from './content'
 
 export class ContentFactory {
     private static create(

@@ -1,6 +1,7 @@
 import fs from 'fs/promises';
 import path from 'path';
-import { IContent, Content, Author } from 'shared';
+import { IContent, Author } from 'shared';
+import Content from '../content/content'
 
 export type ContentUpdate = Partial<Pick<IContent, 'title' | 'body' | 'visibility' | 'image' | 'location' | 'duration' | 'likes' | 'dislikes' | 'categories' | 'members'>>;
 

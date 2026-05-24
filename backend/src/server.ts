@@ -5,7 +5,8 @@ import dotenv from 'dotenv';
 import jwt from 'jsonwebtoken';
 import cookieParser from 'cookie-parser';
 import { ContentFactory } from './content/content-factory';
-import { Notification, Content, Visibility, Author, Action } from 'shared';
+import Content from './content/content'
+import { Notification, Visibility, Author, Action } from 'shared';
 
 dotenv.config();
 
