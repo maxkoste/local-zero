@@ -1,11 +1,9 @@
 import fs from 'fs/promises';
 import path from 'path';
-import { IContent, Content, Author, ContentRecord } from 'shared';
+import { IContent, Author } from 'shared';
+import Content from '../content/content'
 
-export type ContentUpdate = Partial<Pick<
-    ContentRecord,
-    'title' | 'body' | 'visibility' | 'image' | 'location' | 'duration' | 'likes' | 'dislikes' | 'categories'
->>;
+export type ContentUpdate = Partial<Pick<IContent, 'title' | 'body' | 'visibility' | 'image' | 'location' | 'duration' | 'likes' | 'dislikes' | 'categories' | 'members'>>;
 
 export interface ProfileRecord {
     userId: number;
@@ -17,7 +15,7 @@ export interface ProfileRecord {
         Initiativ: number;
         CarbonScore: number;
     };
-    recentActivity: [];
+    recentActivity: { id: string; text: string; date: string }[];
 }
 
 export interface EcoAction {
@@ -60,10 +58,10 @@ const PROFILES_FILE    = path.join(process.cwd(), 'src/storage/profiles.json');
 class StorageSystem {
     private static instance: StorageSystem;
 
-    private initiatives: IContent[] = [];
-    private users: UserRecord[]     = [];
-    private chats: ChatRecord[]     = [];
-    private profiles: ProfileRecord[] = [];
+    private initiatives: Content[]       = [];
+    private users:       UserRecord[]    = [];
+    private chats:       ChatRecord[]    = [];
+    private profiles:    ProfileRecord[] = [];
 
     private initiativesWriteQueue: Promise<void> = Promise.resolve();
     private usersWriteQueue:        Promise<void> = Promise.resolve();
@@ -75,9 +73,7 @@ class StorageSystem {
     private constructor() {}
 
     static getInstance(): StorageSystem {
-        if (!StorageSystem.instance) {
-            StorageSystem.instance = new StorageSystem();
-        }
+        if (!StorageSystem.instance) StorageSystem.instance = new StorageSystem();
         return StorageSystem.instance;
     }
 
@@ -91,7 +87,7 @@ class StorageSystem {
             fs.readFile(PROFILES_FILE,    'utf-8'),
         ]);
 
-        this.initiatives = (JSON.parse(initiativesData) as ContentRecord[])
+        this.initiatives = (JSON.parse(initiativesData) as IContent[])
             .map(record => Content.fromJSON(record));
 
         this.users    = JSON.parse(usersData);
@@ -101,35 +97,34 @@ class StorageSystem {
         this.initialized = true;
     }
 
-    getInitiatives(): IContent[] {
-        return this.initiatives;
-    }
+    getInitiatives(): Content[] { return this.initiatives; }
 
-    getInitiativeById(id: string): IContent | undefined {
+    getInitiativeById(id: string): Content | undefined {
         return this.initiatives.find(i => i.id === id);
     }
 
-    findById(id: string): IContent | undefined {
+    findById(id: string): Content | undefined {
         return this.findNode(this.initiatives, id);
     }
 
-    addInitiative(initiative: IContent): void {
+    addInitiative(initiative: Content): void {
         this.initiatives.push(initiative);
         this.flushInitiatives();
     }
 
-    updateInitiative(id: string, update: ContentUpdate): IContent | null {
+    updateInitiative(id: string, update: ContentUpdate): Content | null {
         const node = this.findById(id);
         if (!node) return null;
 
-        if (update.title      !== undefined) node.title    = update.title;
-        if (update.body       !== undefined) node.body     = update.body;
+        if (update.title      !== undefined) node.title      = update.title;
+        if (update.body       !== undefined) node.body       = update.body;
         if (update.visibility !== undefined) node.visibility = update.visibility as any;
-        if (update.image      !== undefined) node.image    = update.image    ?? undefined;
-        if (update.location   !== undefined) node.location = update.location ?? undefined;
-        if (update.duration   !== undefined) node.duration = update.duration ?? undefined;
-        if (update.likes      !== undefined) node.likes    = new Set(update.likes);
-        if (update.dislikes   !== undefined) node.dislikes = new Set(update.dislikes);
+        if (update.image      !== undefined) node.image      = update.image;
+        if (update.location   !== undefined) node.location   = update.location;
+        if (update.duration   !== undefined) node.duration   = update.duration;
+        if (update.likes      !== undefined) node.likes      = new Set(update.likes);
+        if (update.dislikes   !== undefined) node.dislikes   = new Set(update.dislikes);
+        if (update.members    !== undefined) node.members = new Set(update.members);
         if (update.categories !== undefined) node.categories = update.categories;
 
         this.flushInitiatives();
@@ -144,19 +139,15 @@ class StorageSystem {
         return true;
     }
 
-    addChild(parentId: string, child: IContent): IContent | null {
+    addChild(parentId: string, child: Content): Content | null {
         const parent = this.findNode(this.initiatives, parentId);
         if (!parent) return null;
-
         parent.addChild(child);
-
         this.flushInitiatives();
         return parent;
     }
 
-    getUsers(): UserRecord[] {
-        return this.users;
-    }
+    getUsers(): UserRecord[] { return this.users; }
 
     getUserById(id: number): UserRecord | undefined {
         return this.users.find(u => u.id === id);
@@ -167,9 +158,7 @@ class StorageSystem {
         this.flushUsers();
     }
 
-    getProfiles(): ProfileRecord[] {
-        return this.profiles;
-    }
+    getProfiles(): ProfileRecord[] { return this.profiles; }
 
     getProfileByUserId(userId: number): ProfileRecord | undefined {
         return this.profiles.find(p => p.userId === userId);
@@ -197,9 +186,7 @@ class StorageSystem {
         return user;
     }
 
-    getChats(): ChatRecord[] {
-        return this.chats;
-    }
+    getChats(): ChatRecord[] { return this.chats; }
 
     getChatById(id: string): ChatRecord | undefined {
         return this.chats.find(c => c.id === id);
@@ -229,7 +216,7 @@ class StorageSystem {
     }
 
     private flushInitiatives(): void {
-        const serialised = this.initiatives.map(i => (i as Content).toJSON());
+        const serialised = this.initiatives.map(i => i.toJSON());
         this.initiativesWriteQueue = this.initiativesWriteQueue.then(() =>
             fs.writeFile(INITIATIVES_FILE, JSON.stringify(serialised, null, 2), 'utf-8')
         );
@@ -253,10 +240,10 @@ class StorageSystem {
         );
     }
 
-    private findNode(nodes: IContent[], id: string): IContent | undefined {
+    private findNode(nodes: Content[], id: string): Content | undefined {
         for (const node of nodes) {
             if (node.id === id) return node;
-            const found = this.findNode(node.getChildren(), id);
+            const found = this.findNode(node.children, id);
             if (found) return found;
         }
         return undefined;

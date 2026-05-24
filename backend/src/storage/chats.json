@@ -254,5 +254,138 @@
         "date": "2026-05-21T15:04:21.680Z"
       }
     ]
+  },
+  {
+    "id": "1779450909877",
+    "sender": {
+      "id": 1,
+      "username": "Admin",
+      "password": "admin",
+      "email": "admin@admin.se",
+      "visibility": "folkets_park",
+      "role": "admin",
+      "ecoActions": [
+        {
+          "id": "1778409829075",
+          "key": "CEO",
+          "date": "2026-05-10T10:43:49.075Z"
+        },
+        {
+          "id": "1778412000000",
+          "key": "BIKE",
+          "date": "2026-05-19T08:15:00.000Z"
+        },
+        {
+          "id": "1778456789012",
+          "key": "TREE",
+          "date": "2026-05-14T09:00:00.000Z"
+        },
+        {
+          "id": "1779281466119",
+          "key": "BIKE",
+          "date": "2026-05-20T12:51:06.119Z"
+        },
+        {
+          "id": "1779281475680",
+          "key": "OIL",
+          "date": "2026-05-20T12:51:15.681Z"
+        },
+        {
+          "id": "1779375566575",
+          "key": "BIKE",
+          "date": "2026-05-21T14:59:26.575Z"
+        }
+      ]
+    },
+    "receiver": {
+      "id": 5,
+      "username": "Fredrik",
+      "password": "majken99cool",
+      "email": "fredde@proton.se",
+      "visibility": "folkets_park",
+      "role": "user",
+      "ecoActions": [
+        {
+          "id": "1778600000000",
+          "key": "BIKE",
+          "date": "2026-05-18T06:45:00.000Z"
+        },
+        {
+          "id": "1778630000000",
+          "key": "TREE",
+          "date": "2026-05-19T15:30:00.000Z"
+        }
+      ]
+    },
+    "body": "",
+    "date": "2026-05-22T11:55:09.877Z",
+    "children": [
+      {
+        "id": "1779450929352",
+        "sender": {
+          "id": 1,
+          "username": "Admin",
+          "email": "admin@admin.se",
+          "role": "admin"
+        },
+        "body": "hej fredde!",
+        "date": "2026-05-22T11:55:29.352Z"
+      }
+    ]
+  },
+  {
+    "id": "1779628982165",
+    "sender": {
+      "id": 1,
+      "username": "Admin",
+      "password": "admin",
+      "email": "admin@admin.se",
+      "visibility": "folkets_park",
+      "role": "admin",
+      "ecoActions": [
+        {
+          "id": "1778409829075",
+          "key": "CEO",
+          "date": "2026-05-10T10:43:49.075Z"
+        },
+        {
+          "id": "1778412000000",
+          "key": "BIKE",
+          "date": "2026-05-19T08:15:00.000Z"
+        },
+        {
+          "id": "1778456789012",
+          "key": "TREE",
+          "date": "2026-05-14T09:00:00.000Z"
+        },
+        {
+          "id": "1779281466119",
+          "key": "BIKE",
+          "date": "2026-05-20T12:51:06.119Z"
+        },
+        {
+          "id": "1779281475680",
+          "key": "OIL",
+          "date": "2026-05-20T12:51:15.681Z"
+        },
+        {
+          "id": "1779375566575",
+          "key": "BIKE",
+          "date": "2026-05-21T14:59:26.575Z"
+        }
+      ]
+    },
+    "receiver": {
+      "id": 12,
+      "username": "Sigrid",
+      "password": "abba4ever",
+      "email": "sigrid_abba@gmail.com",
+      "visibility": "kirseberg",
+      "role": "user",
+      "ecoActions": []
+    },
+    "body": "",
+    "date": "2026-05-24T13:23:02.165Z",
+    "children": []
   }
 ]

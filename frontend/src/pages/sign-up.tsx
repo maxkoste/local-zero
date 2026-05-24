@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 
 export function SignUp() {
     const navigate = useNavigate();
+    const [showPassword, setShowPassword] = useState(false);
     const [formData, setFormData] = useState({
         username: '',
         password: '',
@@ -17,7 +18,7 @@ export function SignUp() {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
 
-    const handleSubmit = async (e: React.SyntheticEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setError(null);
 
@@ -42,41 +43,99 @@ export function SignUp() {
     };
 
     return (
-        <>
-            <h1>THIS IS FAKE AND UNSAFE – USE A DUMMY PASSWORD</h1>
-            {error && <p style={{ color: 'red' }}>{error}</p>}
-            <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1rem', width: '300px' }}>
-                <label>
-                    Username
-                    <input type="text" name="username" value={formData.username} onChange={handleChange} required />
-                </label>
-                <label>
-                    Email
-                    <input type="email" name="email" value={formData.email} onChange={handleChange} required />
-                </label>
-                <label>
-                    Password
-                    <input type="password" name="password" value={formData.password} onChange={handleChange} required />
-                </label>
-                <label>
-                    Neighborhood
-                    <select name="visibility" value={formData.visibility} onChange={handleChange}>
-                        {Object.entries(Visibility)
-                            .filter(([, val]) => val !== Visibility.PUBLIC)
-                            .map(([key, val]) => (
-                                <option key={key} value={val}>{key}</option>
-                            ))}
-                    </select>
-                </label>
-                <label>
-                    Role
-                    <select name="role" value={formData.role} onChange={handleChange}>
-                        <option value="user">User</option>
-                        <option value="admin">Admin</option>
-                    </select>
-                </label>
-                <button type="submit">Sign Up</button>
-            </form>
-        </>
+        <div className="app-wrapper">
+            <div className="login-container">
+                <div className="login-card">
+                    <div className="login-header">
+                        <h2>Create Account</h2>
+                        <p>Join our community</p>
+                    </div>
+
+                    <form onSubmit={handleSubmit} className="login-form">
+                        <div className="form-group">
+                            <div className="input-wrapper">
+                                <input
+                                    type="text"
+                                    name="username"
+                                    placeholder="Username"
+                                    value={formData.username}
+                                    onChange={handleChange}
+                                    required
+                                />
+                                <span className="focus-border"></span>
+                            </div>
+                        </div>
+
+                        <div className="form-group">
+                            <div className="input-wrapper">
+                                <input
+                                    type="email"
+                                    name="email"
+                                    placeholder="Email"
+                                    value={formData.email}
+                                    onChange={handleChange}
+                                    required
+                                />
+                                <span className="focus-border"></span>
+                            </div>
+                        </div>
+
+                        <div className="form-group">
+                            <div className="input-wrapper password-wrapper">
+                                <input
+                                    type={showPassword ? "text" : "password"}
+                                    name="password"
+                                    placeholder="Password"
+                                    value={formData.password}
+                                    onChange={handleChange}
+                                    required
+                                />
+                                <button
+                                    type="button"
+                                    className="password-toggle"
+                                    onClick={() => setShowPassword(!showPassword)}
+                                    aria-label="Toggle password visibility"
+                                >
+                                    <span className="eye-icon" style={{ color: '#000' }}>
+                                        {showPassword ? '🙈' : '👁️'}
+                                    </span>
+                                </button>
+                                <span className="focus-border"></span>
+                            </div>
+                        </div>
+
+                        <div className="form-group">
+                            <div className="input-wrapper">
+                                <select
+                                    name="visibility"
+                                    value={formData.visibility}
+                                    onChange={handleChange}
+                                    className="styled-select"
+                                    required
+                                >
+                                    {Object.entries(Visibility)
+                                        .filter(([, val]) => val !== Visibility.PUBLIC)
+                                        .map(([key, val]) => (
+                                            <option key={key} value={val}>{key}</option>
+                                        ))}
+                                </select>
+                                <span className="focus-border"></span>
+                            </div>
+                        </div>
+
+                        <button type="submit" className="login-btn btn">
+                            <span className="btn-text">Sign Up</span>
+                        </button>
+                    </form>
+
+                    <button
+                        onClick={() => navigate('/')}
+                        className="secondary-btn"
+                    >
+                        Already have an account? Sign in
+                    </button>
+                </div>
+            </div>
+        </div>
     );
 }

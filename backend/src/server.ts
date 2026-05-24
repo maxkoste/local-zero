@@ -5,7 +5,8 @@ import dotenv from 'dotenv';
 import jwt from 'jsonwebtoken';
 import cookieParser from 'cookie-parser';
 import { ContentFactory } from './content/content-factory';
-import { Notification, Content, IContent, Visibility, Author, Action } from 'shared';
+import Content from './content/content'
+import { Notification, Visibility, Author, Action } from 'shared';
 
 dotenv.config();
 
@@ -55,8 +56,8 @@ function resolveAuthor(payload: JwtPayload, res: express.Response): Author | nul
 }
 
 function collectReplyNotifications(
-    nodes: IContent[],
-    parent: IContent,
+    nodes: Content[],
+    parent: Content,
     initiativeId: string,
     initiativeTitle: string,
     userId: number,
@@ -95,7 +96,7 @@ function collectReplyNotifications(
         }
 
         collectReplyNotifications(
-            node.getChildren(),
+            node.children,
             node,
             initiativeId,
             initiativeTitle,
@@ -153,7 +154,6 @@ app.patch('/api/users/:id', (req, res) => {
     const user = storage.getUserById(userId);
     if (!user) return res.status(404).json({ error: 'User not found' });
 
-    // TODO: implement attribute updates (visibility, bio, etc.)
     res.status(200).json(user);
 });
 
@@ -178,29 +178,23 @@ app.get('/api/users/:id/profile', (req, res) => {
         });
     }
 
-    function collectAuthoredContent(nodes: IContent[]) {
+    function collectAuthoredContent(nodes: Content[]) {
         for (const node of nodes) {
             if (node.author.id === userId) {
                 if (node.type === 'comment') {
-                    collectAuthoredContent(node.getChildren());
+                    collectAuthoredContent(node.children);
                     continue;
                 }
-
-                const typeLabel = node.type === 'initiative' 
-                    ? 'Created initiative' 
-                    : 'Posted update';
-
+                const typeLabel = node.type === 'initiative' ? 'Created initiative' : 'Posted update';
                 activityItems.push({
-                    id: node.id,
+                    id:   node.id,
                     text: `${typeLabel}: ${node.title ?? node.body?.slice(0, 60) ?? ''}`,
-                    date: (node.date instanceof Date ? node.date : new Date(node.date)).toISOString(),
+                    date: node.date.toISOString(),
                 });
             }
-
-            collectAuthoredContent(node.getChildren());
+            collectAuthoredContent(node.children);
         }
     }
-
     collectAuthoredContent(storage.getInitiatives());
 
     activityItems.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
@@ -314,8 +308,8 @@ app.get('/api/initiatives', (req, res) => {
     const userVisibility = user.visibility?.toLowerCase() ?? 'public';
     const initiatives    = storage.getInitiatives();
 
-    if (userVisibility === 'public') {
-        return res.json(initiatives.map(i => (i as Content).toJSON()));
+    if (user.role === 'admin' || userVisibility === 'public') {
+        return res.json(initiatives.map(i => i.toJSON()));
     }
 
     const filtered = initiatives.filter(i =>
@@ -323,7 +317,7 @@ app.get('/api/initiatives', (req, res) => {
         i.visibility.toLowerCase() === userVisibility
     );
 
-    res.json(filtered.map(i => (i as Content).toJSON()));
+    res.json(filtered.map(i => i.toJSON()));
 });
 
 app.get('/api/initiatives/:id', (req, res) => {
@@ -332,7 +326,7 @@ app.get('/api/initiatives/:id', (req, res) => {
 
     const initiative = storage.getInitiativeById(req.params.id);
     if (!initiative) return res.status(404).json({ error: 'Initiative not found' });
-    res.json((initiative as Content).toJSON());
+    res.json(initiative.toJSON());
 });
 
 app.post('/api/initiatives', (req, res) => {
@@ -354,14 +348,14 @@ app.post('/api/initiatives', (req, res) => {
     );
 
     storage.addInitiative(initiative);
-    res.status(201).json((initiative as Content).toJSON());
+    res.status(201).json(initiative.toJSON());
 });
 
 app.patch('/api/initiatives/:id', (req, res) => {
     const payload = requireAuth(req, res);
     if (!payload) return;
 
-    const { title, body, visibility, image, location, duration, likes, dislikes, categories } = req.body;
+    const { title, body, visibility, image, location, duration, likes, dislikes, categories, members } = req.body;
 
     const updated = storage.updateInitiative(req.params.id, {
         ...(title      !== undefined && { title }),
@@ -373,10 +367,11 @@ app.patch('/api/initiatives/:id', (req, res) => {
         ...(likes      !== undefined && { likes }),
         ...(dislikes   !== undefined && { dislikes }),
         ...(categories !== undefined && { categories }),
+        ...(members    !== undefined && { members }),
     });
 
     if (!updated) return res.status(404).json({ error: 'Initiative not found' });
-    res.json((updated as Content).toJSON());
+    res.json(updated.toJSON());
 });
 
 app.delete('/api/initiatives/:id', (req, res) => {
@@ -424,7 +419,7 @@ app.post('/api/initiatives/:parentId/children', (req, res) => {
             );
 
         storage.addChild(targetParentId, child);
-        res.status(201).json((child as Content).toJSON());
+        res.status(201).json(child.toJSON());
     } catch (err: any) {
         return res.status(400).json({ error: err.message });
     }
@@ -538,13 +533,12 @@ app.get('/api/notifications', (req, res) => {
     const seen = new Set<string>();
 
     for (const initiative of initiatives) {
-        const init            = initiative as Content;
-        const initiativeId    = init.id;
-        const initiativeTitle = init.title ?? '(untitled)';
+        const initiativeId    = initiative.id;
+        const initiativeTitle = initiative.title ?? '(untitled)';
 
         collectReplyNotifications(
-            init.getChildren(),
-            init,
+            initiative.children,
+            initiative,
             initiativeId,
             initiativeTitle,
             userId,
@@ -553,12 +547,12 @@ app.get('/api/notifications', (req, res) => {
             notifications,
         );
 
-        const neighborhoodId = `neighborhood-${init.id}`;
+        const neighborhoodId = `neighborhood-${initiative.id}`;
         if (
             userNeighborhood &&
-            init.author.id !== userId &&
-            init.date > since &&
-            init.visibility.toLowerCase() === userNeighborhood &&
+            initiative.author.id !== userId &&
+            initiative.date > since &&
+            initiative.visibility.toLowerCase() === userNeighborhood &&
             !seen.has(neighborhoodId)
         ) {
             seen.add(neighborhoodId);
@@ -567,10 +561,10 @@ app.get('/api/notifications', (req, res) => {
                 type: 'neighborhood',
                 initiativeId,
                 initiativeTitle,
-                actorUsername: init.author.username,
+                actorUsername: initiative.author.username,
                 contentType: 'initiative',
-                body: init.body,
-                date: init.date.toISOString(),
+                body: initiative.body,
+                date: initiative.date.toISOString(),
                 read: false,
             });
         }

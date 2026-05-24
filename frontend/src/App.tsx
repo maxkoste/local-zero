@@ -10,7 +10,7 @@ import { SignUp } from './pages/sign-up';
 import MainLayout from './pages/main-layout';
 import { InitiativePage } from './pages/initiative-page';
 import { CreateInitiativePage } from './pages/create-initiative-page';
-import { ChatPage } from './pages/chat-page'; // 👈 add this
+import { ChatPage } from './pages/chat-page';
 
 const darkTheme = createTheme({
     palette: {
@@ -25,10 +25,11 @@ function App() {
                 <CssBaseline />
                 <Routes>
                     <Route path="/" element={<LoginPage />} />
+                    <Route path="/sign-up" element={<SignUp />} />
+
                     <Route element={<MainLayout />}>
                         <Route path="/front" element={<FrontPage />} />
                         <Route path="/profile/:id" element={<UserPage />} />
-                        <Route path="/sign-up" element={<SignUp />} />
                         <Route path="/initiative/:id" element={<InitiativePage />} />
                         <Route path="/create-initiative" element={<CreateInitiativePage />} />
                         <Route path="/chat/:id" element={<ChatPage />} />
